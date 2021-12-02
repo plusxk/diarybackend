@@ -2,8 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const UserRoutes = require('./routes/userRoutes');
-const DiaryRoutes = require('./routes/diaryRoutes');
-const FolderRoutes = require('./routes/folderRoutes');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
@@ -15,9 +13,12 @@ mongoose
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
-
+  
 app.use(UserRoutes);
-app.use(DiaryRoutes);
-app.use(FolderRoutes);
+  
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
 
 app.listen(PORT, () => console.log('Server Running...'))

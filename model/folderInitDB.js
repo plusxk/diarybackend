@@ -10,9 +10,8 @@ const FolderSchema = new Schema({
         type: String,
         required: true
     },
-    diaryID: {
-        type: Array,
-        required: true
+    diary: {
+        type: [Schema.Types.Mixed]
     }
 });
 

@@ -15,21 +15,21 @@ const DiarySchema = new Schema({
         required: true
     },
     date: {
-        type: Boolean,
+        type: Date,
         required: true,
         default: Date.now
     },
     tag: {
-        type: Array
+        type: [String]
     },
     filesURL: {
-        type: Array
+        type: [String]
     },
     picURL: {
-        type: Array
+        type: [String]
     },
     videoURL: {
-        type: Array
+        type: [String]
     },
     isFavored: {
         type: Boolean,

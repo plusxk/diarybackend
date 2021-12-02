@@ -11,5 +11,14 @@ services:
   mongo:
     container_name: mongo
     image: mongo
+    volumes:
+      - ./mongoDB:/data/db
     ports:
       - '27017:27017'
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    volumes:
+      - ./mongoDB:/dataCompress/db

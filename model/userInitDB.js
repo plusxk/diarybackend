@@ -27,6 +27,9 @@ const UserSchema = new Schema({
     },
     accessKey: {
         type: String
+    },
+    folder: {
+        type: [Schema.Types.Mixed]
     }
 });
 
