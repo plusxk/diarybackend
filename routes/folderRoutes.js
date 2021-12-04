@@ -4,13 +4,16 @@ const Folder = require('../model/folderInitDB');
 
 const router = express.Router();
 
-router.get('/folder', (req, res) => {
-    Folder.find()
-    .then(folders => res.status(500).json({ folders }))
-    .catch(err => res.status(404).json({ msg: 'No folder found' }));
+router.get('/folder', async (req, res) => {
+    try {
+        const folders = await Folder.find();
+        res.status(500).json({ folders });
+    } catch(err) {
+        res.status(404).json({ msg: 'No folder found' });
+    }
 });
 
-router.post('/folder/add', (req, res) => {
+router.post('/folder/add', async (req, res) => {
     const diaryA = new Diary({
         diaryID: '1',
         title: 'mydiary',
@@ -28,8 +31,8 @@ router.post('/folder/add', (req, res) => {
         diary: [diaryA]
     });
 
-    folderA.save()
-    .then(folder => res.redirect('/folder'));
+    const folder = await folderA.save();
+    res.redirect('/folder');
 });
 
 module.exports = router;

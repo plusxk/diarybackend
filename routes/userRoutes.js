@@ -5,13 +5,16 @@ const Folder = require('../model/folderInitDB');
 
 const router = express.Router();
 
-router.get('/user', (req, res) => {
-    User.find()
-    .then(users => res.status(500).json({ users }))
-    .catch(err => res.status(404).json({ msg: 'No user found' }));
+router.get('/user', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(500).json({ users })
+    } catch(err) {
+        res.status(404).json({ msg: 'No user found' });
+    }
 });
 
-router.post('/user/add', (req, res) => {
+router.post('/user/add', async (req, res) => {
     const diaryA = new Diary({
         diaryID: '1',
         title: 'mydiary',
@@ -39,8 +42,8 @@ router.post('/user/add', (req, res) => {
         folder: [folderA]
     });
 
-    userA.save()
-    .then(user => res.redirect('/user'));
+    const user = await userA.save()
+    res.redirect('/user');
 });
 
 module.exports = router;
