@@ -1,6 +1,6 @@
 const User = require('../model/userInitDB');
-const Diary = require('../model/diaryInitDB');
-const Folder = require('../model/folderInitDB');
+// const Diary = require('../model/diaryInitDB');
+// const Folder = require('../model/folderInitDB');
 
 exports.getUser = async (req, res) => {
     try {
@@ -12,7 +12,7 @@ exports.getUser = async (req, res) => {
 };
 
 exports.postUser = async (req, res) => {
-    const diaryA = new Diary({
+    const diaryA = {
         diaryID: '1',
         title: 'mydiary',
         content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',
@@ -22,12 +22,12 @@ exports.postUser = async (req, res) => {
         picURL: ['pic'],
         videoURL: ['videos'],
         isFavored: false
-    });
-    const folderA = new Folder({
+    };
+    const folderA = {
         folderID: '1',
         folderName: 'myfolder',
         diary: [diaryA]
-    });
+    };
     const userA = new User({
         userID: '1',
         email: 'genewang7@gmail.com',
