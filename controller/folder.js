@@ -1,5 +1,4 @@
-// const Diary = require('../model/diaryInitDB');
-// const Folder = require('../model/folderInitDB');
+const User = require('../model/userDBSchema');
 
 // exports.getFolder = async (req, res) => {
 //     try {
@@ -10,24 +9,19 @@
 //     }
 // };
 
-// exports.postFolder = async (req, res) => {
-//     const diaryA = new Diary({
-//         diaryID: '1',
-//         title: 'mydiary',
-//         content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',
-//         date: Date.now(),
-//         tag: ['tag'],
-//         filesURL: ['files'],
-//         picURL: ['pic'],
-//         videoURL: ['videos'],
-//         isFavored: false
-//     });
-//     const folderA = new Folder({
-//         folderID: '1',
-//         folderName: 'myfolder',
-//         diary: [diaryA]
-//     });
-
-//     const folder = await folderA.save();
-//     res.status(201).json({ folder });
-// };
+//TODO: 新增資料夾
+exports.postFolder = async (req, res) => {
+    const folderA = {
+        folderID: '3',      //req.body.folderID
+        folderName: 'myfolder',      //req.body.folderName
+        diary: []
+    };
+    User.findOneAndUpdate(
+        { userID: '1' },
+        { $push: { folder: folderA }},
+        (err, log) => {
+            console.log('Error Message: ' + err);
+            console.log('Success Message: ' + log);
+        }
+    );
+};

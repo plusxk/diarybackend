@@ -26,7 +26,7 @@ exports.postDiary = async (req, res) => {
     };
 
     const diary = await User
-    .find({ folder : { folderName : 'uncategorized' }})
+    .find({ folder : { folderName : 'Uncategorized' }})
     .save();
     res.status(201).json({ diary });
 };
