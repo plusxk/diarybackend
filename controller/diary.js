@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 //     }
 // };
 
+
+//新增日記入指定資料夾
 exports.postDiary = async (req, res) => {
     const diaryA = {
         diaryID: '1',        //req.body.diaryID
@@ -25,8 +27,19 @@ exports.postDiary = async (req, res) => {
         isFavored: false    //req.body.isFavored
     };
 
-    const diary = await User
-    .find({ folder : { folderName : 'Uncategorized' }})
-    .save();
-    res.status(201).json({ diary });
+    const defaultFolderName = 'Uncategorized';
+    User.updateOne(
+        { 'folder.folderName': defaultFolderName },
+        { $push: { 
+            'folder.$.diary': diaryA 
+        }},
+        { upsert: true },
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.state(500).json({ log })
+        }
+    );
+
 };

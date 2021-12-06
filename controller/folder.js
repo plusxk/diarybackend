@@ -9,7 +9,6 @@ const User = require('../model/userDBSchema');
 //     }
 // };
 
-//TODO: 新增資料夾
 exports.postFolder = async (req, res) => {
     const folderA = {
         folderID: '3',      //req.body.folderID
@@ -20,8 +19,10 @@ exports.postFolder = async (req, res) => {
         { userID: '1' },
         { $push: { folder: folderA }},
         (err, log) => {
-            console.log('Error Message: ' + err);
-            console.log('Success Message: ' + log);
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.state(500).json({ log });
         }
     );
 };

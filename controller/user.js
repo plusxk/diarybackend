@@ -32,10 +32,9 @@ exports.postUser = async (req, res) => {
         userID: '1',
         email: 'genewang7@gmail.com',
         password: 'ssssss',
-        code: false,
+        code: 'fhfjfj',
         isAdmin: false,
-        isActivated: false,
-        accessKey: 'aieghio;df'
+        isActivated: false
     });
 
     

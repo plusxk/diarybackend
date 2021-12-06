@@ -65,7 +65,7 @@ const UserSchema = new Schema({
         required: true
     },
     code: {
-        type: Boolean
+        type: String
     },
     isAdmin: {
         type: Boolean,
@@ -75,20 +75,19 @@ const UserSchema = new Schema({
         type: Boolean,
         required: true
     },
-    accessKey: {
-        type: String
-    },
     folder: {
         type: [FolderSchema],
         required: true,
         default: [
             {
                 folderID: '1',
-                folderName: 'Uncategorized'
+                folderName: 'Uncategorized',
+                diary: []
             },
             {
                 folderID: '2',
-                folderName: 'Favorite'
+                folderName: 'Favorite',
+                diary: []
             }
         ]
     }
