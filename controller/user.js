@@ -1,33 +1,33 @@
-const User = require('../model/userInitDB');
+const User = require('../model/userDBSchema');
 // const Diary = require('../model/diaryInitDB');
 // const Folder = require('../model/folderInitDB');
 
 exports.getUser = async (req, res) => {
     try {
-        const users = await User.find();
-        res.status(500).json({ users })
+        const user = await User.find();
+        res.status(500).json({ user })
     } catch(err) {
         res.status(404).json({ msg: 'No user found' });
     }
 };
 
 exports.postUser = async (req, res) => {
-    const diaryA = {
-        diaryID: '1',
-        title: 'mydiary',
-        content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',
-        date: Date.now(),
-        tag: ['tag'],
-        filesURL: ['files'],
-        picURL: ['pic'],
-        videoURL: ['videos'],
-        isFavored: false
-    };
-    const folderA = {
-        folderID: '1',
-        folderName: 'myfolder',
-        diary: [diaryA]
-    };
+    // const diaryA = {
+    //     diaryID: '1',        //req.body.diaryID
+    //     title: 'mydiary',   //req.body.title
+    //     content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',   //req.body.content
+    //     date: Date.now(),   //req.body.date
+    //     tag: ['tag'],   //req.body.tag
+    //     filesURL: ['files'],    //req.body.filesURL
+    //     picURL: ['pic'],    //req.body.picURL
+    //     videoURL: ['videos'],   //req.body.videoURL
+    //     isFavored: false    //req.body.isFavored
+    // };
+    // const folderA = {
+    //     folderID: '1',
+    //     folderName: 'myfolder',
+    //     diary: [diaryA]
+    // };
     const userA = new User({
         userID: '1',
         email: 'genewang7@gmail.com',
@@ -35,10 +35,10 @@ exports.postUser = async (req, res) => {
         code: false,
         isAdmin: false,
         isActivated: false,
-        accessKey: 'aieghio;df',
-        folder: [folderA]
+        accessKey: 'aieghio;df'
     });
 
+    
     const user = await userA.save();
     res.status(201).json({ user });
 };
