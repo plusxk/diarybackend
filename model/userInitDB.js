@@ -1,5 +1,54 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const DiarySchema = new Schema({
+    diaryID: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    tag: {
+        type: [String]
+    },
+    filesURL: {
+        type: [String]
+    },
+    picURL: {
+        type: [String]
+    },
+    videoURL: {
+        type: [String]
+    },
+    isFavored: {
+        type: Boolean,
+        required: true
+    }
+});
+
+
+const FolderSchema = new Schema({
+    folderID: {
+        type: String,
+        required: true
+    },
+    folderName: {
+        type: String,
+        required: true
+    },
+    diary: [Schema.Types.Mixed]
+});
+
 
 const UserSchema = new Schema({
     userID: {
@@ -29,9 +78,7 @@ const UserSchema = new Schema({
     accessKey: {
         type: String
     },
-    folder: {
-        type: [Schema.Types.Mixed]
-    }
+    folder: [Schema.Types.Mixed]
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

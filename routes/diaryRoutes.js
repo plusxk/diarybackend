@@ -1,10 +1,10 @@
-const express = require('express');
-const diaryController = require('../controller/diary');
+// const express = require('express');
+// const diaryController = require('../controller/diary');
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/diary', diaryController.getDiary);
+// router.get('/diary', diaryController.getDiary);
 
-router.post('/diary', diaryController.postDiary);
+// router.post('/diary', diaryController.postDiary);
 
-module.exports = router;
+// module.exports = router;

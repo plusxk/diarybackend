@@ -1,18 +1,25 @@
 const User = require('../model/userInitDB');
-const Diary = require('../model/diaryInitDB');
-const Folder = require('../model/folderInitDB');
+const bodyParser = require('body-parser');
+const querystring = require('querystring');
+// const Diary = require('../model/diaryInitDB');
+// const Folder = require('../model/folderInitDB');
 
 exports.getUser = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(500).json({ users })
-    } catch(err) {
-        res.status(404).json({ msg: 'No user found' });
-    }
+   User.find({folderName: 'myfolder'},function (err, docs) { 
+    if (err){ 
+        console.log(err); 
+    } 
+    else{ 
+        console.log("Result:", docs[0].toObject().folder); 
+    } 
+    
+    res.status(500).json(docs[0].toObject().folder);
+    //res.end(JSON.stringify(temp));
+});
 };
 
 exports.postUser = async (req, res) => {
-    const diaryA = new Diary({
+    const diaryA = {
         diaryID: '1',
         title: 'mydiary',
         content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',
@@ -22,12 +29,12 @@ exports.postUser = async (req, res) => {
         picURL: ['pic'],
         videoURL: ['videos'],
         isFavored: false
-    });
-    const folderA = new Folder({
+    };
+    const folderA = {
         folderID: '1',
         folderName: 'myfolder',
         diary: [diaryA]
-    });
+    };
     const userA = new User({
         userID: '1',
         email: 'genewang7@gmail.com',

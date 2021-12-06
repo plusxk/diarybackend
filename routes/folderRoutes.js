@@ -1,10 +1,10 @@
-const express = require('express');
-const folderController = require('../controller/folder');
+// const express = require('express');
+// const folderController = require('../controller/folder');
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/folder', folderController.getFolder);
+// router.get('/folder', folderController.getFolder);
 
-router.post('/folder', folderController.postFolder);
+// router.post('/folder', folderController.postFolder);
 
-module.exports = router;
+// module.exports = router;
