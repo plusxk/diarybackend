@@ -1,20 +1,27 @@
 const User = require('../model/userDBSchema');
 const bodyParser = require('body-parser');
 
+//取得Uncategorized底下所有日記
+exports.getAllDiary = (req, res) => {
+    User.find({folderName : 'Uncategorized'}, (err, docs) => {
+        if (err)
+            console.log(err);
+        res.status(500).json(docs[0].toObject().folder[0]);
+    });
+};
 
-
-// exports.getDiary = async (req, res) => {
-//     try {
-//         const diarys = await Diary.find();
-//         res.status(500).json({ diarys });
-//     } catch(err) {
-//         res.status(404).json({ msg: 'No diary found' });
-//     }
-// };
+//TODO: 取得一篇日記內容(依據diaryID)
+exports.getDiaryByID = (req, res) => {
+    User.find({ diaryID: '1' }, (err, docs) => {
+        if (err)
+            console.log(err);
+        res.status(500).json(docs[0].toObject().folder[0].diary[diaryID - 1]);
+    });
+};
 
 
 //新增日記入指定資料夾
-exports.postDiary = async (req, res) => {
+exports.postDiary = (req, res) => {
     const diaryA = {
         diaryID: '1',        //req.body.diaryID
         title: 'mydiary',   //req.body.title
@@ -38,7 +45,7 @@ exports.postDiary = async (req, res) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.state(500).json({ log })
+                res.status(500).json({ log })
         }
     );
 

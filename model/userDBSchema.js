@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 const DiarySchema = new Schema({
     diaryID: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     title: {
         type: String,
@@ -40,7 +41,8 @@ const DiarySchema = new Schema({
 const FolderSchema = new Schema({
     folderID: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     folderName: {
         type: String,

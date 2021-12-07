@@ -9,20 +9,20 @@ const User = require('../model/userDBSchema');
 //     }
 // };
 
-exports.postFolder = async (req, res) => {
+exports.postFolder = (req, res) => {
     const folderA = {
         folderID: '3',      //req.body.folderID
         folderName: 'myfolder',      //req.body.folderName
         diary: []
     };
-    User.findOneAndUpdate(
+    await User.findOneAndUpdate(
         { userID: '1' },
         { $push: { folder: folderA }},
         (err, log) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.state(500).json({ log });
+                res.status(500).json({ log });
         }
     );
 };
