@@ -13,7 +13,7 @@ router.get('/folder/:folderID/:diaryID', diaryController.getDiaryByID);
 //GET specific diaries by tags      localhost/search?condition=tags&search_query=tag
 router.get('/search', diaryController.getDiaryBySearch)
 
-//GET diaries by date         localhost/date?date=2021-12-07
+//GET diaries by date         localhost/date?date=20211207
 router.get('/date', diaryController.getDiaryByDate);
 
 //POST diary in specific folder by folderID

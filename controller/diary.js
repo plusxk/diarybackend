@@ -1,6 +1,7 @@
 const User = require('../model/userDBSchema');
 const bodyParser = require('body-parser');
 
+//日期轉字串
 Date.prototype.yyyymmdd = function() {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
     var dd = this.getDate();
@@ -43,13 +44,13 @@ exports.getDiaryBySearch = (req, res) => {
         const searchBy = req.query;
         const diary = diaries.filter((item, index, array) => {
             if (searchBy.condition === 'title')
-                return item.title.includes(searchBy.search_query) === true; 
+                return item.title.toLowerCase().includes(searchBy.search_query) === true; 
             else if (searchBy.condition === 'content')
-                return item.content.includes(searchBy.search_query) === true; 
+                return item.content.toLowerCase().includes(searchBy.search_query) === true; 
             else if (searchBy.condition === 'tags') {
                 const tags = item.tag;
                 return tags.find((it, index, array) => {
-                    return it.includes(searchBy.search_query) === true;
+                    return it.toLowerCase().includes(searchBy.search_query) === true;
                 });
             }
         });
@@ -57,7 +58,7 @@ exports.getDiaryBySearch = (req, res) => {
     });
 }
 
-//TODO: 取得日曆日期日記
+//取得日曆日期日記
 exports.getDiaryByDate = (req, res) => {
     User.find({ userID: '1' }, (err, docs) => {
         if (err)
@@ -105,6 +106,7 @@ exports.postDiary = (req, res) => {
     );
 };
 
+//修改日記內容
 exports.putDiaryByID = (req, res) => {
     const diaryA = {
         diaryID: '1',        //req.body.diaryID
