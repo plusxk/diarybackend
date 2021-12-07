@@ -32,7 +32,7 @@ exports.getDiaryBySearch = (req, res) => {
         });
         const diaries = folder.diary;
         const searchBy = req.query;
-        const diary = diaries.find((item, index, array) => {
+        const diary = diaries.filter((item, index, array) => {
             if (searchBy.condition === 'title')
                 return item.title.includes(searchBy.search_query) === true; 
             else if (searchBy.condition === 'content')
