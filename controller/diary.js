@@ -10,12 +10,21 @@ exports.getAllDiary = (req, res) => {
     });
 };
 
-//TODO: 取得一篇日記內容(依據diaryID)
+//取得一篇日記內容(依據diaryID)
 exports.getDiaryByID = (req, res) => {
-    User.find({ diaryID: '1' }, (err, docs) => {
+    User.find({ userID: '1' }, (err, docs) => {
         if (err)
             console.log(err);
-        res.status(500).json(docs[0].toObject().folder[0].diary[diaryID - 1]);
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === 'Uncategorized';
+        });
+        const diaries = folder.diary;
+        const diary = diaries.find((item, index, array) => {
+            return item.diaryID = req.params.diaryID;
+        });
+        res.status(500).json({ diary });
     });
 };
 

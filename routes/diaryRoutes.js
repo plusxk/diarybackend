@@ -6,8 +6,10 @@ const router = express.Router();
 //GET all diarys in specific folder
 router.get('/diary', diaryController.getAllDiary);
 
-//TODO: GET specific diary by diaryID
+//GET specific diary by diaryID
 router.get('/diary/:diaryID', diaryController.getDiaryByID);
+
+
 
 //POST uncategorized diary
 router.post('/diary', diaryController.postDiary);
