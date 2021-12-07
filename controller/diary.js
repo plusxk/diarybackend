@@ -20,8 +20,8 @@ exports.getDiaryByID = (req, res) => {
     });
 };
 
-//TODO: 取得一篇日記內容(依據title)
-exports.getDiaryByTitle = (req, res) => {
+//取得一篇日記內容(關鍵字搜尋)
+exports.getDiaryBySearch = (req, res) => {
     User.find({ userID: '1' }, (err, docs) => {
         if (err)
             console.log(err);
@@ -31,52 +31,22 @@ exports.getDiaryByTitle = (req, res) => {
             return item.folderName === 'Uncategorized';
         });
         const diaries = folder.diary;
+        const searchBy = req.query;
         const diary = diaries.find((item, index, array) => {
-            return item.title.includes(req.params.title) === true;
+            if (searchBy.condition === 'title')
+                return item.title.includes(searchBy.search_query) === true; 
+            else if (searchBy.condition === 'content')
+                return item.content.includes(searchBy.search_query) === true; 
+            else if (searchBy.condition === 'tags') {
+                const tags = item.tag;
+                return tags.find((it, index, array) => {
+                    return it.includes(searchBy.search_query) === true;
+                });
+            }
         });
         res.status(500).json({ diary });
     });
-};
-
-//TODO: 取得一篇日記內容(依據content)
-exports.getDiaryByContent = (req, res) => {
-    User.find({ userID: '1' }, (err, docs) => {
-        if (err)
-            console.log(err);
-        
-        const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === 'Uncategorized';
-        });
-        const diaries = folder.diary;
-        const diary = diaries.find((item, index, array) => {
-            return item.content.includes(req.params.content) === true;
-        });
-        res.status(500).json({ diary });
-    });
-};
-
-//TODO: 取得一篇日記內容(依據tags)
-exports.getDiaryByTags = (req, res) => {
-    User.find({ userID: '1' }, (err, docs) => {
-        if (err)
-            console.log(err);
-        
-        const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === 'Uncategorized';
-        });
-        const diaries = folder.diary;
-        const diary = diaries.find((item, index, array) => {
-            const tags = item.tag;
-            return tagsArray = tags.find((it, index, array) => {
-                return it.includes(req.params.tag) === true;
-            });
-        });
-        res.status(500).json({ diary });
-    });
-};
-
+}
 
 //新增日記入指定資料夾
 exports.postDiary = (req, res) => {

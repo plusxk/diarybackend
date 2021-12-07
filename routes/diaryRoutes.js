@@ -4,18 +4,16 @@ const diaryController = require('../controller/diary');
 const router = express.Router();
 
 //GET specific diary by diaryID
-router.get('/user/folder/:folderID/:diaryID', diaryController.getDiaryByID);
+router.get('/folder/:folderID/:diaryID', diaryController.getDiaryByID);
 
-//TODO: GET specific diary by title
-router.get('/user/folder/:folderID/:title', diaryController.getDiaryByTitle)
+/*關鍵字查詢*/
 
-//TODO: GET specific diary by content
-router.get('/user/folder/:folderID/:content', diaryController.getDiaryByContent)
-
-//TODO: GET specific diary by tags
-router.get('/user/folder/:folderID/:tag', diaryController.getDiaryByTags)
+//TODO: GET specific diary by title     localhost/search?condition=title&search_query=mydiary
+//TODO: GET specific diary by content   localhost/search?condition=content&search_query=sgegrhrh
+//TODO: GET specific diary by tags      localhost/search?condition=tags&search_query=tag
+router.get('/search', diaryController.getDiaryBySearch)
 
 //POST diary by in specific folder by folderID
-router.post('/user/folder/:folderID', diaryController.postDiary);
+router.post('/folder/:folderID', diaryController.postDiary);
 
 module.exports = router;

@@ -4,12 +4,15 @@ const folderController = require('../controller/folder');
 const router = express.Router();
 
 //GET all folders
-router.get('/user/folder', folderController.getAllFolder);
+router.get('/folder', folderController.getAllFolder);
 
 //GET specific folder by folderID
-router.get('/user/folder/:folderID', folderController.getFolderByID);
+router.get('/folder/:folderID', folderController.getFolderByID);
+
+//TODO: GET diary by in specific folder by folderID
+// router.get('/folder', diaryController.postDiary);
 
 //POST folder
-router.post('/user/folder', folderController.postFolder);
+router.post('/folder', folderController.postFolder);
 
 module.exports = router;
