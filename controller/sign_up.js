@@ -16,7 +16,9 @@ exports.sign_up=async(req, res,next) => {
                 isActivated: false,
             }); 
             const user = await userA.save();
-            res.status(201).json('成功註冊');
+            next();
+            //res.status(201).json('成功註冊');
+
         }
 
     }
@@ -24,5 +26,5 @@ exports.sign_up=async(req, res,next) => {
         console.log(error);
         res.status(500).json({msg:"err"});
     } 
-    next();
+
 }
