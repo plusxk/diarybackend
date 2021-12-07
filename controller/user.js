@@ -1,21 +1,18 @@
 const User = require('../model/userInitDB');
-const bodyParser = require('body-parser');
-const querystring = require('querystring');
-// const Diary = require('../model/diaryInitDB');
-// const Folder = require('../model/folderInitDB');
 
 exports.getUser = async (req, res) => {
-   User.find({folderName: 'myfolder'},function (err, docs) { 
-    if (err){ 
-        console.log(err); 
-    } 
-    else{ 
-        console.log("Result:", docs[0].toObject().folder); 
-    } 
-    
-    res.status(500).json(docs[0].toObject().folder);
-    //res.end(JSON.stringify(temp));
-});
+    try {
+        User.find({folderName: 'myfolder'},function(err,docs){
+            if(err)
+                console.log(err);
+            else
+                console.log("result:",docs[0].toObject().folder);
+            res.status(200).json(docs[0].toObject().folder);
+
+        });
+    } catch(err) {
+        res.status(404).json({ msg: 'No user found' });
+    }
 };
 
 exports.postUser = async (req, res) => {
@@ -36,13 +33,12 @@ exports.postUser = async (req, res) => {
         diary: [diaryA]
     };
     const userA = new User({
-        userID: '1',
+        userID: 'testUsername',
         email: 'genewang7@gmail.com',
         password: 'ssssss',
-        code: false,
+        code: '0000',
         isAdmin: false,
         isActivated: false,
-        accessKey: 'aieghio;df',
         folder: [folderA]
     });
 

@@ -31,7 +31,7 @@ exports.mail=async(req, res) => {
     });
     User.findOneAndUpdate(
       {email:email},
-      {$push:{code:code}},
+      {$set:{code:code}},
       (err,log) => {
         if(err)
           console.log('Error Message: ' + err );
