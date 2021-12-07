@@ -1,14 +1,6 @@
 const User = require('../model/userDBSchema');
 const bodyParser = require('body-parser');
 
-//取得Uncategorized底下所有日記
-exports.getAllDiary = (req, res) => {
-    User.find({userID: '1'}, (err, docs) => {
-        if (err)
-            console.log(err);
-        res.status(500).json(docs[0].toObject().folder[0]);
-    });
-};
 
 //取得一篇日記內容(依據diaryID)
 exports.getDiaryByID = (req, res) => {
@@ -22,7 +14,64 @@ exports.getDiaryByID = (req, res) => {
         });
         const diaries = folder.diary;
         const diary = diaries.find((item, index, array) => {
-            return item.diaryID = req.params.diaryID;
+            return item.diaryID === req.params.diaryID;
+        });
+        res.status(500).json({ diary });
+    });
+};
+
+//TODO: 取得一篇日記內容(依據title)
+exports.getDiaryByTitle = (req, res) => {
+    User.find({ userID: '1' }, (err, docs) => {
+        if (err)
+            console.log(err);
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === 'Uncategorized';
+        });
+        const diaries = folder.diary;
+        const diary = diaries.find((item, index, array) => {
+            return item.title.includes(req.params.title) === true;
+        });
+        res.status(500).json({ diary });
+    });
+};
+
+//TODO: 取得一篇日記內容(依據content)
+exports.getDiaryByContent = (req, res) => {
+    User.find({ userID: '1' }, (err, docs) => {
+        if (err)
+            console.log(err);
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === 'Uncategorized';
+        });
+        const diaries = folder.diary;
+        const diary = diaries.find((item, index, array) => {
+            return item.content.includes(req.params.content) === true;
+        });
+        res.status(500).json({ diary });
+    });
+};
+
+//TODO: 取得一篇日記內容(依據tags)
+exports.getDiaryByTags = (req, res) => {
+    User.find({ userID: '1' }, (err, docs) => {
+        if (err)
+            console.log(err);
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === 'Uncategorized';
+        });
+        const diaries = folder.diary;
+        const diary = diaries.find((item, index, array) => {
+            const tags = item.tag;
+            return tagsArray = tags.find((it, index, array) => {
+                return it.includes(req.params.tag) === true;
+            });
         });
         res.status(500).json({ diary });
     });
@@ -43,9 +92,8 @@ exports.postDiary = (req, res) => {
         isFavored: false    //req.body.isFavored
     };
 
-    const defaultFolderName = 'Uncategorized';
     User.updateOne(
-        { 'folder.folderName': defaultFolderName },
+        { 'folder.folderID': req.params.folderID },
         { $push: { 
             'folder.$.diary': diaryA 
         }},
