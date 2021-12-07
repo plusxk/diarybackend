@@ -1,6 +1,15 @@
 const User = require('../model/userDBSchema');
 const bodyParser = require('body-parser');
 
+Date.prototype.yyyymmdd = function() {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+  
+    return [this.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+           ].join('');
+};
 
 //取得一篇日記內容(依據diaryID)
 exports.getDiaryByID = (req, res) => {
@@ -20,7 +29,7 @@ exports.getDiaryByID = (req, res) => {
     });
 };
 
-//取得一篇日記內容(關鍵字搜尋)
+//取得關鍵字搜尋日記
 exports.getDiaryBySearch = (req, res) => {
     User.find({ userID: '1' }, (err, docs) => {
         if (err)
@@ -47,6 +56,25 @@ exports.getDiaryBySearch = (req, res) => {
         res.status(500).json({ diary });
     });
 }
+
+//TODO: 取得日曆日期日記
+exports.getDiaryByDate = (req, res) => {
+    User.find({ userID: '1' }, (err, docs) => {
+        if (err)
+            console.log(err);
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === 'Uncategorized';
+        });
+        const diaries = folder.diary;
+        const diary = diaries.filter((item, index, array) => {
+            console.log(item.date.yyyymmdd());
+            return item.date.yyyymmdd() === req.query.date; 
+        });
+        res.status(500).json({ diary });
+    });
+};
 
 //新增日記入指定資料夾
 exports.postDiary = (req, res) => {
