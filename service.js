@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const UserRoutes = require('./routes/userRoutes');
-const FolderRoutes = require('./routes/folderRoutes');
+const MailRoutes = require('./routes/mailRoutes');
 const DiaryRoutes = require('./routes/diaryRoutes');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
   
 app.use(UserRoutes);
- app.use(MailRoutes);
+app.use(MailRoutes);
 // app.use(DiaryRoutes);
   
 // app.get('/', (req, res) => {
