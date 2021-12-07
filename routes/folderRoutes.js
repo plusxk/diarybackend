@@ -12,4 +12,7 @@ router.get('/folder/:folderID', folderController.getFolderByID);
 //POST folder
 router.post('/folder', folderController.postFolder);
 
+//PUT specific folder by folderID
+router.put('/folder/:folderID', folderController.putFolder);
+
 module.exports = router;

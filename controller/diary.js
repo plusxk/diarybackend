@@ -91,7 +91,7 @@ exports.postDiary = (req, res) => {
     };
 
     User.updateOne(
-        { 'folder.folderID': req.params.folderID },
+        { 'userID': '1', 'folder.folderID': req.params.folderID },
         { $push: { 
             'folder.$.diary': diaryA 
         }},
@@ -103,5 +103,31 @@ exports.postDiary = (req, res) => {
                 res.status(500).json({ log })
         }
     );
+};
 
+exports.putDiaryByID = (req, res) => {
+    const diaryA = {
+        diaryID: '1',        //req.body.diaryID
+        title: 'MYDIARY',   //req.body.title
+        content: 'THISHOGA;rhrahrhsrhsrh',   //req.body.content
+        date: Date.now(),   //req.body.date
+        tag: ['tag', 'dsgag'],   //req.body.tag
+        filesURL: ['files'],    //req.body.filesURL
+        picURL: ['pic'],    //req.body.picURL
+        videoURL: ['videos'],   //req.body.videoURL
+        isFavored: true    //req.body.isFavored
+    };
+
+    User.updateOne(
+        { 'userID': '1', 'folder.folderID': req.params.folderID },
+        { $set: { 
+            'folder.$.diary': diaryA 
+        }},
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.status(500).json({ log })
+        }
+    );
 };

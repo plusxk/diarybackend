@@ -42,3 +42,19 @@ exports.postFolder = (req, res) => {
         }
     );
 };
+
+//修改資料夾名稱
+exports.putFolder = (req, res) => {
+    User.updateOne(
+        { 'userID': '1', 'folder.folderID': req.params.folderID },
+        { $set: { 
+            'folder.$.folderName': 'MYFOLDER'
+        }},
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.status(500).json({ log })
+        }
+    );
+};
