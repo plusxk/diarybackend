@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 //取得Uncategorized底下所有日記
 exports.getAllDiary = (req, res) => {
-    User.find({folderName : 'Uncategorized'}, (err, docs) => {
+    User.find({userID: '1'}, (err, docs) => {
         if (err)
             console.log(err);
         res.status(500).json(docs[0].toObject().folder[0]);
