@@ -12,6 +12,22 @@ Date.prototype.yyyymmdd = function() {
            ].join('');
 };
 
+const getAllDiaryByFolder = (folderID) => {
+    let folder;
+
+    User.find({userID: '1'}, (err, docs) => {
+        if (err)
+            console.log(err);
+
+        const folders = docs[0].toObject().folder;
+        folder = folders.find((item, index, array) => {
+            return item.folderID === folderID;
+        });
+    });
+
+    return folder.diary;
+}
+
 //取得一篇日記內容(依據diaryID)
 exports.getDiaryByID = (req, res) => {
     User.find({ userID: '1' }, (err, docs) => {
@@ -120,16 +136,60 @@ exports.putDiaryByID = (req, res) => {
         isFavored: true    //req.body.isFavored
     };
 
-    User.updateOne(
-        { 'userID': '1', 'folder.folderID': req.params.folderID },
-        { $set: { 
-            'folder.$.diary': diaryA 
-        }},
-        (err, log) => {
-            if (err)
-                console.log('Error Message: ' + err);
-            else
-                res.status(500).json({ log })
-        }
-    );
+    User.find({userID: '1'}, (err, docs) => {
+        if (err)
+            console.log(err);
+
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderID === req.params.folderID;
+        });
+
+        const diaryArray = folder.diary;
+        const index = diaryArray.findIndex(obj => obj.diaryID === req.params.diaryID); 
+        diaryArray[index] = diaryA;
+
+        User.updateOne(
+            { 'userID': '1', 'folder.folderID': req.params.folderID },
+            { $set: { 
+                'folder.$.diary': diaryArray 
+            }},
+            (err, log) => {
+                if (err)
+                    console.log('Error Message: ' + err);
+                else
+                    res.status(500).json({ log })
+            }
+        );
+    });
+};
+
+//刪除日記(依據ID)
+exports.deleteDiaryByID = (req, res) => {
+    User.find({userID: '1'}, (err, docs) => {
+        if (err)
+            console.log(err);
+
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderID === req.params.folderID;
+        });
+
+        const diaryArray = folder.diary;
+        const index = diaryArray.findIndex(obj => obj.diaryID === req.params.diaryID); 
+        diaryArray.splice(index, 1);
+        
+        User.updateOne(
+            { 'userID': '1', 'folder.folderID': req.params.folderID },
+            { $set: { 
+                'folder.$.diary': diaryArray 
+            }},
+            (err, log) => {
+                if (err)
+                    console.log('Error Message: ' + err);
+                else
+                    res.status(500).json({ log })
+            }
+        );
+    });
 };

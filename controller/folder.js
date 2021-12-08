@@ -58,3 +58,21 @@ exports.putFolder = (req, res) => {
         }
     );
 };
+
+//刪除資料夾
+exports.deleteFolder = (req, res) => {
+    User.updateOne(
+        { userID: '1' },
+        { $pull: { 
+            folder: {
+                folderID: req.params.folderID 
+            }
+        }},
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.status(500).json({ log })
+        }
+    );
+};
