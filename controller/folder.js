@@ -48,7 +48,7 @@ exports.putFolder = (req, res) => {
     User.updateOne(
         { 'userID': '1', 'folder.folderID': req.params.folderID },
         { $set: { 
-            'folder.$.folderName': 'MYFOLDER'
+            'folder.$.folderName': 'MYFOLDER'       //req.body.folderName
         }},
         (err, log) => {
             if (err)

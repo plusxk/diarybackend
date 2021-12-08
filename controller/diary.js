@@ -1,5 +1,4 @@
 const User = require('../model/userDBSchema');
-const bodyParser = require('body-parser');
 
 //日期轉字串
 Date.prototype.yyyymmdd = function() {
@@ -11,22 +10,6 @@ Date.prototype.yyyymmdd = function() {
             (dd>9 ? '' : '0') + dd
            ].join('');
 };
-
-const getAllDiaryByFolder = (folderID) => {
-    let folder;
-
-    User.find({userID: '1'}, (err, docs) => {
-        if (err)
-            console.log(err);
-
-        const folders = docs[0].toObject().folder;
-        folder = folders.find((item, index, array) => {
-            return item.folderID === folderID;
-        });
-    });
-
-    return folder.diary;
-}
 
 //取得一篇日記內容(依據diaryID)
 exports.getDiaryByID = (req, res) => {
