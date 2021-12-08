@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const User = require('./model/userDBSchema');
 const UserRoutes = require('./routes/userRoutes');
 const FolderRoutes = require('./routes/folderRoutes');
 const DiaryRoutes = require('./routes/diaryRoutes');
@@ -12,12 +9,6 @@ app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
 
 const MONGODB_URI = 'mongodb://mongo:27017/diarydb';
-
-//TODO:
-// const store = new MongoDBStore({
-//   uri: MONGODB_URI,
-//   collection: 'sessions'
-// });
 
 mongoose
   .connect(
@@ -28,19 +19,6 @@ mongoose
   .catch(err => console.log(err));
 
 app.use(bodyParser.json());
-
-// app.use(session( {
-//   secret: 'my Secret', 
-//   resave: false, 
-//   saveUninitialized: false,
-//   store: store
-// }));
-
-// app.use(async (req, res, next) => {
-//   const user = await User.find(req.session.user._id);
-//   req.user = user;
-//   next();
-// });
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

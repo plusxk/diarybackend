@@ -36,7 +36,7 @@ exports.getDiaryByID = (req, res) => {
         
         const folders = docs[0].toObject().folder;
         const folder = folders.find((item, index, array) => {
-            return item.folderName === 'Uncategorized';
+            return item.folderID === req.params.folderID;
         });
         const diaries = folder.diary;
         const diary = diaries.find((item, index, array) => {
@@ -52,25 +52,28 @@ exports.getDiaryBySearch = (req, res) => {
         if (err)
             console.log(err);
         
+        let diaryArray = new Array();
         const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === 'Uncategorized';
-        });
-        const diaries = folder.diary;
         const searchBy = req.query;
-        const diary = diaries.filter((item, index, array) => {
-            if (searchBy.condition === 'title')
-                return item.title.toLowerCase().includes(searchBy.search_query) === true; 
-            else if (searchBy.condition === 'content')
-                return item.content.toLowerCase().includes(searchBy.search_query) === true; 
-            else if (searchBy.condition === 'tags') {
-                const tags = item.tag;
-                return tags.find((it, index, array) => {
-                    return it.toLowerCase().includes(searchBy.search_query) === true;
-                });
-            }
+        
+        folders.forEach(folder => {
+            const foundDiary = folder.diary.filter((item, index, array) => {
+                if (searchBy.condition === 'title')
+                    return item.title.toLowerCase().includes(searchBy.search_query) === true; 
+                else if (searchBy.condition === 'content')
+                    return item.content.toLowerCase().includes(searchBy.search_query) === true; 
+                else if (searchBy.condition === 'tags') {
+                    const tags = item.tag;
+                    return tags.find((it, index, array) => {
+                       return it.toLowerCase().includes(searchBy.search_query) === true;
+                    });
+                }
+            });
+            
+            if (foundDiary.length > 0)
+                diaryArray.push(foundDiary);
         });
-        res.status(500).json({ diary });
+        res.status(500).json({ diaryArray });
     });
 }
 
@@ -80,16 +83,17 @@ exports.getDiaryByDate = (req, res) => {
         if (err)
             console.log(err);
         
+        let diaryArray = new Array();
         const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === 'Uncategorized';
+        folders.forEach(folder => {
+            const foundDiary = folder.diary.filter((item, index, array) => {
+                return item.date.yyyymmdd() === req.query.date;
+            });
+
+            if (foundDiary.length > 0)
+                diaryArray.push(foundDiary);
         });
-        const diaries = folder.diary;
-        const diary = diaries.filter((item, index, array) => {
-            console.log(item.date.yyyymmdd());
-            return item.date.yyyymmdd() === req.query.date; 
-        });
-        res.status(500).json({ diary });
+        res.status(500).json({ diaryArray });
     });
 };
 
