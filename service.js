@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 app.use(UserRoutes);
 app.use(FolderRoutes);
 app.use(DiaryRoutes);
-  
+
 app.get('/', (req, res) => {
   res.send('Hello World');
 });

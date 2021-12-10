@@ -13,7 +13,7 @@ Date.prototype.yyyymmdd = function() {
 
 //取得一篇日記內容(依據diaryID)
 exports.getDiaryByID = (req, res) => {
-    User.find({ userID: '1' }, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
         
@@ -31,14 +31,14 @@ exports.getDiaryByID = (req, res) => {
 
 //取得關鍵字搜尋日記
 exports.getDiaryBySearch = (req, res) => {
-    User.find({ userID: '1' }, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
         
         let diaryArray = new Array();
         const folders = docs[0].toObject().folder;
         const searchBy = req.query;
-        
+
         folders.forEach(folder => {
             const foundDiary = folder.diary.filter((item, index, array) => {
                 if (searchBy.condition === 'title')
@@ -62,7 +62,7 @@ exports.getDiaryBySearch = (req, res) => {
 
 //取得日曆日期日記
 exports.getDiaryByDate = (req, res) => {
-    User.find({ userID: '1' }, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
         
@@ -95,7 +95,7 @@ exports.postDiary = (req, res) => {
     };
 
     User.updateOne(
-        { 'userID': '1', 'folder.folderID': req.params.folderID },
+        { 'userID': req.params.userID, 'folder.folderID': req.params.folderID },
         { $push: { 
             'folder.$.diary': diaryA 
         }},
@@ -104,7 +104,7 @@ exports.postDiary = (req, res) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.status(500).json({ log })
+                res.status(500).json({ log });
         }
     );
 };
@@ -123,7 +123,7 @@ exports.putDiaryByID = (req, res) => {
         isFavored: true    //req.body.isFavored
     };
 
-    User.find({userID: '1'}, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
 
@@ -145,7 +145,7 @@ exports.putDiaryByID = (req, res) => {
                 if (err)
                     console.log('Error Message: ' + err);
                 else
-                    res.status(500).json({ log })
+                    res.status(500).json({ log });
             }
         );
     });
@@ -153,7 +153,7 @@ exports.putDiaryByID = (req, res) => {
 
 //刪除日記(依據ID)
 exports.deleteDiaryByID = (req, res) => {
-    User.find({userID: '1'}, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
 
@@ -175,7 +175,7 @@ exports.deleteDiaryByID = (req, res) => {
                 if (err)
                     console.log('Error Message: ' + err);
                 else
-                    res.status(500).json({ log })
+                    res.status(500).json({ log });
             }
         );
     });

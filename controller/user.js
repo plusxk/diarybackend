@@ -9,6 +9,15 @@ exports.getUser = async (req, res) => {
     }
 };
 
+exports.getUserByID = async (req, res) => {
+    try {
+        const user = await User.findOne({ userID: req.params.userID });
+        res.status(500).json({ user })
+    } catch(err) {
+        res.status(404).json({ msg: 'No user found' });
+    }
+};
+
 exports.postUser = async (req, res) => {
     const userA = new User({
         userID: '1',

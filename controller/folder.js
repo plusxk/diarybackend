@@ -2,7 +2,7 @@ const User = require('../model/userDBSchema');
 
 //取得所有資料夾
 exports.getAllFolder = (req, res) => {
-    User.find({userID: '1'}, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
         res.status(500).json(docs[0].toObject().folder);
@@ -11,7 +11,7 @@ exports.getAllFolder = (req, res) => {
 
 //取得資料夾(依據folderID)
 exports.getFolderByID = (req, res) => {
-    User.find({userID: '1'}, (err, docs) => {
+    User.find({ userID: req.params.userID }, (err, docs) => {
         if (err)
             console.log(err);
 
@@ -32,7 +32,7 @@ exports.postFolder = (req, res) => {
         diary: []
     };
     User.findOneAndUpdate(
-        { userID: '1' },
+        { userID: req.params.userID },
         { $push: { folder: folderA }},
         (err, log) => {
             if (err)
@@ -46,7 +46,7 @@ exports.postFolder = (req, res) => {
 //修改資料夾名稱
 exports.putFolder = (req, res) => {
     User.updateOne(
-        { 'userID': '1', 'folder.folderID': req.params.folderID },
+        { 'userID': req.params.userID, 'folder.folderID': req.params.folderID },
         { $set: { 
             'folder.$.folderName': 'MYFOLDER'       //req.body.folderName
         }},
@@ -62,7 +62,7 @@ exports.putFolder = (req, res) => {
 //刪除資料夾
 exports.deleteFolder = (req, res) => {
     User.updateOne(
-        { userID: '1' },
+        { userID: req.params.userID },
         { $pull: { 
             folder: {
                 folderID: req.params.folderID 
