@@ -4,11 +4,11 @@ const User = require('../model/userDBSchema');
 Date.prototype.yyyymmdd = function() {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
     var dd = this.getDate();
-  
+
     return [this.getFullYear(),
             (mm>9 ? '' : '0') + mm,
             (dd>9 ? '' : '0') + dd
-           ].join('');
+        ].join('');
 };
 
 //取得一篇日記內容(依據diaryID)
@@ -48,7 +48,7 @@ exports.getDiaryBySearch = (req, res) => {
                 else if (searchBy.condition === 'tags') {
                     const tags = item.tag;
                     return tags.find((it, index, array) => {
-                       return it.toLowerCase().includes(searchBy.search_query) === true;
+                        return it.toLowerCase().includes(searchBy.search_query) === true;
                     });
                 }
             });

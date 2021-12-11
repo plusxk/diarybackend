@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const UserRoutes = require('./routes/userRoutes');
 const FolderRoutes = require('./routes/folderRoutes');
 const DiaryRoutes = require('./routes/diaryRoutes');
+const VerifyRoutes = require('./routes/verifyRoutes');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 app.use(UserRoutes);
 app.use(FolderRoutes);
 app.use(DiaryRoutes);
+app.use(VerifyRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World');
