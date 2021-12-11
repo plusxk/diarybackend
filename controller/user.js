@@ -1,42 +1,31 @@
-const User = require('../model/userInitDB');
-// const Diary = require('../model/diaryInitDB');
-// const Folder = require('../model/folderInitDB');
+const User = require('../model/userDBSchema');
 
 exports.getUser = async (req, res) => {
     try {
-        const users = await User.find();
-        res.status(500).json({ users })
+        const user = await User.find();
+        res.status(500).json({ user })
+    } catch(err) {
+        res.status(404).json({ msg: 'No user found' });
+    }
+};
+
+exports.getUserByID = async (req, res) => {
+    try {
+        const user = await User.findOne({ userID: req.params.userID });
+        res.status(500).json({ user })
     } catch(err) {
         res.status(404).json({ msg: 'No user found' });
     }
 };
 
 exports.postUser = async (req, res) => {
-    const diaryA = {
-        diaryID: '1',
-        title: 'mydiary',
-        content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',
-        date: Date.now(),
-        tag: ['tag'],
-        filesURL: ['files'],
-        picURL: ['pic'],
-        videoURL: ['videos'],
-        isFavored: false
-    };
-    const folderA = {
-        folderID: '1',
-        folderName: 'myfolder',
-        diary: [diaryA]
-    };
     const userA = new User({
         userID: '1',
         email: 'genewang7@gmail.com',
         password: 'ssssss',
-        code: false,
+        code: 'fhfjfj',
         isAdmin: false,
-        isActivated: false,
-        accessKey: 'aieghio;df',
-        folder: [folderA]
+        isActivated: false
     });
 
     const user = await userA.save();

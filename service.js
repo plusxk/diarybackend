@@ -8,9 +8,11 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
 
+const MONGODB_URI = 'mongodb://mongo:27017/diarydb';
+
 mongoose
   .connect(
-    'mongodb://mongo:27017/diarydb',
+    MONGODB_URI,
     { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB Connected'))
@@ -26,12 +28,12 @@ app.use((req, res, next) => {
 });
   
 app.use(UserRoutes);
-// app.use(FolderRoutes);
-// app.use(DiaryRoutes);
-  
-// app.get('/', (req, res) => {
-//   res.send('Hello World');
-// });
+app.use(FolderRoutes);
+app.use(DiaryRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
 
 
 app.listen(PORT, () => console.log('Server Running...'));
