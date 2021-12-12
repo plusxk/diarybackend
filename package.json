@@ -4,16 +4,10 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-<<<<<<< HEAD
-    "mocha": "^9.1.3",
-    "mongo": "^0.1.0",
-    "mongoose": "^6.0.14",
-=======
     "jsonwebtoken": "^8.5.1",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
     "nodemailer": "^6.7.2",
->>>>>>> main
     "nodemon": "^2.0.15",
     "should": "^13.2.3",
     "supertest": "^6.1.6"
@@ -21,19 +15,9 @@
   "name": "diarydb",
   "version": "1.0.0",
   "main": "service.js",
-<<<<<<< HEAD
-  "devDependencies": {
-    "chai": "^4.3.4",
-    "mocha": "^9.1.3"
-  },
-  "scripts": {
-    "start": "node service.js",
-    "test": "mocha --timeout 5000 --exit"
-=======
   "scripts": {
     "start": "cross-env NODE_ENV=development node service.js",
     "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit"
->>>>>>> main
   },
   "keywords": [],
   "author": "",
