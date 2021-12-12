@@ -41,7 +41,7 @@ const DiarySchema = new Schema({
 const FolderSchema = new Schema({
     folderID: {
         type: String,
-        required: true,
+        required: true
     },
     folderName: {
         type: String,

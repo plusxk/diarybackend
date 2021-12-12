@@ -34,7 +34,7 @@ describe("test sign up", () => {
         this.timeout("5000");
 
         request
-        .get('/user/00857028@email.ntou.edu.tw')
+        .get('/user/123456@google.com')
         .expect(500)
         .end(function(err, res){
             userCode = res.body.code;
@@ -46,7 +46,7 @@ describe("test sign up", () => {
     it("should have status 201", function(done) {
         this.timeout("5000");
         let user = {
-            email: "00857028@email.ntou.edu.tw",
+            email: "123456@google.com",
             code: userCode
         }
         request
@@ -68,7 +68,7 @@ describe("test delete user", () => {
     it("should have status 200", function(done) {
         this.timeout("5000");
         request
-        .delete('/user/00857028@email.ntou.edu.tw')
+        .delete('/user/123456@google.com')
         .expect(200)
         .end(function(err, res){
             should.not.exist(err);
