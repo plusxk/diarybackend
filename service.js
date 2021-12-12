@@ -10,13 +10,13 @@ const PORT = process.env.PORT || 3000;
 
 const MONGODB_URI = 'mongodb://mongo:27017/diarydb';
 
-mongoose
-  .connect(
-    MONGODB_URI,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// mongoose
+//   .connect(
+//     MONGODB_URI,
+//     { useNewUrlParser: true }
+//   )
+//   .then(() => console.log('MongoDB Connected'))
+//   .catch(err => console.log(err));
 
 app.use(bodyParser.json());
 
@@ -31,9 +31,11 @@ app.use(UserRoutes);
 app.use(FolderRoutes);
 app.use(DiaryRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World');
+// });
 
 
 app.listen(PORT, () => console.log('Server Running...'));
+
+module.exports = app;
