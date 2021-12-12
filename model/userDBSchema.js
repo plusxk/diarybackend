@@ -42,7 +42,6 @@ const FolderSchema = new Schema({
     folderID: {
         type: String,
         required: true,
-        unique: true
     },
     folderName: {
         type: String,
