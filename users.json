@@ -1,0 +1,39 @@
+[{
+  "_id": "61b4b047173d5ff6d25ff30e",
+  "email": "genewang7@gmail.com",
+  "password": "$2a$10$scELc/mX2ti22MzW9zemxOGGFZdH7NSGv/sl33TrQN4vED8B1BRTy",
+  "code": false,
+  "isAdmin": false,
+  "isActivated": false,
+  "accessKey": "aieghio;df",
+  "folder": [
+    {
+      "folderID": "1",
+      "folderName": "myfolder",
+      "diary": [
+        {
+          "diaryID": "1",
+          "title": "mydiary",
+          "content": "THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH",
+          "date": "2021-12-11T14:05:59.979Z",
+          "tag": [
+            "tag"
+          ],
+          "filesURL": [
+            "files"
+          ],
+          "picURL": [
+            "pic"
+          ],
+          "videoURL": [
+            "videos"
+          ],
+          "isFavored": false,
+          "_id": "61b4b047173d5ff6d25ff310"
+        }
+      ],
+      "_id": "61b4b047173d5ff6d25ff30f"
+    }
+  ],
+  "__v": 0
+}]

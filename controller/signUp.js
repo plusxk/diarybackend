@@ -29,7 +29,6 @@ exports.signUp=async(req, res, next) => {
         }
         else{
             const userA = new User({
-                userID: '30',
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 10),
                 code: '0',

@@ -10,9 +10,9 @@ exports.getUser = async (req, res) => {
     }
 };
 
-exports.getUserByID = async (req, res) => {
+exports.getUserByEmail = async (req, res) => {
     try {
-        const user = await User.findOne({ userID: req.params.userID });
+        const user = await User.findOne({ email: req.params.email });
         res.status(500).json( user )
     } catch(err) {
         res.status(404).json({ msg: 'No user found' });
@@ -21,7 +21,6 @@ exports.getUserByID = async (req, res) => {
 
 exports.postUser = async (req, res) => {
     const userA = new User({
-        userID: '1',
         email: 'genewang7@gmail.com',
         password: bcrypt.hashSync('ssssss', 10),
         code: 'fhfjfj',
@@ -34,7 +33,7 @@ exports.postUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-    User.findOneAndDelete({userID: req.params.userID}, (err, result) => {
+    User.findOneAndDelete({email: req.params.email}, (err, result) => {
         if (err){
             res.status(500).json({msg: err});
         } 

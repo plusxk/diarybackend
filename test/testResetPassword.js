@@ -8,7 +8,7 @@ describe("test reset password ssssss => 123456",  () => {
     it("should have status 200", function(done) {
         this.timeout("5000");
         let user = {
-            userID: "1",
+            email: "genewang7@gmail.com",
             password: "ssssss",
             newPassword: "123456"
         }
@@ -30,7 +30,7 @@ describe("test reset password 123456 => ssssss",  () => {
     it("should have status 200", function(done) {
         this.timeout("5000");
         let user = {
-            userID: "1",
+            email: "genewang7@gmail.com",
             password: "123456",
             newPassword: "ssssss"
         }

@@ -9,7 +9,7 @@ describe("test random password",  () => {
     it("should have status 200", function(done) {
         this.timeout("5000");
         let user = {
-            userID: "1",
+            email: "genewang7@gmail.com",
         }
         request
         .post('/randomPassword')
@@ -29,7 +29,7 @@ describe("test reset password => ssssss",  () => {
     it("should have status 200", function(done) {
         this.timeout("5000");
         let user = {
-            userID: "1",
+            email: "genewang7@gmail.com",
             newPassword: "ssssss"
         }
         request

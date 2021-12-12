@@ -2,10 +2,10 @@ const User = require('../model/userDBSchema');
 const bcrypt = require('bcryptjs');
 
 exports.checkUser = async (req, res, next) => {
-    let id = req.body.userID;
+    let email = req.body.email;
     let oldPassword = req.body.password;
 
-    User.findOne({userID: id}, function(err, user) {
+    User.findOne({email: email}, function(err, user) {
         if(err){
             res.status(500).json({
                 msg: "error"
@@ -30,10 +30,10 @@ exports.checkUser = async (req, res, next) => {
 }
 
 exports.resetPassword = async (req, res) =>  {
-    let id = req.body.userID;
+    let email = req.body.email;
     let newPassword = req.body.newPassword;
 
-    const filter = { userID: id};
+    const filter = { email: email};
     const update = { password: bcrypt.hashSync(newPassword, 10)};
     User.updateOne(filter, update, (err, user) => {
         if(err){
@@ -53,7 +53,7 @@ exports.resetPassword = async (req, res) =>  {
 exports.randomPassword = async (req, res, next) => {
 
     let randPassword = Math.random().toString(36).substr(3);
-    const filter = { userID: req.body.userID};
+    const filter = { email: req.body.email};
     const update = { password: bcrypt.hashSync(randPassword, 10)};
     User.findOneAndUpdate(filter, update, (err, user) => {
         if(err){
