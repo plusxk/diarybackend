@@ -3,8 +3,8 @@ const diaryController = require('../controller/diary');
 
 const router = express.Router();
 
-//GET specific diary by diaryID
-router.get('/user/:email/:folderID/:diaryID', diaryController.getDiaryByID);
+//GET specific diary by title
+router.get('/user/:email/:folderName/:title', diaryController.getDiaryByID);
 
 /*關鍵字查詢*/
 
@@ -13,16 +13,16 @@ router.get('/user/:email/:folderID/:diaryID', diaryController.getDiaryByID);
 //GET specific diaries by tags      localhost/search/1?condition=tags&search_query=tag
 router.get('/search/:email', diaryController.getDiaryBySearch);
 
-//GET diaries by date               localhos1/date/1?date=20211207
+//GET diaries by date               localhost/00857028@email.ntou.edu.tw/date/1?date=20211207
 router.get('/date/:email', diaryController.getDiaryByDate);
 
-//POST diary in specific folder by folderID
-router.post('/user/:email/:folderID', diaryController.postDiary);
+//POST diary in specific folder by folderName
+router.post('/user/:email/:folderName', diaryController.postDiary);
 
-//PUT specific diary by diaryID in specific folder by folderID
-router.put('/user/:email/:folderID/:diaryID', diaryController.putDiaryByID);
+//PUT specific diary by title in specific folder by folderName
+router.put('/user/:email/:folderName/:title', diaryController.putDiaryByID);
 
-//DELETE specific diary by diaryID in specific folder by folderID
-router.delete('/user/:email/:folderID/:diaryID', diaryController.deleteDiaryByID)
+//DELETE specific diary by title in specific folder by folderName
+router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByID)
 
 module.exports = router;
