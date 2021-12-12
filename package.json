@@ -8,16 +8,22 @@
     "jsonwebtoken": "^8.5.1",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "should": "^13.2.3",
+    "supertest": "^6.1.6"
   },
   "name": "diarydb",
   "version": "1.0.0",
   "main": "service.js",
   "scripts": {
-    "start": "node service.js"
+    "start": "cross-env NODE_ENV=development node service.js",
+    "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }

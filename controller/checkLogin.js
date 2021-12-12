@@ -1,16 +1,18 @@
 var jwt = require('jsonwebtoken');
+const config = require('../config');
 exports.verify = async (req, res, next) => {
     let token = req.headers.authorization;
-    jwt.verify(token, 'my_diary_project', function(err, decode){
+
+    jwt.verify(token, config.authenticateJWT , function(err, decode){
         if(err){
-            res.json({msg: '當前用戶未登入'});
+            res.status(500).json({msg: '當前用戶未登入'});
         }
         else{
-            res.json({
+            res.status(200).json({
                 userID: decode.userID,
                 msg: '已登入'
             });
-            token: jwt.sign({userID:user.userID}, 'abcd', {
+            token: jwt.sign({userID:user.userID}, config.key , {
                 expiresIn: "60s"
             });
         }

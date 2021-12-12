@@ -1,44 +1,32 @@
-const User = require('../model/userDBSchema');
+const User = require('../model/userInitDB');
+const mongoose = require('mongoose');
 
 exports.checkUser = async (req, res, next) => {
     let id = req.body.userID;
     let oldPassword = req.body.password;
-    let newPassword = req.body.newPassword;
-    let retypePassword = req.body.retypePassword;
-    if(newPassword == retypePassword){
-        User.findOne({userID: id}, (err, user) => {
-            if(err){
-                console.log("Error message:", err);
-                res.status(500).json({
-                    msg: "error"
-                });
-            }
-            else if(user){
-                if(oldPassword == user.password){
-                    console.log("password is correct");
-                    next();
-                }
-                else{
-                    console.log("Please enter the correct password");
-                    res.status(500).json({
-                        msg: "Please enter the correct password"
-                    });
-                }
+
+    User.findOne({userID: id}, function(err, user) {
+        if(err){
+            res.status(500).json({
+                msg: "error"
+            });
+        }
+        else if(user){
+            if(oldPassword == user.password){
+                next();
             }
             else{
-                console.log("User is not found");
                 res.status(500).json({
-                    msg: "User is not found"
+                    msg: "Please enter the correct password"
                 });
             }
-        });
-    }
-    else{
-        console.log("Please retype the correct password");
+        }
+        else{
             res.status(500).json({
-            msg: "Please retype the correct password"
-        });
-    }
+                msg: "User is not found"
+            });
+        }
+    });
 }
 
 exports.resetPassword = async (req, res) =>  {
