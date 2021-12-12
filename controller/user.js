@@ -13,7 +13,7 @@ exports.getUser = async (req, res) => {
 exports.getUserByID = async (req, res) => {
     try {
         const user = await User.findOne({ userID: req.params.userID });
-        res.status(500).json({ user })
+        res.status(500).json( user )
     } catch(err) {
         res.status(404).json({ msg: 'No user found' });
     }
@@ -31,4 +31,16 @@ exports.postUser = async (req, res) => {
 
     const user = await userA.save();
     res.status(201).json({ user });
+};
+
+exports.deleteUser = async (req, res) => {
+    User.findOneAndDelete({userID: req.params.userID}, (err, result) => {
+        if (err){
+            res.status(500).json({msg: err});
+        } 
+        else{
+            console.log('got deleted');
+            res.status(200).json({msg: "got deleted"});
+        }
+    })
 };

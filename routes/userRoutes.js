@@ -12,4 +12,7 @@ router.get('/user/:userID', userController.getUserByID);
 //POST an user
 router.post('/user', userController.postUser);
 
+//DELETE an user
+router.delete('/user/:userID', userController.deleteUser);
+
 module.exports = router;

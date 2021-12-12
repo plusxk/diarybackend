@@ -22,7 +22,7 @@ exports.checkUser = async (req, res, next) => {
             }
         }
         else{
-            res.status(500).json({
+            res.status(404).json({
                 msg: "User is not found"
             });
         }

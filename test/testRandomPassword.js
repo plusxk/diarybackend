@@ -1,4 +1,3 @@
-const User = require('../model/userDBSchema');
 const supertest = require('supertest');
 var should = require('should');
 var app = require('../service');
