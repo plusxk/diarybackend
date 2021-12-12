@@ -1,5 +1,5 @@
 const User = require('../model/userDBSchema');
-const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 exports.checkUser = async (req, res, next) => {
     let id = req.body.userID;
@@ -12,7 +12,7 @@ exports.checkUser = async (req, res, next) => {
             });
         }
         else if(user){
-            if(oldPassword == user.password){
+            if(bcrypt.compareSync(oldPassword, user.password)){
                 next();
             }
             else{
@@ -34,7 +34,7 @@ exports.resetPassword = async (req, res) =>  {
     let newPassword = req.body.newPassword;
 
     const filter = { userID: id};
-    const update = { password: newPassword};
+    const update = { password: bcrypt.hashSync(newPassword, 10)};
     User.updateOne(filter, update, (err, user) => {
         if(err){
             res.status(500).json({

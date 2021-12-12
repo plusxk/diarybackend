@@ -1,6 +1,6 @@
 const User = require('../model/userDBSchema');
 const jwt = require("jsonwebtoken");
-const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const config = require('../config');
 
 exports.login = async (req, res) => {
@@ -15,7 +15,7 @@ exports.login = async (req, res) => {
                 });
             }
             else if(user){
-                if(user.password == password){
+                if(bcrypt.compareSync(password, user.password)){
                     res.status(200).json({
                         token: jwt.sign({userID:user.userID}, config.authenticateJWT, {
                             expiresIn: "60s"

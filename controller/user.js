@@ -1,4 +1,5 @@
 const User = require('../model/userDBSchema');
+const bcrypt = require('bcryptjs');
 
 exports.getUser = async (req, res) => {
     try {
@@ -22,7 +23,7 @@ exports.postUser = async (req, res) => {
     const userA = new User({
         userID: '1',
         email: 'genewang7@gmail.com',
-        password: 'ssssss',
+        password: bcrypt.hashSync('ssssss', 10),
         code: 'fhfjfj',
         isAdmin: false,
         isActivated: false
