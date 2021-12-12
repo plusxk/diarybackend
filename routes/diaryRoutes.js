@@ -4,7 +4,7 @@ const diaryController = require('../controller/diary');
 const router = express.Router();
 
 //GET specific diary by title
-router.get('/user/:email/:folderName/:title', diaryController.getDiaryByID);
+router.get('/user/:email/:folderName/:title', diaryController.getDiaryByTitle);
 
 /*關鍵字查詢*/
 
@@ -20,9 +20,9 @@ router.get('/date/:email', diaryController.getDiaryByDate);
 router.post('/user/:email/:folderName', diaryController.postDiary);
 
 //PUT specific diary by title in specific folder by folderName
-router.put('/user/:email/:folderName/:title', diaryController.putDiaryByID);
+router.put('/user/:email/:folderName/:title', diaryController.putDiaryByTitle);
 
 //DELETE specific diary by title in specific folder by folderName
-router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByID)
+router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByTitle)
 
 module.exports = router;

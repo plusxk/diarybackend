@@ -109,7 +109,7 @@ exports.postDiary = (req, res) => {
 };
 
 //修改日記內容
-exports.putDiaryByID = (req, res) => {
+exports.putDiaryByTitle = (req, res) => {
     const diaryA = {
         title: 'MYDIARY',   //req.body.title
         content: 'THISHOGA;rhrahrhsrhsrh',   //req.body.content

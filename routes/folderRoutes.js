@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/user/:email/folder', folderController.getAllFolder);
 
 //GET specific folder by folderName
-router.get('/user/:email/:folderName', folderController.getFolderByID);
+router.get('/user/:email/:folderName', folderController.getFolderByName);
 
 //POST folder
 router.post('/user/:email/folder', folderController.postFolder);

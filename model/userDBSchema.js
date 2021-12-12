@@ -71,12 +71,10 @@ const UserSchema = new Schema({
         required: true,
         default: [
             {
-                folderID: '1',
                 folderName: 'Uncategorized',
                 diary: []
             },
             {
-                folderID: '2',
                 folderName: 'Favorite',
                 diary: []
             }
