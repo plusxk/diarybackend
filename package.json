@@ -8,6 +8,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
+    "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
     "should": "^13.2.3",
     "supertest": "^6.1.6"

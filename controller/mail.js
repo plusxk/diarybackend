@@ -1,8 +1,12 @@
-const User = require('../model/userInitDB');
+const User = require('../model/userDBSchema');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+
 exports.mail=async(req, res) => { 
   try{
+    mailText = res.locals.text;
+    mailSubject = res.locals.subject;
+    message = res.locals.message;
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -10,34 +14,26 @@ exports.mail=async(req, res) => {
         pass: 'a147896325'
       }
     });
-    let email=req.query.email;
-    console.log('email:' + email);
-    let code0=Math.floor(Math.random() * 10);
-    let code1=Math.floor(Math.random() * 10);
-    let code2=Math.floor(Math.random() * 10);
-    let code3=Math.floor(Math.random() * 10);
-    let code=code0.toString()+code1.toString()+code2.toString()+code3.toString();
-    console.log('code:'+code);
+    let email=req.body.email;
+    /*console.log('email:' + email);
+
+    console.log('code:'+code);*/
     let mailOptions = {
       from: '00857030@email.ntou.edu.tw',
       to:email,
-      subject: 'Sending Verify Code!',
-      text:code
+      subject: mailSubject,
+      text: mailText
     };
     transporter.sendMail(mailOptions,function(err) {
       if (err) {
         console.log('Unable to send email: ' + err);
+        res.status(201).send('Unable to send email: ' + err);
+      }
+      else{
+        res.status(201).send(message);
       }
     });
-    User.findOneAndUpdate(
-      {email:email},
-      {$set:{code:code}},
-      (err,log) => {
-        if(err)
-          console.log('Error Message: ' + err );
-      }
-    );
-    res.status(201).send('Verify Code was sending to the mail.');
+    
   }
   catch (error){
         console.log(error);

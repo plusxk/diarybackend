@@ -1,4 +1,4 @@
-const User = require('../model/userInitDB');
+const User = require('../model/userDBSchema');
 const mongoose = require('mongoose');
 
 exports.checkUser = async (req, res, next) => {
@@ -48,4 +48,22 @@ exports.resetPassword = async (req, res) =>  {
         }
     });
 
+}
+
+exports.randomPassword = async (req, res, next) => {
+
+    const filter = { userID: id};
+    const update = { password: bcrypt.hashSync(req.body.password, 10)};
+    User.updateOne(filter, update, (err, user) => {
+        if(err){
+            res.status(500).json({
+                msg: "Something wrong when updating data!"
+            })
+        }
+        else{
+            res.status(200).json({
+                msg: "Reset Password successfully"
+            })
+        }
+    });
 }

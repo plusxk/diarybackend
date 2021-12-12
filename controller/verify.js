@@ -1,4 +1,4 @@
-const User = require('../model/userInitDB');
+const User = require('../model/userDBSchema');
 const querystring = require('querystring');
 exports.verify=async(req, res) => { 
     //verify
@@ -15,14 +15,27 @@ exports.verify=async(req, res) => {
     //     res.status(404).json({ msg: 'No user found' });
     // }
     try{
-        User.find({email: req.query.email},function (err, docs) { 
-    		if (err){ 
+        User.find({email: req.body.email},function (err, docs) { 
+    	    if (err){ 
         		console.log(err); 
     		} 
     		else{ 
                 console.log('code:' ,docs[0].code);
-        		if(req.query.code==docs[0].code)
-        			res.status(201).json('Code correct'); 
+        		if(req.body.code==docs[0].code){
+                    User.findOneAndUpdate(
+                        {email:req.body.email},
+                        {$set:{isActivated:true}},
+                        (err,log) => {
+                            if(err){
+                                console.log('Error Message: ' + err );
+                                res.status(201).send('Error Message: ' + err ); 
+                            }
+                            else{
+                                res.status(201).json('Activate successfully!'); 
+                            }
+                        }
+                    );
+                }
                 else
                     res.status(500).json('Code incorrect'); 
             

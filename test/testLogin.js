@@ -30,7 +30,7 @@ describe("test verify",  () => {
 
     it("should have status 200", function(done) {
         request
-        .post('/verify')
+        .post('/checkLogin')
         .set('Content-Type', 'application/json')
         .set('authorization', token)
         .expect(200) // status must be 200
