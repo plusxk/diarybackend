@@ -52,18 +52,21 @@ exports.resetPassword = async (req, res) =>  {
 
 exports.randomPassword = async (req, res, next) => {
 
-    const filter = { userID: id};
-    const update = { password: bcrypt.hashSync(req.body.password, 10)};
-    User.updateOne(filter, update, (err, user) => {
+    let randPassword = Math.random().toString(36).substr(3);
+    const filter = { userID: req.body.userID};
+    const update = { password: bcrypt.hashSync(randPassword, 10)};
+    User.findOneAndUpdate(filter, update, (err, user) => {
         if(err){
             res.status(500).json({
                 msg: "Something wrong when updating data!"
             })
         }
         else{
-            res.status(200).json({
-                msg: "Reset Password successfully"
-            })
+            res.locals.email = user.email;
+            res.locals.message = "New password was sending to the mail."
+            res.locals.text = randPassword;
+            res.locals.subject = 'Sending Verify Code!';
+            next();
         }
     });
 }

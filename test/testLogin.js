@@ -8,7 +8,7 @@ describe("test login",  () => {
 
     it("should have status 200", function(done) {
         let user = {
-            userID: "testUsername",
+            userID: "1",
             password: "ssssss"
         }
         request

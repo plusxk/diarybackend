@@ -16,7 +16,7 @@ const config = require('./config');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'test';
 
 mongoose
     .connect(config.db[env], config.dbParams)

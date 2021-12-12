@@ -14,10 +14,14 @@ exports.mail=async(req, res) => {
         pass: 'a147896325'
       }
     });
-    let email=req.body.email;
-    /*console.log('email:' + email);
-
-    console.log('code:'+code);*/
+    let email;
+    if(!typeof(req.body.email) == undefined){
+      email=req.body.email;
+    }
+    else{
+      email=res.locals.email;
+    }
+    
     let mailOptions = {
       from: '00857030@email.ntou.edu.tw',
       to:email,
