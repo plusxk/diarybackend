@@ -9,5 +9,7 @@ module.exports = {
         useNewUrlParser: true,
     },
 
-    authenticateJWT: "diary_project"
+    authenticateJWT: "diary_project",
+
+    secretKey: "diary_project"
 };

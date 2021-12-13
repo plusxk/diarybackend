@@ -11,6 +11,7 @@ const CheckLoginRoutes = require('./routes/checkLoginRoutes');
 const MailRoutes = require('./routes/mailRoutes');
 const VerifyRoutes = require('./routes/verifyRoutes');
 const SignUpRoutes = require('./routes/signUpRoutes');
+const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
 
 const config = require('./config');
 const app = express();
@@ -41,6 +42,7 @@ app.use(AccountRoutes);
 app.use(MailRoutes);
 app.use(SignUpRoutes);
 app.use(VerifyRoutes);
+app.use(DiaryFunctionRoutes);
 
 
 app.listen(PORT, () => console.log('Server Running...'));

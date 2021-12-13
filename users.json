@@ -1,36 +1,29 @@
 [{
-  "_id": "61b4b047173d5ff6d25ff30e",
+  "_id": "61b731fc2f0d8364e24a0bd9",
   "email": "genewang7@gmail.com",
-  "password": "$2a$10$pRrF/haerU9HQDAkxPPE3edlTqDvt5l1V4Nhd6PN1LavPdSatRpMq",
-  "code": false,
+  "password": "$2a$10$FQCDiOyog449XftLeal3W.SVLY6hi7wfJpp4eXJ1nMybxfnnZMJI6",
+  "code": "fhfjfj",
   "isAdmin": false,
   "isActivated": false,
-  "accessKey": "aieghio;df",
   "folder": [
     {
-      "folderName": "myfolder",
+      "_id": "61b731fc2f0d8364e24a0bda",
+      "folderName": "Uncategorized",
       "diary": [
         {
-          "title": "mydiary",
-          "content": "THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH",
-          "date": "2021-12-11T14:05:59.979Z",
-          "tag": [
-            "tag"
-          ],
-          "filesURL": [
-            "files"
-          ],
-          "picURL": [
-            "pic"
-          ],
-          "videoURL": [
-            "videos"
-          ],
-          "isFavored": false,
-          "_id": "61b4b047173d5ff6d25ff310"
+          "date": "2021-12-13T11:44:21.142Z",
+          "tag": [],
+          "filesURL": [],
+          "picURL": [],
+          "videoURL": [],
+          "_id": "61b732152f0d8364e24a0bdd"
         }
-      ],
-      "_id": "61b4b047173d5ff6d25ff30f"
+      ]
+    },
+    {
+      "_id": "61b731fc2f0d8364e24a0bdb",
+      "folderName": "Favorite",
+      "diary": []
     }
   ],
   "__v": 0
