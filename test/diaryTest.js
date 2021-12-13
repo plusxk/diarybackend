@@ -7,7 +7,7 @@ describe('Diary Controller Test', () => {
     describe('GET/ get a diary by title', () => {
         it('should respond an object, having status 500', function(done) {
             request
-            .get('/user/genewang7@gmail.com/myfolder/mydiary')
+            .get('/user/genewang7@gmail.com/Uncategorized/mydiary')
             .expect(500)
             .end(function(err, res) {
                 should.not.exist(err);
@@ -20,6 +20,7 @@ describe('Diary Controller Test', () => {
                 should(res.body.diary).have.property('picURL');
                 should(res.body.diary).have.property('videoURL');
                 should(res.body.diary).have.property('isFavored');
+                should(res.body.diary).have.property('sanitizedHtml');
                 done();
             })
         })
@@ -95,7 +96,7 @@ describe('Diary Controller Test', () => {
             };
 
             request
-            .post('/user/genewang7@gmail.com/myfolder')
+            .post('/user/genewang7@gmail.com/Uncategorized')
             .send(diaryA)
             .expect(500)
             .end(function(err, res) {
@@ -120,7 +121,7 @@ describe('Diary Controller Test', () => {
             };
 
             request
-            .put('/user/genewang7@gmail.com/myfolder/MYDIARY')
+            .put('/user/genewang7@gmail.com/Uncategorized/MYDIARY')
             .send(diaryA)
             .expect(500)
             .end(function(err, res) {
@@ -135,7 +136,7 @@ describe('Diary Controller Test', () => {
         it('should respond an object, having status 500', function(done) {
 
             request
-            .delete('/user/genewang7@gmail.com/myfolder/MYDIARY')
+            .delete('/user/genewang7@gmail.com/Uncategorized/MYDIARY')
             .expect(500)
             .end(function(err, res) {
                 should.not.exist(err);

@@ -20,10 +20,9 @@ describe('Folder Controller Test', () => {
     describe('GET / get a folder in a user by folderName', () => {
         it('should respond an object, have status 500', function(done) {
             request
-            .get('/user/genewang7@gmail.com/myfolder')
+            .get('/user/genewang7@gmail.com/Uncategorized')
             .expect(500)
             .end(function(err, res) {
-                // console.log(res.body);
                 should.not.exist(err);
                 should(res.body).be.a.Object(); 
                 should(res.body.folder).have.property('_id');   

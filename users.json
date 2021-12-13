@@ -11,11 +11,15 @@
       "folderName": "Uncategorized",
       "diary": [
         {
+          "title": "mydiary",
+          "content": "This is my first diary",
           "date": "2021-12-13T11:44:21.142Z",
           "tag": [],
           "filesURL": [],
           "picURL": [],
           "videoURL": [],
+          "isFavored": false,
+          "sanitizedHtml": "This is my first diary",
           "_id": "61b732152f0d8364e24a0bdd"
         }
       ]

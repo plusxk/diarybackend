@@ -1,4 +1,9 @@
 const mongoose = require('mongoose')
+const marked = require('marked');
+const createDomPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const dompurify = createDomPurify(new JSDOM().window);
+
 const Schema = mongoose.Schema;
 const DiarySchema = new Schema({
 
@@ -30,6 +35,9 @@ const DiarySchema = new Schema({
     isFavored: {
         type: Boolean,
         required: true
+    },
+    sanitizedHtml: {
+        type: String
     }
 });
 
@@ -81,5 +89,12 @@ const UserSchema = new Schema({
         ]
     }
 });
+
+DiarySchema.pre('validate', function(next) {
+    if (this.content) 
+        this.sanitizedHtml = dompurify.sanitize(marked(this.content));
+    
+    next();
+})
 
 module.exports = User = mongoose.model('user', UserSchema);
