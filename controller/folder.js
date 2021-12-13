@@ -27,7 +27,7 @@ exports.getFolderByName = (req, res) => {
 //新增資料夾
 exports.postFolder = (req, res) => {
     const folderA = {
-        folderName: 'myfolder',      //req.body.folderName
+        folderName: req.body.folderName,      //req.body.folderName
         diary: []
     };
     User.findOneAndUpdate(
@@ -47,7 +47,7 @@ exports.putFolder = (req, res) => {
     User.updateOne(
         { 'email': req.params.email, 'folder.folderName': req.params.folderName },
         { $set: { 
-            'folder.$.folderName': 'MYFOLDER'       //req.body.folderName
+            'folder.$.folderName': req.body.folderName       //req.body.folderName
         }},
         (err, log) => {
             if (err)

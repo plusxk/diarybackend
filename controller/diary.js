@@ -83,14 +83,14 @@ exports.getDiaryByDate = (req, res) => {
 //新增日記入指定資料夾
 exports.postDiary = (req, res) => {
     const diaryA = {
-        title: 'mydiary',   //req.body.title
-        content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',   //req.body.content
-        date: Date.now(),   //req.body.date
-        tag: ['tag'],   //req.body.tag
-        filesURL: ['files'],    //req.body.filesURL
-        picURL: ['pic'],    //req.body.picURL
-        videoURL: ['videos'],   //req.body.videoURL
-        isFavored: false    //req.body.isFavored
+        title: req.body.title,   //req.body.title
+        content: req.body.content,   //req.body.content
+        date: req.body.date,   //req.body.date
+        tag: req.body.tag,   //req.body.tag
+        filesURL: req.body.filesURL,    //req.body.filesURL
+        picURL: req.body.picURL,    //req.body.picURL
+        videoURL: req.body.videoURL,   //req.body.videoURL
+        isFavored: req.body.isFavored    //req.body.isFavored
     };
 
     User.updateOne(
@@ -111,14 +111,14 @@ exports.postDiary = (req, res) => {
 //修改日記內容
 exports.putDiaryByTitle = (req, res) => {
     const diaryA = {
-        title: 'MYDIARY',   //req.body.title
-        content: 'THISHOGA;rhrahrhsrhsrh',   //req.body.content
-        date: Date.now(),   //req.body.date
-        tag: ['tag', 'dsgag'],   //req.body.tag
-        filesURL: ['files'],    //req.body.filesURL
-        picURL: ['pic'],    //req.body.picURL
-        videoURL: ['videos'],   //req.body.videoURL
-        isFavored: true    //req.body.isFavored
+        title: req.body.title,   //req.body.title
+        content: req.body.content,   //req.body.content
+        date: req.body.date,   //req.body.date
+        tag: req.body.tag,   //req.body.tag
+        filesURL: req.body.filesURL,    //req.body.filesURL
+        picURL: req.body.picURL,    //req.body.picURL
+        videoURL: req.body.videoURL,   //req.body.videoURL
+        isFavored: req.body.isFavored    //req.body.isFavored
     };
 
     User.find({ email: req.params.email }, (err, docs) => {
@@ -135,7 +135,7 @@ exports.putDiaryByTitle = (req, res) => {
         diaryArray[index] = diaryA;
 
         User.updateOne(
-            { 'email': email, 'folder.folderName': req.params.folderName },
+            { 'email': req.params.email, 'folder.folderName': req.params.folderName },
             { $set: { 
                 'folder.$.diary': diaryArray 
             }},
@@ -165,7 +165,7 @@ exports.deleteDiaryByTitle = (req, res) => {
         diaryArray.splice(index, 1);
         
         User.updateOne(
-            { email: email, 'folder.folderName': req.params.folderName },
+            { email: req.params.email, 'folder.folderName': req.params.folderName },
             { $set: { 
                 'folder.$.diary': diaryArray 
             }},

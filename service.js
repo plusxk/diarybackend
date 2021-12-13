@@ -18,20 +18,10 @@ app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'test';
 
-<<<<<<< HEAD
-// mongoose
-//   .connect(
-//     MONGODB_URI,
-//     { useNewUrlParser: true }
-//   )
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch(err => console.log(err));
-=======
 mongoose
     .connect(config.db[env], config.dbParams)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
->>>>>>> main
 
 app.use(bodyParser.json());
 
@@ -51,20 +41,7 @@ app.use(AccountRoutes);
 app.use(MailRoutes);
 app.use(SignUpRoutes);
 app.use(VerifyRoutes);
-// app.use(FolderRoutes);
-// app.use(DiaryRoutes);
-  
-// app.get('/', (req, res) => {
-//   res.send('Hello World');
-// });
 
-<<<<<<< HEAD
-// app.get('/', (req, res) => {
-//   res.send('Hello World');
-// });
-
-=======
->>>>>>> main
 
 app.listen(PORT, () => console.log('Server Running...'));
 

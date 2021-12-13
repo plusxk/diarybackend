@@ -1,38 +1,40 @@
 const supertest = require('supertest');
-const chai = require('chai');
 var should = require('should');
 var app = require('../service');
 const request = supertest(app);
-const dbHandler = require('./dbHandler');
-const User = require('../model/userDBSchema');
-const { expect } = require('chai');
-
-before(async () => await dbHandler.connect());
-// afterEach(async () => await dbHandler.clearDatabase());
-after(async () => await dbHandler.closeDatabase());
 
 describe('User Controller Test', () => {
-    describe('GET /user', () => {
-        it('should get all users in json, respond with status 201', async () => {
-            const getReq = await request
+    describe('GET/ get all users', () => {
+        it('should respond an array, have status 500', function(done) {
+            request
             .get('/user')
-            .set('Accept', 'application/json')
-
-            expect(getReq.statusCode).to.equal(201);
-            expect(getReq.body.user).to.be.an('array');
-            expect(getReq.body.user.length).to.equal(1);
+            .expect(500)
+            .end((err, res) => {
+                should.not.exist(err);
+                should(res.body.user).be.a.Array();
+                done();
+            })
         });
     })
-    
-    describe('GET /user/:userID', () => {
-        it('should get a user in json, respond with status 201', async () => {
-            const getReq = await request
-            .get('/user/1')
-            .set('Accept', 'application/json')
-            
-            console.log(getReq.body);
-            // expect(getReq.statusCode).to.equal(201);
-            // expect(getReq.body.user).to.be.an('object');
-        })
-    });
+    describe('GET/ get a user by email', () => {
+        it('should respond an object, have status 500', function(done) {
+            this.timeout("5000");
+
+            request
+            .get('/user/genewang7@gmail.com')
+            .expect(500)
+            .end(function (err, res) {
+                should.not.exist(err);
+                should(res.body).be.a.Object();
+                should(res.body).have.property('_id');
+                should(res.body).have.property('email');
+                should(res.body).have.property('password');
+                should(res.body).have.property('code');
+                should(res.body).have.property('isAdmin');
+                should(res.body).have.property('isActivated');
+                should(res.body).have.property('folder');
+                done();
+            })
+        });
+    })
 });
