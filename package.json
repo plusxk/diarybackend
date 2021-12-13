@@ -17,7 +17,7 @@
   "main": "service.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node service.js",
-    "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit"
+    "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit && cross-env NODE_ENV=test mocha test/testSignUp.js --exit"
   },
   "keywords": [],
   "author": "",

@@ -11,19 +11,19 @@ Date.prototype.yyyymmdd = function() {
         ].join('');
 };
 
-//取得一篇日記內容(依據diaryID)
-exports.getDiaryByID = (req, res) => {
+//取得一篇日記內容(依據title)
+exports.getDiaryByTitle = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
             console.log(err);
         
         const folders = docs[0].toObject().folder;
         const folder = folders.find((item, index, array) => {
-            return item.folderID === req.params.folderID;
+            return item.folderName === req.params.folderName;
         });
         const diaries = folder.diary;
         const diary = diaries.find((item, index, array) => {
-            return item.diaryID === req.params.diaryID;
+            return item.title === req.params.title;
         });
         res.status(500).json({ diary });
     });
@@ -83,7 +83,6 @@ exports.getDiaryByDate = (req, res) => {
 //新增日記入指定資料夾
 exports.postDiary = (req, res) => {
     const diaryA = {
-        diaryID: '1',        //req.body.diaryID
         title: 'mydiary',   //req.body.title
         content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',   //req.body.content
         date: Date.now(),   //req.body.date
@@ -95,7 +94,7 @@ exports.postDiary = (req, res) => {
     };
 
     User.updateOne(
-        { 'email': req.params.email, 'folder.folderID': req.params.folderID },
+        { 'email': req.params.email, 'folder.folderName': req.params.folderName },
         { $push: { 
             'folder.$.diary': diaryA 
         }},
@@ -110,9 +109,8 @@ exports.postDiary = (req, res) => {
 };
 
 //修改日記內容
-exports.putDiaryByID = (req, res) => {
+exports.putDiaryByTitle = (req, res) => {
     const diaryA = {
-        diaryID: '1',        //req.body.diaryID
         title: 'MYDIARY',   //req.body.title
         content: 'THISHOGA;rhrahrhsrhsrh',   //req.body.content
         date: Date.now(),   //req.body.date
@@ -129,15 +127,15 @@ exports.putDiaryByID = (req, res) => {
 
         const folders = docs[0].toObject().folder;
         const folder = folders.find((item, index, array) => {
-            return item.folderID === req.params.folderID;
+            return item.folderName === req.params.folderName;
         });
 
         const diaryArray = folder.diary;
-        const index = diaryArray.findIndex(obj => obj.diaryID === req.params.diaryID); 
+        const index = diaryArray.findIndex(obj => obj.title === req.params.title); 
         diaryArray[index] = diaryA;
 
         User.updateOne(
-            { 'email': email, 'folder.folderID': req.params.folderID },
+            { 'email': email, 'folder.folderName': req.params.folderName },
             { $set: { 
                 'folder.$.diary': diaryArray 
             }},
@@ -151,23 +149,23 @@ exports.putDiaryByID = (req, res) => {
     });
 };
 
-//刪除日記(依據ID)
-exports.deleteDiaryByID = (req, res) => {
+//刪除日記(依據title)
+exports.deleteDiaryByTitle = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
             console.log(err);
 
         const folders = docs[0].toObject().folder;
         const folder = folders.find((item, index, array) => {
-            return item.folderID === req.params.folderID;
+            return item.folderName === req.params.folderName;
         });
 
         const diaryArray = folder.diary;
-        const index = diaryArray.findIndex(obj => obj.diaryID === req.params.diaryID); 
+        const index = diaryArray.findIndex(obj => obj.title === req.params.title); 
         diaryArray.splice(index, 1);
         
         User.updateOne(
-            { email: email, 'folder.folderID': req.params.folderID },
+            { email: email, 'folder.folderName': req.params.folderName },
             { $set: { 
                 'folder.$.diary': diaryArray 
             }},

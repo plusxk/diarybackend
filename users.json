@@ -1,18 +1,16 @@
 [{
   "_id": "61b4b047173d5ff6d25ff30e",
   "email": "genewang7@gmail.com",
-  "password": "$2a$10$scELc/mX2ti22MzW9zemxOGGFZdH7NSGv/sl33TrQN4vED8B1BRTy",
+  "password": "$2a$10$pRrF/haerU9HQDAkxPPE3edlTqDvt5l1V4Nhd6PN1LavPdSatRpMq",
   "code": false,
   "isAdmin": false,
   "isActivated": false,
   "accessKey": "aieghio;df",
   "folder": [
     {
-      "folderID": "1",
       "folderName": "myfolder",
       "diary": [
         {
-          "diaryID": "1",
           "title": "mydiary",
           "content": "THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH",
           "date": "2021-12-11T14:05:59.979Z",

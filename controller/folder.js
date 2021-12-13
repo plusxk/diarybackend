@@ -9,15 +9,15 @@ exports.getAllFolder = (req, res) => {
     });
 };
 
-//取得資料夾(依據folderID)
-exports.getFolderByID = (req, res) => {
+//取得資料夾(依據folderName)
+exports.getFolderByName = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
             console.log(err);
 
         const folders = docs[0].toObject().folder;
         const folder = folders.find((item, index, array) => {
-            return item.folderID === req.params.folderID;
+            return item.folderName === req.params.folderName;
         });
         res.status(500).json({ folder });
     });
@@ -27,7 +27,6 @@ exports.getFolderByID = (req, res) => {
 //新增資料夾
 exports.postFolder = (req, res) => {
     const folderA = {
-        folderID: '3',      //req.body.folderID
         folderName: 'myfolder',      //req.body.folderName
         diary: []
     };
@@ -46,7 +45,7 @@ exports.postFolder = (req, res) => {
 //修改資料夾名稱
 exports.putFolder = (req, res) => {
     User.updateOne(
-        { 'email': req.params.email, 'folder.folderID': req.params.folderID },
+        { 'email': req.params.email, 'folder.folderName': req.params.folderName },
         { $set: { 
             'folder.$.folderName': 'MYFOLDER'       //req.body.folderName
         }},
@@ -65,7 +64,7 @@ exports.deleteFolder = (req, res) => {
         { email: req.params.email },
         { $pull: { 
             folder: {
-                folderID: req.params.folderID 
+                folderName: req.params.folderName 
             }
         }},
         (err, log) => {

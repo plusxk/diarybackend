@@ -1,11 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const DiarySchema = new Schema({
-    diaryID: {
-        type: String,
-        required: true,
-        unique: true
-    },
+
     title: {
         type: String,
         required: true
@@ -39,10 +35,7 @@ const DiarySchema = new Schema({
 
 
 const FolderSchema = new Schema({
-    folderID: {
-        type: String,
-        required: true,
-    },
+
     folderName: {
         type: String,
         required: true
@@ -78,12 +71,10 @@ const UserSchema = new Schema({
         required: true,
         default: [
             {
-                folderID: '1',
                 folderName: 'Uncategorized',
                 diary: []
             },
             {
-                folderID: '2',
                 folderName: 'Favorite',
                 diary: []
             }
