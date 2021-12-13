@@ -5,22 +5,22 @@ const config = require('../config');
 
 exports.login = async (req, res) => {
     try{ 
-        let id = req.body.userID;
+        let email = req.body.email;
         let password = req.body.password;
 
-        User.findOne({userID: id}, function(err, user){
+        User.findOne({email: email}, function(err, user){
             if(err){
                 res.status(500).json({
-                    msg: "userID " + id + " is not found!"
+                    msg: "email " + email + " is not found!"
                 });
             }
             else if(user){
                 if(bcrypt.compareSync(password, user.password)){
                     res.status(200).json({
-                        token: jwt.sign({userID:user.userID}, config.authenticateJWT, {
+                        token: jwt.sign({email:user.email}, config.authenticateJWT, {
                             expiresIn: "60s"
                         }),
-                        userID: user.userID,
+                        email: user.email,
                     });
                 }
                 else{
@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
                 
             }
             else{
-                res.status(500).json({
+                res.status(404).json({
                     msg: "user not found"
                 });
             }

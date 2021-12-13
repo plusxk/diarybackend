@@ -9,10 +9,10 @@ exports.verify = async (req, res, next) => {
         }
         else{
             res.status(200).json({
-                userID: decode.userID,
+                email: decode.email,
                 msg: '已登入'
             });
-            token: jwt.sign({userID:user.userID}, config.key , {
+            token: jwt.sign({email:user.email}, config.key , {
                 expiresIn: "60s"
             });
         }

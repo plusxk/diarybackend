@@ -7,9 +7,12 @@ const router = express.Router();
 router.get('/user', userController.getUser);
 
 //GET a user
-router.get('/user/:userID', userController.getUserByID);
+router.get('/user/:email', userController.getUserByEmail);
 
 //POST an user
 router.post('/user', userController.postUser);
+
+//DELETE an user
+router.delete('/user/:email', userController.deleteUser);
 
 module.exports = router;
