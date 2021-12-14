@@ -8,6 +8,7 @@
     "express-session": "^1.17.2",
     "jsdom": "^19.0.0",
     "jsonwebtoken": "^8.5.1",
+    "markdown-it": "^12.3.0",
     "marked": "^4.0.7",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
@@ -21,7 +22,7 @@
   "main": "service.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node service.js",
-    "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit && cross-env NODE_ENV=test mocha test/testSignUp.js --exit && cross-env NODE_ENV=test mocha test/userTest.js --exit && cross-env NODE_ENV=test mocha test/folderTest.js --exit && cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit"
+    "test": "cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit"
   },
   "keywords": [],
   "author": "",

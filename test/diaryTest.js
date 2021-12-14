@@ -20,7 +20,6 @@ describe('Diary Controller Test', () => {
                 should(res.body.diary).have.property('picURL');
                 should(res.body.diary).have.property('videoURL');
                 should(res.body.diary).have.property('isFavored');
-                should(res.body.diary).have.property('sanitizedHtml');
                 done();
             })
         })
@@ -86,7 +85,7 @@ describe('Diary Controller Test', () => {
         it('should respond an object, having status 500', function(done) {
             const diaryA = {
                 title: 'MYDIARY',   //req.body.title
-                content: 'SHGSDIG;ASIHGIS;G',   //req.body.content
+                content: '# SHGSDIG;ASIHGIS;G',   //req.body.content
                 date: Date.now(),   //req.body.date
                 tag: ['tagSSSS'],   //req.body.tag
                 filesURL: ['filesSSSS'],    //req.body.filesURL

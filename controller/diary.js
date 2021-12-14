@@ -1,4 +1,5 @@
 const User = require('../model/userDBSchema');
+const markdown = require('markdown-it')();
 
 //日期轉字串
 Date.prototype.yyyymmdd = function() {
@@ -90,7 +91,8 @@ exports.postDiary = (req, res) => {
         filesURL: req.body.filesURL,    //req.body.filesURL
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
-        isFavored: req.body.isFavored    //req.body.isFavored
+        isFavored: req.body.isFavored,    //req.body.isFavored
+        markdown: markdown.render(req.body.content)
     };
 
     User.updateOne(
@@ -118,7 +120,8 @@ exports.putDiaryByTitle = (req, res) => {
         filesURL: req.body.filesURL,    //req.body.filesURL
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
-        isFavored: req.body.isFavored    //req.body.isFavored
+        isFavored: req.body.isFavored,    //req.body.isFavored
+        markdown: markdown.render(req.body.content)
     };
 
     User.find({ email: req.params.email }, (err, docs) => {
