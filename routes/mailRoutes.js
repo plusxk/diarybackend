@@ -4,8 +4,8 @@ const signUpController = require('../controller/signUp');
 
 const router = express.Router();
 
-router.post('/signUp', signUpController.verifyCode);
-router.post('/mail', mailController.mail);
+router.post('/resendCode', signUpController.verifyCode);
+router.post('/resendCode', mailController.mail);
 
 
 module.exports = router;

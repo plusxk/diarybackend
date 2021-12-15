@@ -32,9 +32,18 @@ docker-compose up
     }
 
   ### 寄送驗證碼入信箱 (HTTP POST):
-    localhost/mail
+    localhost/resendCode
+    
+  ### 確認驗證碼 (HTTP POST):
+    localhost/verify
+    
+  POST測試內容(json):
+    {
+        "email": "123456@google.com",
+        "code": "3518"
+    }
   
-  ### 登入 (HTTP POST):
+  ### 登入(登入成功後，前端要將token存到cookie) (HTTP POST):
     localhost/login
 
   POST測試內容(json):
@@ -43,15 +52,21 @@ docker-compose up
         "password": "tttttt"
     }
 
-  ### 驗證是否登入 (HTTP POST):
+  ### 驗證是否登入(headers裡面放token，傳到後端check Token) (HTTP POST):
     localhost/checkLogin
 
-  ### 忘記密碼 (HTTP POST):
+  ### 忘記密碼(僅輸入email即可) (HTTP POST):
     localhost/randomPassword
   (寄出隨機密碼入信箱)
 
   ### 重設密碼 (HTTP POST):
     localhost/resetPassword
+  POST測試內容(json):
+    {
+        "email": "123456@google.com",
+        "password": "tttttt",
+        "newPassword": "ssssss"
+    }
 
 
   ## 日記&資料夾系統
@@ -100,8 +115,6 @@ docker-compose up
         "videoURL": ["videosSSSS"],
         "isFavored": false
     }
-
-  *前端GET日記內容請用"markdown"這個atrribute而非"content"*
 
   ### 透過title取得日記 (HTTP GET):
     localhost/user/:email/:folderName/:title
@@ -167,3 +180,5 @@ docker-compose up
   ### 透過email刪除使用者 (HTTP DELETE):
     localhost/user/:email
     ex: localhost/user/genewang7@gmail.com
+  # 注意事項
+  __前端GET日記內容請用"markdown"這個atrribute而非"content"__  
