@@ -86,7 +86,7 @@ docker-compose up
     ex: localhost/user/genewang7@gmail.com/MYFOLDER
 
   ### 新增日記 (HTTP POST):
-    
+    localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/Uncategorized 
     
   POST測試內容(json):
