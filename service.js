@@ -5,6 +5,7 @@ const UserRoutes = require('./routes/userRoutes');
 const MailRoutes = require('./routes/mailRoutes');
 const VerifyRoutes = require('./routes/verifyRoutes');
 const SignUpRoutes = require('./routes/sign_upRoutes');
+const FileUpLoadRoutes = require('./routes/fileuploadRoutes');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use(UserRoutes);
 app.use(MailRoutes);
 app.use(SignUpRoutes);
 app.use(VerifyRoutes);
+app.use(FileUpLoadRoutes);
   
 // app.get('/', (req, res) => {
 //   res.send('Hello World');
