@@ -16,7 +16,8 @@
   "version": "1.0.0",
   "main": "service.js",
   "scripts": {
-    "test": "mocha"
+    "start": "node service.js"
+    
   },
   "keywords": [],
   "author": "",
