@@ -1,10 +1,21 @@
-// const express = require('express');
-// const folderController = require('../controller/folder');
+const express = require('express');
+const folderController = require('../controller/folder');
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get('/folder', folderController.getFolder);
+//GET all folders
+router.get('/user/:email/folder', folderController.getAllFolder);
 
-// router.post('/folder', folderController.postFolder);
+//GET specific folder by folderName
+router.get('/user/:email/:folderName', folderController.getFolderByName);
 
-// module.exports = router;
+//POST folder
+router.post('/user/:email/folder', folderController.postFolder);
+
+//PUT specific folder by folderName
+router.put('/user/:email/:folderName', folderController.putFolder);
+
+//DELETE specific folder by folderName
+router.delete('/user/:email/:folderName', folderController.deleteFolder);
+
+module.exports = router;

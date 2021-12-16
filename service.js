@@ -1,22 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 const UserRoutes = require('./routes/userRoutes');
+const FolderRoutes = require('./routes/folderRoutes');
+const DiaryRoutes = require('./routes/diaryRoutes');
+const AccountRoutes = require('./routes/accountRoutes');
+const AuthRoutes = require('./routes/authRoutes');
+const CheckLoginRoutes = require('./routes/checkLoginRoutes');
 const MailRoutes = require('./routes/mailRoutes');
 const VerifyRoutes = require('./routes/verifyRoutes');
-const SignUpRoutes = require('./routes/sign_upRoutes');
-const FileUpLoadRoutes = require('./routes/fileuploadRoutes');
+const SignUpRoutes = require('./routes/signUpRoutes');
+const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
+
+const config = require('./config');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
+const env = process.env.NODE_ENV || 'test';
 
 mongoose
-  .connect(
-    'mongodb://mongo:27017/diarydb',
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+    .connect(config.db[env], config.dbParams)
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
 
 app.use(bodyParser.json());
 
@@ -28,14 +34,17 @@ app.use((req, res, next) => {
 });
   
 app.use(UserRoutes);
+app.use(FolderRoutes);
+app.use(DiaryRoutes);
+app.use(AuthRoutes);
+app.use(CheckLoginRoutes);
+app.use(AccountRoutes);
 app.use(MailRoutes);
 app.use(SignUpRoutes);
 app.use(VerifyRoutes);
-app.use(FileUpLoadRoutes);
-  
-// app.get('/', (req, res) => {
-//   res.send('Hello World');
-// });
+app.use(DiaryFunctionRoutes);
 
 
 app.listen(PORT, () => console.log('Server Running...'));
+
+module.exports = app;

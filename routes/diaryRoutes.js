@@ -1,10 +1,28 @@
-// const express = require('express');
-// const diaryController = require('../controller/diary');
+const express = require('express');
+const diaryController = require('../controller/diary');
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get('/diary', diaryController.getDiary);
+//GET specific diary by title
+router.get('/user/:email/:folderName/:title', diaryController.getDiaryByTitle);
 
-// router.post('/diary', diaryController.postDiary);
+/*關鍵字查詢*/
 
-// module.exports = router;
+//GET specific diaries by title     localhost/search/1?condition=title&search_query=mydiary
+//GET specific diaries by content   localhost/search/1?condition=content&search_query=sgegrhrh
+//GET specific diaries by tags      localhost/search/1?condition=tags&search_query=tag
+router.get('/search/:email', diaryController.getDiaryBySearch);
+
+//GET diaries by date               localhost/00857028@email.ntou.edu.tw/date/1?date=20211207
+router.get('/date/:email', diaryController.getDiaryByDate);
+
+//POST diary in specific folder by folderName
+router.post('/user/:email/:folderName', diaryController.postDiary);
+
+//PUT specific diary by title in specific folder by folderName
+router.put('/user/:email/:folderName/:title', diaryController.putDiaryByTitle);
+
+//DELETE specific diary by title in specific folder by folderName
+router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByTitle)
+
+module.exports = router;

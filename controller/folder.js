@@ -1,33 +1,77 @@
-// const Diary = require('../model/diaryInitDB');
-// const Folder = require('../model/folderInitDB');
+const User = require('../model/userDBSchema');
 
-// exports.getFolder = async (req, res) => {
-//     try {
-//         const folders = await Folder.find();
-//         res.status(500).json({ folders });
-//     } catch(err) {
-//         res.status(404).json({ msg: 'No folder found' });
-//     }
-// };
+//取得所有資料夾
+exports.getAllFolder = (req, res) => {
+    User.find({ email: req.params.email }, (err, docs) => {
+        if (err)
+            console.log(err);
+        res.status(500).json(docs[0].toObject().folder);
+    });
+};
 
-// exports.postFolder = async (req, res) => {
-//     const diaryA = new Diary({
-//         diaryID: '1',
-//         title: 'mydiary',
-//         content: 'THISHOGA;IHGUEWIOGSDGDSHGDSJKJDSLJKAH',
-//         date: Date.now(),
-//         tag: ['tag'],
-//         filesURL: ['files'],
-//         picURL: ['pic'],
-//         videoURL: ['videos'],
-//         isFavored: false
-//     });
-//     const folderA = new Folder({
-//         folderID: '1',
-//         folderName: 'myfolder',
-//         diary: [diaryA]
-//     });
+//取得資料夾(依據folderName)
+exports.getFolderByName = (req, res) => {
+    User.find({ email: req.params.email }, (err, docs) => {
+        if (err)
+            console.log(err);
 
-//     const folder = await folderA.save();
-//     res.status(201).json({ folder });
-// };
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === req.params.folderName;
+        });
+        res.status(500).json({ folder });
+    });
+
+};
+
+//新增資料夾
+exports.postFolder = (req, res) => {
+    const folderA = {
+        folderName: req.body.folderName,      //req.body.folderName
+        diary: []
+    };
+    User.findOneAndUpdate(
+        { email: req.params.email },
+        { $push: { folder: folderA }},
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.status(500).json({ log });
+        }
+    );
+};
+
+//修改資料夾名稱
+exports.putFolder = (req, res) => {
+    User.updateOne(
+        { 'email': req.params.email, 'folder.folderName': req.params.folderName },
+        { $set: { 
+            'folder.$.folderName': req.body.folderName       //req.body.folderName
+        }},
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.status(500).json({ log })
+        }
+    );
+};
+
+//刪除資料夾
+exports.deleteFolder = (req, res) => {
+    User.updateOne(
+        { email: req.params.email },
+        { $pull: { 
+            folder: {
+                folderName: req.params.folderName 
+            }
+        }},
+        (err, log) => {
+            if (err)
+                console.log('Error Message: ' + err);
+            else
+                res.status(500).json({ log })
+        }
+    );
+};

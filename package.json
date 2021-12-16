@@ -2,25 +2,33 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "chai": "^4.3.4",
-    "connect-mongodb-session": "^3.1.1",
+    "crypto": "^1.0.1",
+    "dompurify": "^2.3.4",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "mocha": "^9.1.3",
+    "jsdom": "^19.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "markdown-it": "^12.3.0",
+    "marked": "^4.0.7",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
     "nodemailer": "^6.7.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "should": "^13.2.3",
+    "supertest": "^6.1.6"
   },
   "name": "diarydb",
   "version": "1.0.0",
   "main": "service.js",
   "scripts": {
-    "start": "node service.js"
-    
+    "start": "cross-env NODE_ENV=development node service.js",
+    "test": "cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
