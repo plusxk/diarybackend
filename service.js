@@ -19,10 +19,13 @@ app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'test';
 
-mongoose
+(async () => {
+  await mongoose
     .connect(config.db[env], config.dbParams)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+})();
+
 
 app.use(bodyParser.json());
 
