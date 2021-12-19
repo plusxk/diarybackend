@@ -14,7 +14,9 @@ pipeline {
       }
     }
     stage('end build'){
-      bat 'docker-compose down'
+      steps {
+        bat 'docker-compose down'
+      }
     }
   }
 }
