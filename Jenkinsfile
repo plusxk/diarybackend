@@ -28,10 +28,10 @@ pipeline {
             bat 'docker push steven0103/mongo-express:latest'
         }
     }
-    post {
+  }
+  post {
         always {
             bat 'docker-compose down'
         }
     }
-  }
 }
