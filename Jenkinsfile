@@ -13,5 +13,8 @@ pipeline {
         bat 'npm test'
       }
     }
+    stage('end build'){
+      bat 'docker-compose down'
+    }
   }
 }
