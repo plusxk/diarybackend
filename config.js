@@ -3,7 +3,7 @@ module.exports = {
     db: {
       production: "mongodb://user:pass@example.com:1234/musika",
       development: "mongodb://mongo:27017/diarydb",
-      test: "mongodb://localhost:27017/diarydb",
+      test: "mongodb+srv://test:1234@cluster0.5r4ti.mongodb.net/diarydb?retryWrites=true&w=majority",
     },
     dbParams: {
         useNewUrlParser: true,
