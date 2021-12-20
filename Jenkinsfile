@@ -21,11 +21,7 @@ pipeline {
         steps {
             echo 'Deploying docker images'
             bat 'docker tag diary-docker_app steven0103/diary-docker_app'
-            bat 'docker tag mongo steven0103/mongo'
-            bat 'docker tag mongo-express steven0103/mongo-express'
             bat 'docker push steven0103/diary-docker_app:latest'
-            bat 'docker push steven0103/mongo:latest'
-            bat 'docker push steven0103/mongo-express:latest'
         }
     }
   }

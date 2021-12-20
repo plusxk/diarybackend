@@ -15,8 +15,9 @@ exports.verifyCode = async(req, res, next) => {
         {email:req.body.email},
         {$set:{code:code}},
         (err,log) => {
-            if(err)
-                console.log('Error Message: ' + err );
+            if(err){    // 500: Internal Server Error
+                res.status(500).json({msg:"err"});
+            }
         }
     );
     next();
@@ -37,22 +38,48 @@ exports.signUp=async(req, res, next) => {
             }); 
             const user = await userA.save();
             next();
-            //res.status(201).json('成功註冊');
-
         }
 
     }
     catch (error){
-        console.log(error);
         res.status(500).json({msg:"err"});
     } 
 
 }
 
-exports.updateCode = async(req, res, next) => {
+exports.verify=async(req, res) => { 
 
-
-
-
-
+    try{
+        User.find({email: req.body.email},function (err, docs) { 
+            if (err){   // 500: Internal Server Error
+                res.status(500).send('Error Message: ' + err ); 
+            } 
+            else{ 
+                /*console.log('code:' ,docs[0].code);
+                console.log(req.body.code);*/
+                if(req.body.code==docs[0].code){
+                    User.findOneAndUpdate(
+                        {email:req.body.email},
+                        {$set:{isActivated:true}},
+                        (err,log) => {
+                            if(err){    // 500: Internal Server Error
+                                res.status(500).send('Error Message: ' + err ); 
+                            }
+                            else{   // 200: OK
+                                res.status(200).json('Activate successfully!'); 
+                            }
+                        }
+                    );
+                }
+                else{   // 401: Unauthorized
+                    res.status(401).json('Code incorrect'); 
+                }
+            
+    		} 
+		});
+    }
+    catch (error){  // 500: Internal Server Error
+        console.log(error);
+        res.status(500).json({msg:"err"});
+    } 
 }

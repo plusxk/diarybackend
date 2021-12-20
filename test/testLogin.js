@@ -6,7 +6,7 @@ const request = supertest(app);
 //test login
 describe("test login",  () => {
 
-    it("should have status 200", function(done) {
+    it("should have response a token", function(done) {
         let user = {
             email: "genewang7@gmail.com",
             password: "ssssss"
@@ -19,6 +19,8 @@ describe("test login",  () => {
         .end(function(err, res){
             token = res.body.token;
             should.not.exist(err);
+            should(res.body).have.property('token');
+            should(res.body).have.property('email');
             done();
         })
     })
@@ -28,7 +30,7 @@ describe("test login",  () => {
 //test jwt
 describe("test verify",  () => {
 
-    it("should have status 200", function(done) {
+    it("should have response an email", function(done) {
         request
         .post('/checkLogin')
         .set('Content-Type', 'application/json')
@@ -36,6 +38,7 @@ describe("test verify",  () => {
         .expect(200) // status must be 200
         .end(function(err, res){
             should.not.exist(err);
+            should(res.body).have.property('email');
             done();
         })
     })

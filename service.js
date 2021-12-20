@@ -7,9 +7,7 @@ const FolderRoutes = require('./routes/folderRoutes');
 const DiaryRoutes = require('./routes/diaryRoutes');
 const AccountRoutes = require('./routes/accountRoutes');
 const AuthRoutes = require('./routes/authRoutes');
-const CheckLoginRoutes = require('./routes/checkLoginRoutes');
 const MailRoutes = require('./routes/mailRoutes');
-const VerifyRoutes = require('./routes/verifyRoutes');
 const SignUpRoutes = require('./routes/signUpRoutes');
 const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
 
@@ -40,11 +38,9 @@ app.use(UserRoutes);
 app.use(FolderRoutes);
 app.use(DiaryRoutes);
 app.use(AuthRoutes);
-app.use(CheckLoginRoutes);
 app.use(AccountRoutes);
 app.use(MailRoutes);
 app.use(SignUpRoutes);
-app.use(VerifyRoutes);
 app.use(DiaryFunctionRoutes);
 
 

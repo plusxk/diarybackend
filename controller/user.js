@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 exports.getUser = async (req, res) => {
     try {
         const user = await User.find();
-        res.status(500).json({ user })
+        res.status(200).json({ user })
     } catch(err) {
         res.status(404).json({ msg: 'No user found' });
     }
@@ -13,7 +13,7 @@ exports.getUser = async (req, res) => {
 exports.getUserByEmail = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.params.email });
-        res.status(500).json( user )
+        res.status(200).json( user )
     } catch(err) {
         res.status(404).json({ msg: 'No user found' });
     }
