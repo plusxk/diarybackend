@@ -12,6 +12,7 @@ const MailRoutes = require('./routes/mailRoutes');
 const VerifyRoutes = require('./routes/verifyRoutes');
 const SignUpRoutes = require('./routes/signUpRoutes');
 const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
+const FileUpLoadRoutes=require('./routes/fileuploadRoutes');
 
 const config = require('./config');
 const app = express();
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-  
+
 app.use(UserRoutes);
 app.use(FolderRoutes);
 app.use(DiaryRoutes);
@@ -43,7 +44,7 @@ app.use(MailRoutes);
 app.use(SignUpRoutes);
 app.use(VerifyRoutes);
 app.use(DiaryFunctionRoutes);
-
+app.use(FileUpLoadRoutes);
 
 app.listen(PORT, () => console.log('Server Running...'));
 

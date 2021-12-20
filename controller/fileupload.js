@@ -1,6 +1,8 @@
 const{google}=require('googleapis');
-const path =require('path')
-const fs = require('fs')
+const stream=require('stream');
+const path =require('path');
+const fs = require('fs');
+
 
 const Client_ID='859572158752-9o0fej694da89iogmvm0o4cdv9le7jfs.apps.googleusercontent.com';
 const Client_Serect ='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';
@@ -14,6 +16,7 @@ const oauth2client =new google.auth.OAuth2(
 	Redirect_URI
 );
 
+
 oauth2client.setCredentials({refresh_token: Refresh_Token})
 
 const drive =google.drive({ 
@@ -22,42 +25,78 @@ const drive =google.drive({
 })
 
 
-var fileId=''
-exports.fileupload=(req, res) => {
+
+
+var fileId='';
+exports.fileupload= async(req, res) => {
 	try{    
-		if(!req.files) {
+		if(!req.file) {
             res.send({
                 status: false,
                 message: 'No file uploaded'
-        }); 
-        let file = req.files.file;
-        await uploadFile(file);
-    }
-    catch (error){
-        console.log(error);
+        	}); 
+        }
+        console.log(req.file);
+        const { foo } = req.file;
+        console.log(req.file.mimetype);
+        let file = req.file;
+        //console.log(file.file.path);
+       	//uploadFile(file);
+
+       	let bufferStream=new stream.PassThrough();
+		bufferStream.end(file.buffer);
+		const response =await drive.files.create({
+			requestBody:{
+				name:file.originalname,
+				mimeType: file.mimetype,
+			},
+			media:{
+				mimeType:file.mimetype,
+				body:bufferStream,
+			},
+		});
+		console.log(response.data.id);
+		fileId=response.data.id;
+
+		await drive.permissions.create({
+			fileId:fileId,
+			requestBody:{
+				role: 'reader',
+				type: 'anyone'
+			}
+		});
+		//contentLink 是下載
+		const result = await drive.files.get({
+			fileId:fileId,
+			fields:'webViewLink, webContentLink',
+		});
+		console.log(result.data.webViewLink);
+		let url=result.data.webViewLink;
+
+       	res.status(201).json({url});
+    }catch (err){
+        console.log(err);
         res.status(500).json({msg:"err"});
     } 
 
 
 }
-async function uploadFile(file){
-	try{
-		const response =await drive.files.create({
-			requestBody:{
-				name:file.name,
-				mimeType: file.mimetype,
-			},
-			media:{
-				mimeType:file.mimetype,
-				body:fs.createReadStream(file.path),
-			},
-		});
-		console.log(response.data.id);
-		fileId=response.data.id;
-	}catch(err){
-		console.log(err.message);
-	}
-}
+// function uploadFile(file){
+// 	let bufferStream=new stream.PassThrough();
+// 	bufferStream.end(file.buffer);
+// 		const response =await drive.files.create({
+// 			requestBody:{
+// 				name:file.originalname,
+// 				mimeType: file.mimetype,
+// 			},
+// 			media:{
+// 				mimeType:file.mimetype,
+// 				body:bufferStream,
+// 			},
+// 		});
+// 		console.log(response.data.id);
+// 		fileId=response.data.id;
+// }
 
 //uploadFile();
 
@@ -74,24 +113,24 @@ async function uploadFile(file){
 
 // deleteFile();
 
-async function genratePublicUrl(){
-	try{
-		fileId='1-Tckhd2H0-bLcKGX84wqbRGNv7lNa_Mr'
-		await drive.permissions.create({
-			fileId:'1-Tckhd2H0-bLcKGX84wqbRGNv7lNa_Mr',
-			requestBody:{
-				role: 'reader',
-				type: 'anyone'
-			}
-		});
-		//contentLink 是下載
-		const result = await drive.files.get({
-			fileId:fileId,
-			fields:'webViewLink, webContentLink',
-		});
-		console.log(result.data);
-	}catch(err){
-		console.log(err.message);
-	}
-}
+// async function genratePublicUrl(){
+// 	try{
+// 		fileId='1-Tckhd2H0-bLcKGX84wqbRGNv7lNa_Mr'
+// 		await drive.permissions.create({
+// 			fileId:'1-Tckhd2H0-bLcKGX84wqbRGNv7lNa_Mr',
+// 			requestBody:{
+// 				role: 'reader',
+// 				type: 'anyone'
+// 			}
+// 		});
+// 		//contentLink 是下載
+// 		const result = await drive.files.get({
+// 			fileId:fileId,
+// 			fields:'webViewLink, webContentLink',
+// 		});
+// 		console.log(result.data);
+// 	}catch(err){
+// 		console.log(err.message);
+// 	}
+// }
 //genratePublicUrl();
