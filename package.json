@@ -26,7 +26,7 @@
   "main": "service.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node service.js",
-    "test": "cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit"
+    "test": "cross-env NODE_ENV=test mocha test/testUploadFile.js --exit"
   },
   "keywords": [],
   "author": "",

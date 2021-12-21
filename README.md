@@ -182,3 +182,8 @@ docker-compose up
     ex: localhost/user/genewang7@gmail.com
   # 注意事項
   __前端GET日記內容請用"markdown"這個atrribute而非"content"__  
+
+  ### 上傳圖片 (HTTP POST):
+    localhost/fileupload
+  # 注意事項
+  __前端在讀取本地端檔案時請將name設為"myfile"__
