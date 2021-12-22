@@ -16,13 +16,13 @@ exports.verify=async(req, res) => {
     // }
     try{
         User.find({email: req.body.email},function (err, docs) { 
-    	    if (err){ 
-        		console.log("Error msg:", err); 
-    		} 
-    		else{ 
+            if (err){ 
+                console.log("Error msg:", err); 
+            } 
+            else{ 
                 console.log('code:' ,docs[0].code);
                 console.log(req.body.code);
-        		if(req.body.code==docs[0].code){
+                if(req.body.code==docs[0].code){
                     User.findOneAndUpdate(
                         {email:req.body.email},
                         {$set:{isActivated:true}},
@@ -42,8 +42,8 @@ exports.verify=async(req, res) => {
                     res.status(500).json('Code incorrect'); 
                 }
             
-    		} 
-		});
+            } 
+        });
     }
     catch (error){
         console.log(error);
