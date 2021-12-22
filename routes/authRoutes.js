@@ -3,9 +3,7 @@ const authController = require('../controller/auth');
 
 const router = express.Router();
 
-router.get('/login', (req, res) => {
-    res.status(200).json({msg: "success"});
-});
 router.post('/login', authController.login);
+router.post('/checkLogin', authController.verify);
 
 module.exports = router;

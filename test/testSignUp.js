@@ -7,17 +7,17 @@ const request = supertest(app);
 //test sign up
 describe("test sign up", () => {
 
-    it("should have status 201", function(done) {
+    it("should have status 250", function(done) {
         this.timeout("5000");
         let user = {
-            email: "123456@google.com",
+            email: "00857028@email.ntou.edu.tw",
             password: "tttttt"
         }
         request
         .post('/signUp')
         .set('Content-Type', 'application/json')
         .send(user)
-        .expect(201)
+        .expect(250)
         .end(function(err, res){
             should.not.exist(err);
             done();
@@ -26,7 +26,7 @@ describe("test sign up", () => {
 });
 
 //verify after sign up
-describe("test sign up", () => {
+describe("test verify", () => {
     
     var userCode = "";
     // get code
@@ -34,8 +34,8 @@ describe("test sign up", () => {
         this.timeout("5000");
 
         request
-        .get('/user/123456@google.com')
-        .expect(500)
+        .get('/user/00857028@email.ntou.edu.tw')
+        .expect(200)
         .end(function(err, res){
             userCode = res.body.code;
             should.not.exist(err);
@@ -46,14 +46,14 @@ describe("test sign up", () => {
     it("should have status 201", function(done) {
         this.timeout("5000");
         let user = {
-            email: "123456@google.com",
+            email: "00857028@email.ntou.edu.tw",
             code: userCode
         }
         request
         .post('/verify')
         .set('Content-Type', 'application/json')
         .send(user)
-        .expect(201)
+        .expect(200)
         .end(function(err, res){
             should.not.exist(err);
             done();
@@ -68,7 +68,7 @@ describe("test delete user", () => {
     it("should have status 200", function(done) {
         this.timeout("5000");
         request
-        .delete('/user/123456@google.com')
+        .delete('/user/00857028@email.ntou.edu.tw')
         .expect(200)
         .end(function(err, res){
             should.not.exist(err);
@@ -76,4 +76,3 @@ describe("test delete user", () => {
         })
     })
 });
-
