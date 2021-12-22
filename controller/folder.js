@@ -5,7 +5,7 @@ exports.getAllFolder = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
             console.log(err);
-        res.status(500).json(docs[0].toObject().folder);
+        res.status(200).json(docs[0].toObject().folder);
     });
 };
 
@@ -19,7 +19,7 @@ exports.getFolderByName = (req, res) => {
         const folder = folders.find((item, index, array) => {
             return item.folderName === req.params.folderName;
         });
-        res.status(500).json({ folder });
+        res.status(200).json({ folder });
     });
 
 };
@@ -37,7 +37,7 @@ exports.postFolder = (req, res) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.status(500).json({ log });
+                res.status(200).json({ log });
         }
     );
 };
@@ -53,7 +53,7 @@ exports.putFolder = (req, res) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.status(500).json({ log })
+                res.status(200).json({ log })
         }
     );
 };
@@ -71,7 +71,7 @@ exports.deleteFolder = (req, res) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.status(500).json({ log })
+                res.status(200).json({ log })
         }
     );
 };

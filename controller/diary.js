@@ -26,7 +26,7 @@ exports.getDiaryByTitle = (req, res) => {
         const diary = diaries.find((item, index, array) => {
             return item.title === req.params.title;
         });
-        res.status(500).json({ diary });
+        res.status(200).json({ diary });
     });
 };
 
@@ -57,7 +57,7 @@ exports.getDiaryBySearch = (req, res) => {
             if (foundDiary.length > 0)
                 diaryArray.push(foundDiary);
         });
-        res.status(500).json({ diaryArray });
+        res.status(200).json({ diaryArray });
     });
 }
 
@@ -77,7 +77,7 @@ exports.getDiaryByDate = (req, res) => {
             if (foundDiary.length > 0)
                 diaryArray.push(foundDiary);
         });
-        res.status(500).json({ diaryArray });
+        res.status(200).json({ diaryArray });
     });
 };
 
@@ -105,7 +105,7 @@ exports.postDiary = (req, res) => {
             if (err)
                 console.log('Error Message: ' + err);
             else
-                res.status(500).json({ log });
+                res.status(200).json({ log });
         }
     );
 };
@@ -146,7 +146,7 @@ exports.putDiaryByTitle = (req, res) => {
                 if (err)
                     console.log('Error Message: ' + err);
                 else
-                    res.status(500).json({ log });
+                    res.status(200).json({ log });
             }
         );
     });
@@ -176,7 +176,7 @@ exports.deleteDiaryByTitle = (req, res) => {
                 if (err)
                     console.log('Error Message: ' + err);
                 else
-                    res.status(500).json({ log });
+                    res.status(200).json({ log });
             }
         );
     });

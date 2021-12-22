@@ -5,10 +5,10 @@ const request = supertest(app);
 
 describe('Diary Controller Test', () => {
     describe('GET/ get a diary by title', () => {
-        it('should respond an object, having status 500', function(done) {
+        it('should respond an object, having status 200', function(done) {
             request
             .get('/user/genewang7@gmail.com/Uncategorized/mydiary')
-            .expect(500)
+            .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
@@ -27,10 +27,10 @@ describe('Diary Controller Test', () => {
 
     describe('GET/ get diaries by search', () => {
         describe('search by title', () => {
-            it('should respond an array, having status 500', function(done) {
+            it('should respond an array, having status 200', function(done) {
                 request
                 .get('/search/genewang7@gmail.com?condition=title&search_query=mydiary')
-                .expect(500)
+                .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
                     should(res.body.diaryArray).be.a.Array();
@@ -40,10 +40,10 @@ describe('Diary Controller Test', () => {
         })
 
         describe('search by content', () => {
-            it('should respond an array, having status 500', function(done) {
+            it('should respond an array, having status 200', function(done) {
                 request
                 .get('/search/genewang7@gmail.com?condition=content&search_query=sgegrhrh')
-                .expect(500)
+                .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
                     should(res.body.diaryArray).be.a.Array();
@@ -53,10 +53,10 @@ describe('Diary Controller Test', () => {
         })
 
         describe('search by tags', () => {
-            it('should respond an array, having status 500', function(done) {
+            it('should respond an array, having status 200', function(done) {
                 request
                 .get('/search/genewang7@gmail.com?condition=tags&search_query=tag')
-                .expect(500)
+                .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
                     should(res.body.diaryArray).be.a.Array();
@@ -68,10 +68,10 @@ describe('Diary Controller Test', () => {
 
     describe('GET/ get diaries by search', () => {
         describe('search by date', () => {
-            it('should respond an array, having status 500', function(done) {
+            it('should respond an array, having status 200', function(done) {
                 request
                 .get('/date/genewang7@gmail.com?date=20211213')
-                .expect(500)
+                .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
                     should(res.body.diaryArray).be.a.Array();
@@ -82,7 +82,7 @@ describe('Diary Controller Test', () => {
     })
     
     describe('POST/ post a diary in a folder', () => {
-        it('should respond an object, having status 500', function(done) {
+        it('should respond an object, having status 200', function(done) {
             const diaryA = {
                 title: 'MYDIARY',   //req.body.title
                 content: '# SHGSDIG;ASIHGIS;G',   //req.body.content
@@ -97,7 +97,7 @@ describe('Diary Controller Test', () => {
             request
             .post('/user/genewang7@gmail.com/Uncategorized')
             .send(diaryA)
-            .expect(500)
+            .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
@@ -107,7 +107,7 @@ describe('Diary Controller Test', () => {
     })
 
     describe('PUT/ put a diary in a folder', () => {
-        it('should respond an object, having status 500', function(done) {
+        it('should respond an object, having status 200', function(done) {
             const diaryA = {
                 title: 'MYDIARY',   //req.body.title
                 content: 'SHGSDIG;ASIHGIS;G',   //req.body.content
@@ -122,7 +122,7 @@ describe('Diary Controller Test', () => {
             request
             .put('/user/genewang7@gmail.com/Uncategorized/MYDIARY')
             .send(diaryA)
-            .expect(500)
+            .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
@@ -132,11 +132,11 @@ describe('Diary Controller Test', () => {
     })
 
     describe('DELETE/ delete a diary in a folder', () => {
-        it('should respond an object, having status 500', function(done) {
+        it('should respond an object, having status 200', function(done) {
 
             request
             .delete('/user/genewang7@gmail.com/Uncategorized/MYDIARY')
-            .expect(500)
+            .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
