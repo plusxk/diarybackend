@@ -16,17 +16,18 @@ Date.prototype.yyyymmdd = function() {
 exports.getDiaryByTitle = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-        
-        const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === req.params.folderName;
-        });
-        const diaries = folder.diary;
-        const diary = diaries.find((item, index, array) => {
-            return item.title === req.params.title;
-        });
-        res.status(200).json({ diary });
+            res.status(500).json({msg: err});
+        else {
+            const folders = docs[0].toObject().folder;
+            const folder = folders.find((item, index, array) => {
+                return item.folderName === req.params.folderName;
+            });
+            const diaries = folder.diary;
+            const diary = diaries.find((item, index, array) => {
+                return item.title === req.params.title;
+            });
+            res.status(200).json({ diary });
+        }
     });
 };
 
@@ -34,30 +35,31 @@ exports.getDiaryByTitle = (req, res) => {
 exports.getDiaryBySearch = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-        
-        let diaryArray = new Array();
-        const folders = docs[0].toObject().folder;
-        const searchBy = req.query;
-
-        folders.forEach(folder => {
-            const foundDiary = folder.diary.filter((item, index, array) => {
-                if (searchBy.condition === 'title')
-                    return item.title.toLowerCase().includes(searchBy.search_query) === true; 
-                else if (searchBy.condition === 'content')
-                    return item.content.toLowerCase().includes(searchBy.search_query) === true; 
-                else if (searchBy.condition === 'tags') {
-                    const tags = item.tag;
-                    return tags.find((it, index, array) => {
-                        return it.toLowerCase().includes(searchBy.search_query) === true;
-                    });
-                }
+            res.status(500).json({msg: err});
+        else {
+            let diaryArray = new Array();
+            const folders = docs[0].toObject().folder;
+            const searchBy = req.query;
+    
+            folders.forEach(folder => {
+                const foundDiary = folder.diary.filter((item, index, array) => {
+                    if (searchBy.condition === 'title')
+                        return item.title.toLowerCase().includes(searchBy.search_query) === true; 
+                    else if (searchBy.condition === 'content')
+                        return item.content.toLowerCase().includes(searchBy.search_query) === true; 
+                    else if (searchBy.condition === 'tags') {
+                        const tags = item.tag;
+                        return tags.find((it, index, array) => {
+                            return it.toLowerCase().includes(searchBy.search_query) === true;
+                        });
+                    }
+                });
+                
+                if (foundDiary.length > 0)
+                    diaryArray.push(foundDiary);
             });
-            
-            if (foundDiary.length > 0)
-                diaryArray.push(foundDiary);
-        });
-        res.status(200).json({ diaryArray });
+            res.status(200).json({ diaryArray });
+        }
     });
 }
 
@@ -65,19 +67,20 @@ exports.getDiaryBySearch = (req, res) => {
 exports.getDiaryByDate = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-        
-        let diaryArray = new Array();
-        const folders = docs[0].toObject().folder;
-        folders.forEach(folder => {
-            const foundDiary = folder.diary.filter((item, index, array) => {
-                return item.date.yyyymmdd() === req.query.date;
+            res.status(500).json({msg: err});
+        else {
+            let diaryArray = new Array();
+            const folders = docs[0].toObject().folder;
+            folders.forEach(folder => {
+                const foundDiary = folder.diary.filter((item, index, array) => {
+                    return item.date.yyyymmdd() === req.query.date;
+                });
+    
+                if (foundDiary.length > 0)
+                    diaryArray.push(foundDiary);
             });
-
-            if (foundDiary.length > 0)
-                diaryArray.push(foundDiary);
-        });
-        res.status(200).json({ diaryArray });
+            res.status(200).json({ diaryArray });
+        }
     });
 };
 
@@ -103,7 +106,7 @@ exports.postDiary = (req, res) => {
         { upsert: true },
         (err, log) => {
             if (err)
-                console.log('Error Message: ' + err);
+                res.status(500).json({msg: err});
             else
                 res.status(200).json({ log });
         }
@@ -126,29 +129,30 @@ exports.putDiaryByTitle = (req, res) => {
 
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-
-        const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === req.params.folderName;
-        });
-
-        const diaryArray = folder.diary;
-        const index = diaryArray.findIndex(obj => obj.title === req.params.title); 
-        diaryArray[index] = diaryA;
-
-        User.updateOne(
-            { 'email': req.params.email, 'folder.folderName': req.params.folderName },
-            { $set: { 
-                'folder.$.diary': diaryArray 
-            }},
-            (err, log) => {
-                if (err)
-                    console.log('Error Message: ' + err);
-                else
-                    res.status(200).json({ log });
-            }
-        );
+            res.status(500).json({msg: err});
+        else {
+            const folders = docs[0].toObject().folder;
+            const folder = folders.find((item, index, array) => {
+                return item.folderName === req.params.folderName;
+            });
+    
+            const diaryArray = folder.diary;
+            const index = diaryArray.findIndex(obj => obj.title === req.params.title); 
+            diaryArray[index] = diaryA;
+    
+            User.updateOne(
+                { 'email': req.params.email, 'folder.folderName': req.params.folderName },
+                { $set: { 
+                    'folder.$.diary': diaryArray 
+                }},
+                (err, log) => {
+                    if (err)
+                        res.status(500).json({msg: err});
+                    else
+                        res.status(200).json({ log });
+                }
+            );
+        }
     });
 };
 
@@ -156,28 +160,29 @@ exports.putDiaryByTitle = (req, res) => {
 exports.deleteDiaryByTitle = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-
-        const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === req.params.folderName;
-        });
-
-        const diaryArray = folder.diary;
-        const index = diaryArray.findIndex(obj => obj.title === req.params.title); 
-        diaryArray.splice(index, 1);
-        
-        User.updateOne(
-            { email: req.params.email, 'folder.folderName': req.params.folderName },
-            { $set: { 
-                'folder.$.diary': diaryArray 
-            }},
-            (err, log) => {
-                if (err)
-                    console.log('Error Message: ' + err);
-                else
-                    res.status(200).json({ log });
-            }
-        );
+            res.status(500).json({msg: err});
+        else {
+            const folders = docs[0].toObject().folder;
+            const folder = folders.find((item, index, array) => {
+                return item.folderName === req.params.folderName;
+            });
+    
+            const diaryArray = folder.diary;
+            const index = diaryArray.findIndex(obj => obj.title === req.params.title); 
+            diaryArray.splice(index, 1);
+            
+            User.updateOne(
+                { email: req.params.email, 'folder.folderName': req.params.folderName },
+                { $set: { 
+                    'folder.$.diary': diaryArray 
+                }},
+                (err, log) => {
+                    if (err)
+                        res.status(500).json({msg: err});
+                    else
+                        res.status(200).json({ log });
+                }
+            );
+        }
     });
 };

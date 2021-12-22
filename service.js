@@ -15,7 +15,7 @@ const FileUpLoadRoutes=require('./routes/fileuploadRoutes');
 const config = require('./config');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const env = process.env.NODE_ENV || 'development';
 
 (async () => {

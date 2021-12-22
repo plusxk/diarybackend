@@ -4,8 +4,9 @@ const User = require('../model/userDBSchema');
 exports.getAllFolder = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-        res.status(200).json(docs[0].toObject().folder);
+            res.status(500).json({msg: err});
+        else
+            res.status(200).json(docs[0].toObject().folder);
     });
 };
 
@@ -13,13 +14,14 @@ exports.getAllFolder = (req, res) => {
 exports.getFolderByName = (req, res) => {
     User.find({ email: req.params.email }, (err, docs) => {
         if (err)
-            console.log(err);
-
-        const folders = docs[0].toObject().folder;
-        const folder = folders.find((item, index, array) => {
-            return item.folderName === req.params.folderName;
-        });
-        res.status(200).json({ folder });
+            res.status(500).json({msg: err});
+        else {
+            const folders = docs[0].toObject().folder;
+            const folder = folders.find((item, index, array) => {
+                return item.folderName === req.params.folderName;
+            });
+            res.status(200).json({ folder });
+        }
     });
 
 };
@@ -35,7 +37,7 @@ exports.postFolder = (req, res) => {
         { $push: { folder: folderA }},
         (err, log) => {
             if (err)
-                console.log('Error Message: ' + err);
+                res.status(500).json({msg: err});
             else
                 res.status(200).json({ log });
         }
@@ -51,7 +53,7 @@ exports.putFolder = (req, res) => {
         }},
         (err, log) => {
             if (err)
-                console.log('Error Message: ' + err);
+                res.status(500).json({msg: err});
             else
                 res.status(200).json({ log })
         }
@@ -69,7 +71,7 @@ exports.deleteFolder = (req, res) => {
         }},
         (err, log) => {
             if (err)
-                console.log('Error Message: ' + err);
+                res.status(500).json({msg: err});
             else
                 res.status(200).json({ log })
         }
