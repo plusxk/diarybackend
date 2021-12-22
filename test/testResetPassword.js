@@ -5,7 +5,7 @@ const request = supertest(app);
 
 describe("test reset password ssssss => 123456",  () => {
 
-    it("should have status 200", function(done) {
+    it("should have status 201", function(done) {
         this.timeout("5000");
         let user = {
             email: "genewang7@gmail.com",
@@ -16,7 +16,7 @@ describe("test reset password ssssss => 123456",  () => {
         .post('/resetPassword')
         .set('Content-Type', 'application/json')
         .send(user)
-        .expect(200)
+        .expect(201)
         .end(function(err, res){
             should.not.exist(err);
             done();
@@ -27,7 +27,7 @@ describe("test reset password ssssss => 123456",  () => {
 
 describe("test reset password 123456 => ssssss",  () => {
 
-    it("should have status 200", function(done) {
+    it("should have status 201", function(done) {
         this.timeout("5000");
         let user = {
             email: "genewang7@gmail.com",
@@ -38,7 +38,7 @@ describe("test reset password 123456 => ssssss",  () => {
         .post('/resetPassword')
         .set('Content-Type', 'application/json')
         .send(user)
-        .expect(200)
+        .expect(201)
         .end(function(err, res){
             should.not.exist(err);
             done();
