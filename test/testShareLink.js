@@ -15,6 +15,7 @@ describe("test encrypted",  () => {
         .end(function(err, res){
             encryptedPath += res.body.encryptedPath;
             should.not.exist(err);
+            should(res.body).have.property('encryptedPath');
             done();
         })
     })
@@ -31,6 +32,7 @@ describe("test decrypted",  () => {
         .end(function(err, res){
             //console.log(res.body);
             should.not.exist(err);
+            should(res.body).be.a.Object();
             done();
         })
     })

@@ -31,7 +31,7 @@ exports.login = async (req, res) => { // middleware: login
                     }
                 }
                 else{
-                    res.status(401).json({  // 401: Unauthorized
+                    res.status(403).json({  // 403: Forbidden
                         msg: "Your account has not be activated!"
                     });
                 }
@@ -62,7 +62,7 @@ exports.verify = async (req, res, next) => {
                 msg: '已登入'
             });
             token: jwt.sign({email:user.email}, config.key , {
-                expiresIn: "60s"
+                expiresIn: "300s"
             });
         }
     })

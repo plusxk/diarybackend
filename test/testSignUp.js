@@ -10,7 +10,7 @@ describe("test sign up", () => {
     it("should have status 250", function(done) {
         this.timeout("5000");
         let user = {
-            email: "00857028@email.ntou.edu.tw",
+            email: "diaryprojecttest@gmail.ntou.edu.tw",
             password: "tttttt"
         }
         request
@@ -30,11 +30,11 @@ describe("test verify", () => {
     
     var userCode = "";
     // get code
-    it("should have status 200", function(done) {
+    it("should respond a code, having status 200", function(done) {
         this.timeout("5000");
 
         request
-        .get('/user/00857028@email.ntou.edu.tw')
+        .get('/user/diaryprojecttest@gmail.ntou.edu.tw')
         .expect(200)
         .end(function(err, res){
             userCode = res.body.code;
@@ -43,17 +43,17 @@ describe("test verify", () => {
         })
     })
     
-    it("should have status 201", function(done) {
+    it("should have status 204", function(done) {
         this.timeout("5000");
         let user = {
-            email: "00857028@email.ntou.edu.tw",
+            email: "diaryprojecttest@gmail.ntou.edu.tw",
             code: userCode
         }
         request
         .post('/verify')
         .set('Content-Type', 'application/json')
         .send(user)
-        .expect(200)
+        .expect(204)
         .end(function(err, res){
             should.not.exist(err);
             done();
@@ -65,11 +65,11 @@ describe("test verify", () => {
 //delete after create user
 describe("test delete user", () => {
 
-    it("should have status 200", function(done) {
+    it("should have status 204", function(done) {
         this.timeout("5000");
         request
-        .delete('/user/00857028@email.ntou.edu.tw')
-        .expect(200)
+        .delete('/user/diaryprojecttest@gmail.ntou.edu.tw')
+        .expect(204)
         .end(function(err, res){
             should.not.exist(err);
             done();

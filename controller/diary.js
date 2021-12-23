@@ -98,6 +98,7 @@ exports.postDiary = (req, res) => {
         markdown: markdown.render(req.body.content)
     };
 
+
     User.updateOne(
         { 'email': req.params.email, 'folder.folderName': req.params.folderName },
         { $push: { 

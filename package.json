@@ -28,7 +28,8 @@
   "main": "service.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node service.js",
-    "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit && cross-env NODE_ENV=test mocha test/testSignUp.js --exit && cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testUploadFile.js --exit"
+    "test": "cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit && cross-env NODE_ENV=test mocha test/testSignUp.js --exit && cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testUploadFile.js --exit",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",

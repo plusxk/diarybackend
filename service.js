@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+const cors = require('cors');
+const config = require('./config');
+const app = express();
 
 const UserRoutes = require('./routes/userRoutes');
 const FolderRoutes = require('./routes/folderRoutes');
@@ -11,11 +15,10 @@ const SignUpRoutes = require('./routes/signUpRoutes');
 const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
 const FileUpLoadRoutes=require('./routes/fileUploadRoutes');
 
-const config = require('./config');
-const app = express();
+
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3001;
-const env = process.env.NODE_ENV || 'test';
+const env = process.env.NODE_ENV || 'development';
 
 (async () => {
   await mongoose
@@ -26,6 +29,7 @@ const env = process.env.NODE_ENV || 'test';
 
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,6 +37,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
+
+/*
+// for production
+if(env === "production"){
+  app.use(express.static(path.resolve(__dirname, 'client/build')));
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "client", "build", "index.html")));
+}
+*/
 
 app.use(UserRoutes);
 app.use(FolderRoutes);

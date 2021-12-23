@@ -25,24 +25,29 @@ exports.mail=async(req, res) => {
         }
 
         let mailOptions = {
-          from: 'diaryproject1234@gmail.com',
-          to:email,
-          subject: mailSubject,
-          text: mailText
+            from: 'diaryproject1234@gmail.com',
+            to:email,
+            subject: mailSubject,
+            text: mailText
         };
 
         transporter.sendMail(mailOptions,function(err) {
-            if (err) {    // 500: Internal Server Error
-                res.status(500).send('Unable to send email: ' + err);
+            if (err) {    
+                res.status(500).json({ // 500: Internal Server Error
+                    msg: "err"
+                });
             }
             else{   // 250: Requested action taken and completed.
-                res.status(250).send(message);
+                res.status(250).json({
+                    msg: "The mail has been sent"
+                });
             }
         });
         
     }
     catch (error){  // 500: Internal Server Error
-        console.log(error);
-        res.status(500).json({msg:"err"});
+        res.status(500).json({ 
+            msg: "err"
+        });
     }
 }
