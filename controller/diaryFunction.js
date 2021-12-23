@@ -57,17 +57,28 @@ exports.decrypt = (req, res) => {
         let title = tokens[2];
 
         User.find({ email: email }, (err, docs) => {
-            if (err)
-                console.log(err);
-            const folders = docs[0].toObject().folder;
-            const folder = folders.find((item, index, array) => {
-                return item.folderName === folderName;
-            });
-            const diaries = folder.diary;
-            const diary = diaries.find((item, index, array) => {
-                return item.title === title;
-            });
-            res.status(200).json({diary});
+            if (err){
+                res.status(500).json({	// 500: Internal Server Error
+                    msg:"err"
+                });
+            }
+                
+            else if(docs){
+                const folders = docs[0].toObject().folder;
+                const folder = folders.find((item, index, array) => {
+                    return item.folderName === folderName;
+                });
+                const diaries = folder.diary;
+                const diary = diaries.find((item, index, array) => {
+                    return item.title === title;
+                });
+                res.status(200).json({diary});
+            }
+            else {
+                res.status(404).json({	// 404: Not Found
+                    msg:"not found"
+                });
+            }
         });
     }
     catch(err){

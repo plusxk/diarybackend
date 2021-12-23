@@ -3,6 +3,8 @@ var should = require('should');
 var app = require('../service');
 const request = supertest(app);
 
+let token;
+
 //test random password
 describe("test random password",  () => {
 

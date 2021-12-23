@@ -3,6 +3,8 @@ var should = require('should');
 var app = require('../service');
 const request = supertest(app);
 
+
+
 describe('Folder Controller Test', () => {
     describe('GET/ get all folders in a user', () => {
         it('should respond an array, have status 200', function(done) {
