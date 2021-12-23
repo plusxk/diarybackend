@@ -18,10 +18,10 @@ pipeline {
         bat 'npm test'
       }
     }
-    stage('Push') {
+    /*stage('Push') {
         steps {
             
         }
-    }
+    }*/
   }
 }
