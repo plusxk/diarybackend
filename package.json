@@ -12,6 +12,7 @@
     "marked": "^4.0.7",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
+    "multer": "^1.4.4",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
     "should": "^13.2.3",
