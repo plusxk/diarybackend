@@ -28,7 +28,7 @@ const drive =google.drive({
 
 
 var fileId='';
-exports.fileupload= async(req, res) => {
+exports.fileUpload= async(req, res) => {
 	try{    
 		if(!req.file) {
             res.send({

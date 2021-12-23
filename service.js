@@ -7,16 +7,15 @@ const FolderRoutes = require('./routes/folderRoutes');
 const DiaryRoutes = require('./routes/diaryRoutes');
 const AccountRoutes = require('./routes/accountRoutes');
 const AuthRoutes = require('./routes/authRoutes');
-const MailRoutes = require('./routes/mailRoutes');
 const SignUpRoutes = require('./routes/signUpRoutes');
 const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
-const FileUpLoadRoutes=require('./routes/fileuploadRoutes');
+const FileUpLoadRoutes=require('./routes/fileUploadRoutes');
 
 const config = require('./config');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3001;
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'test';
 
 (async () => {
   await mongoose
@@ -40,7 +39,6 @@ app.use(FolderRoutes);
 app.use(DiaryRoutes);
 app.use(AuthRoutes);
 app.use(AccountRoutes);
-app.use(MailRoutes);
 app.use(SignUpRoutes);
 app.use(DiaryFunctionRoutes);
 app.use(FileUpLoadRoutes);

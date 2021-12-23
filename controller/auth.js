@@ -15,17 +15,24 @@ exports.login = async (req, res) => { // middleware: login
                 });
             }
             else if(user){  // user is found
-                if(bcrypt.compareSync(password, user.password)){
-                    res.status(200).json({  // 200: OK
-                        token: jwt.sign({email:user.email}, config.authenticateJWT, {
-                            expiresIn: "60s"
-                        }),
-                        email: user.email,
-                    });
+                if(user.isActivated){
+                    if(bcrypt.compareSync(password, user.password)){
+                        res.status(200).json({  // 200: OK
+                            token: jwt.sign({email:user.email}, config.authenticateJWT, {
+                                expiresIn: "60s"
+                            }),
+                            email: user.email,
+                        });
+                    }
+                    else{
+                        res.status(401).json({  // 401: Unauthorized
+                            msg: "Password is incorrect!"
+                        });
+                    }
                 }
                 else{
                     res.status(401).json({  // 401: Unauthorized
-                        msg: "Password is incorrect!"
+                        msg: "Your account has not be activated!"
                     });
                 }
                 

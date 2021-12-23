@@ -7,27 +7,21 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        bat 'docker-compose up -d'
+        echo 'Build state!!'
         bat 'npm install'
+        bat 'npm start'
       }
     }
     stage('test') {
       steps {
-        echo 'Unit tests'
+        echo 'Unit test state!!'
         bat 'npm test'
       }
     }
     stage('Push') {
         steps {
-            echo 'Deploying docker images'
-            bat 'docker tag diary-docker_app steven0103/diary-docker_app'
-            bat 'docker push steven0103/diary-docker_app:latest'
+            
         }
     }
   }
-  post {
-        always {
-            bat 'docker-compose down'
-        }
-    }
 }
