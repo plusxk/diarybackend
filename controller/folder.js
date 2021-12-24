@@ -26,6 +26,30 @@ exports.getFolderByName = (req, res) => {
 
 };
 
+//檢查資料夾重複命名
+exports.isDuplicate = (req, res, next) => {
+    const folderA = {
+        folderName: req.body.folderName,      //req.body.folderName
+        diary: []
+    };
+
+    User.find({ email: req.params.email }, (err, docs) => {
+        if (err)
+            return res.status(500).json({msg: err});
+        else {
+            const folders = docs[0].toObject().folder;
+            const folder = folders.find((item, index, array) => {
+                return item.folderName === req.body.folderName;
+            });
+            
+            if (folder !== undefined) 
+                return res.status(409).json({ msg: "Found duplicate folder name." });  
+            
+            next();
+        }
+    });
+}
+
 //新增資料夾
 exports.postFolder = (req, res) => {
     const folderA = {

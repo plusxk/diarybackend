@@ -29,7 +29,7 @@ describe('Diary Controller Test', () => {
         describe('search by title', () => {
             it('should respond an array, having status 200', function(done) {
                 request
-                .get('/search/genewang7@gmail.com?condition=title&search_query=mydiary')
+                .get('/search/genewang7@gmail.com?condition=title&search_query=mythirddiary')
                 .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
@@ -42,7 +42,7 @@ describe('Diary Controller Test', () => {
         describe('search by content', () => {
             it('should respond an array, having status 200', function(done) {
                 request
-                .get('/search/genewang7@gmail.com?condition=content&search_query=sgegrhrh')
+                .get('/search/genewang7@gmail.com?condition=content&search_query=SHGSDIG')
                 .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
@@ -70,7 +70,7 @@ describe('Diary Controller Test', () => {
         describe('search by date', () => {
             it('should respond an array, having status 200', function(done) {
                 request
-                .get('/date/genewang7@gmail.com?date=20211213')
+                .get('/date/genewang7@gmail.com?date=20211224')
                 .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
@@ -84,7 +84,7 @@ describe('Diary Controller Test', () => {
     describe('POST/ post a diary in a folder', () => {
         it('should respond an object, having status 200', function(done) {
             const diaryA = {
-                title: 'MYDIARY',   //req.body.title
+                title: 'testdiary',   //req.body.title
                 content: '# SHGSDIG;ASIHGIS;G',   //req.body.content
                 date: Date.now(),   //req.body.date
                 tag: ['tagSSSS'],   //req.body.tag
@@ -100,7 +100,30 @@ describe('Diary Controller Test', () => {
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
+                should(res.body.log).be.a.Object();
+                done();
+            })
+        })
+
+        it('should respond a message indicating that user post a duplicate diary title, having status code 409', function(done) {
+            const diaryA = {
+                title: 'testdiary',   //req.body.title
+                content: '# SHGSDIG;ASIHGIS;G',   //req.body.content
+                date: Date.now(),   //req.body.date
+                tag: ['tagSSSS'],   //req.body.tag
+                filesURL: ['filesSSSS'],    //req.body.filesURL
+                picURL: ['picSSSS'],    //req.body.picURL
+                videoURL: ['videosSSSS'],   //req.body.videoURL
+                isFavored: false    //req.body.isFavored
+            };
+
+            request
+            .post('/user/genewang7@gmail.com/Uncategorized')
+            .send(diaryA)
+            .expect(409)
+            .end(function(err, res) {
+                should.not.exist(err);
+                should(res.body).have.property('msg');
                 done();
             })
         })
@@ -109,7 +132,7 @@ describe('Diary Controller Test', () => {
     describe('PUT/ put a diary in a folder', () => {
         it('should respond an object, having status 200', function(done) {
             const diaryA = {
-                title: 'MYDIARY',   //req.body.title
+                title: 'TESTDIARY',   //req.body.title
                 content: 'SHGSDIG;ASIHGIS;G',   //req.body.content
                 date: Date.now(),   //req.body.date
                 tag: ['tagSSSS'],   //req.body.tag
@@ -120,12 +143,35 @@ describe('Diary Controller Test', () => {
             };
 
             request
-            .put('/user/genewang7@gmail.com/Uncategorized/MYDIARY')
+            .put('/user/genewang7@gmail.com/Uncategorized/testdiary')
             .send(diaryA)
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
+                done();
+            })
+        })
+
+        it('should respond a message indicating that user post a duplicate diary title, having status code 409', function(done) {
+            const diaryA = {
+                title: 'mydiary',   //req.body.title
+                content: '# SHGSDIG;ASIHGIS;G',   //req.body.content
+                date: Date.now(),   //req.body.date
+                tag: ['tagSSSS'],   //req.body.tag
+                filesURL: ['filesSSSS'],    //req.body.filesURL
+                picURL: ['picSSSS'],    //req.body.picURL
+                videoURL: ['videosSSSS'],   //req.body.videoURL
+                isFavored: false    //req.body.isFavored
+            };
+
+            request
+            .put('/user/genewang7@gmail.com/Uncategorized/TESTDIARY')
+            .send(diaryA)
+            .expect(409)
+            .end(function(err, res) {
+                should.not.exist(err);
+                should(res.body).have.property('msg');
                 done();
             })
         })
@@ -135,7 +181,7 @@ describe('Diary Controller Test', () => {
         it('should respond an object, having status 200', function(done) {
 
             request
-            .delete('/user/genewang7@gmail.com/Uncategorized/MYDIARY')
+            .delete('/user/genewang7@gmail.com/Uncategorized/TESTDIARY')
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);

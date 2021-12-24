@@ -24,10 +24,7 @@ describe('Folder Controller Test', () => {
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object(); 
-                should(res.body.folder).have.property('_id');   
-                should(res.body.folder).have.property('folderName');   
-                should(res.body.folder).have.property('diary');   
+                should(res.body).be.a.Object();  
                 done();
             })
         })
@@ -36,7 +33,8 @@ describe('Folder Controller Test', () => {
     describe('POST / post a folder in a user', () => {
         it('should respond an object, have status 200', function(done) {
             const folderA = {
-                folderName: 'MYFOLDER'
+                folderName: 'Thisismyfolder',
+                diary: []
             }
             
             request
@@ -45,7 +43,23 @@ describe('Folder Controller Test', () => {
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
+                should(res.body.log.folder).be.an.Array();
+                done();
+            })
+        })
+
+        it('should respond a message indicating that user post a duplicate folder name, having status code 409', function(done) {
+            const folderA = {
+                folderName: 'Thisismyfolder'
+            }
+            
+            request
+            .post('/user/genewang7@gmail.com/folder')
+            .send(folderA)
+            .expect(409)
+            .end(function(err, res) {
+                should.not.exist(err);
+                should(res.body).have.property('msg');
                 done();
             })
         })
@@ -54,11 +68,11 @@ describe('Folder Controller Test', () => {
     describe('PUT / put a folder in a user by folderName', () => {
         it('should respond an object, have status 200', function(done) {
             const folderA = {
-                folderName: 'mYfOlDeR'
+                folderName: 'THISISMYFOLDER'
             }
             
             request
-            .put('/user/genewang7@gmail.com/MYFOLDER')
+            .put('/user/genewang7@gmail.com/Thisismyfolder')
             .send(folderA)
             .expect(200)
             .end(function(err, res) {
@@ -67,12 +81,28 @@ describe('Folder Controller Test', () => {
                 done();
             })
         })
+
+        it('should respond a message indicating that user post a duplicate folder name, having status code 409', function(done) {
+            const folderA = {
+                folderName: 'MYFOLDER'
+            }
+            
+            request
+            .put('/user/genewang7@gmail.com/THISISMYFOLDER')
+            .send(folderA)
+            .expect(409)
+            .end(function(err, res) {
+                should.not.exist(err);
+                should(res.body).have.property('msg');
+                done();
+            })
+        })
     })
 
     describe('DELETE / delete a folder in a user by folderName', () => {
         it('should respond an object, have status 200', function(done) {
             request
-            .delete('/user/genewang7@gmail.com/mYfOlDeR')
+            .delete('/user/genewang7@gmail.com/THISISMYFOLDER')
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
