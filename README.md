@@ -78,14 +78,21 @@ docker-compose up
     {
         folderName: 'MYFOLDER'
     }
+  
+  回傳狀態:正常->200
+          發現相同資料夾->409
 
   ### 取得所有資料夾 (HTTP GET):
     localhost/user/:email/folder
     ex: localhost/user/genewang7@gmail.com/folder
 
+  回傳狀態:正常->200
+
   ### 透過folderName取得特定資料夾 (HTTP GET):
     localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/Uncategorized
+
+  回傳狀態:正常->200
 
   ### 重新命名資料夾 (HTTP PUT):
     localhost/user/:email/:folderName
@@ -96,9 +103,14 @@ docker-compose up
         folderName: 'mYfOlDeR'
     }
 
+  回傳狀態:正常->200
+          發現相同資料夾->409  
+
   ### 刪除資料夾 (HTTP DELETE):
     localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/MYFOLDER
+
+  回傳狀態:正常->200  
 
   ### 新增日記 (HTTP POST):
     localhost/user/:email/:folderName
@@ -116,27 +128,44 @@ docker-compose up
         "isFavored": false
     }
 
+  回傳狀態:正常->200
+          發現相同日記->409 
+
   ### 透過title取得日記 (HTTP GET):
     localhost/user/:email/:folderName/:title
     ex: localhost/user/genewang7@gmail.com/Uncategorized/MYDIARY
   (使用者email:genewang7@gmail.com下的資料夾名稱:Uncategorized下的title為MYDIARY的日記)
 
+  回傳狀態:正常->200
+
   ### 關鍵字查詢取得日記透過title (HTTP GET):
     localhost/search/:email
-    ex: localhost/search/1?condition=title&search_query=mydiary
+    ex: localhost/search/1?condition=title&search_query=mythirddiary
+
+  回傳狀態:正常->200
+
   ### 關鍵字查詢取得日記透過content (HTTP GET):
     localhost/search/:email
     ex: localhost/search/1?condition=content&search_query=SHGSDIG
+
+  回傳狀態:正常->200
+
   ### 關鍵字查詢取得日記透過tags (HTTP GET):
     localhost/search/:email
     ex: localhost/search/1?condition=tags&search_query=tagSSSS
 
+  回傳狀態:正常->200
+
   ### 透過日期取得日記 (HTTP GET):
     localhost/date/:email
     ex: localhost/date/genewang7@gmail.com?date=20211214
+
+  回傳狀態:正常->200
+
   ### 將日記新增至指定資料夾 (HTTP POST):
     localhost/user/:email/:folderName
     ex: localhost/genewang7@gmail.com/Uncategorized
+    
   POST測試內容(json):
     {
         "title": "MYDIARY1",
@@ -148,10 +177,14 @@ docker-compose up
         "videoURL": ["videosSSSS"],
         "isFavored": false
     }
+
+  回傳狀態:正常->200
+          發現相同日記->409 
    
   ### 修改日記 (HTTP PUT):
     localhost/user/:email/:folderName/:title
-    ex: localhost/genewang7@gmail.com/Uncategorized/MYDIARY
+    ex: localhost/user/genewang7@gmail.com/Uncategorized/MYDIARY
+
   PUT測試內容(json):
     {
         "title": "MYDIARY",
@@ -163,26 +196,36 @@ docker-compose up
         "videoURL": ["videosSSSS"],
         "isFavored": false
     }
+
+  回傳狀態:正常->200
+          發現相同日記->409  
     
   ### 刪除日記 (HTTP DELETE):
     localhost/user/:email/:folderName/:title
-    ex: localhost/genewang7@gmail.com/Uncategorized/MYDIARY
+    ex: localhost/user/genewang7@gmail.com/Uncategorized/MYDIARY
+
+  回傳狀態:正常->200  
   
   ### 分享連結 (HTTP GET):
     localhost/shareLink/:email/:folderName/:title
     ex: localhost/shareLink/genewang7@gmail.com/Uncategorized/mydiary
+
+  ### 上傳圖片 (HTTP POST):
+    localhost/fileupload
 
   ## 管理員系統
   ### 透過email取得使用者 (HTTP GET):
     localhost/user/:email
     ex: localhost/user/genewang7@gmail.com
 
+  回傳狀態:正常->200  
+
   ### 透過email刪除使用者 (HTTP DELETE):
     localhost/user/:email
     ex: localhost/user/genewang7@gmail.com
 
-  ### 上傳圖片 (HTTP POST):
-    localhost/fileupload
+  回傳狀態:正常->200  
+
     
   # 注意事項
   __前端GET日記內容請用"markdown"這個atrribute而非"content"__  

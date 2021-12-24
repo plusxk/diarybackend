@@ -43,15 +43,17 @@ exports.getDiaryBySearch = (req, res) => {
     
             folders.forEach(folder => {
                 const foundDiary = folder.diary.filter((item, index, array) => {
-                    if (searchBy.condition === 'title')
-                        return item.title.toLowerCase().includes(searchBy.search_query) === true; 
-                    else if (searchBy.condition === 'content')
-                        return item.content.toLowerCase().includes(searchBy.search_query) === true; 
-                    else if (searchBy.condition === 'tags') {
-                        const tags = item.tag;
-                        return tags.find((it, index, array) => {
-                            return it.toLowerCase().includes(searchBy.search_query) === true;
-                        });
+                    if (item.title !== undefined && item.content !== undefined) {
+                        if (searchBy.condition === 'title')
+                            return item.title.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        else if (searchBy.condition === 'content')
+                            return item.content.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        else if (searchBy.condition === 'tags') {
+                            const tags = item.tag;
+                            return tags.find((it, index, array) => {
+                                return it.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                            });
+                        }
                     }
                 });
                 
@@ -84,6 +86,41 @@ exports.getDiaryByDate = (req, res) => {
     });
 };
 
+// 檢查是否新增到相同名稱diary
+exports.isDuplicate = (req, res, next) => {
+
+    const diaryA = {
+        title: req.body.title,   //req.body.title
+        content: req.body.content,   //req.body.content
+        date: req.body.date,   //req.body.date
+        tag: req.body.tag,   //req.body.tag
+        filesURL: req.body.filesURL,    //req.body.filesURL
+        picURL: req.body.picURL,    //req.body.picURL
+        videoURL: req.body.videoURL,   //req.body.videoURL
+        isFavored: req.body.isFavored,    //req.body.isFavored
+        markdown: markdown.render(String(req.body.content))
+    };
+
+    User.find({ email: req.params.email }, (err, docs) => {
+        if (err) 
+            return res.status(500).json({msg: err});
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === req.params.folderName;
+        });
+        const diaries = folder.diary;
+        const diary = diaries.find((item, index, array) => {
+            return item.title === req.body.title;
+        });
+
+        if (diary !== undefined) 
+            return res.status(409).json({ msg: "Found duplicate diary title." });  
+
+        next();
+    })
+}
+
 //新增日記入指定資料夾
 exports.postDiary = (req, res) => {
     const diaryA = {
@@ -95,10 +132,9 @@ exports.postDiary = (req, res) => {
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
         isFavored: req.body.isFavored,    //req.body.isFavored
-        markdown: markdown.render(req.body.content)
+        markdown: markdown.render(String(req.body.content))
     };
-
-
+    
     User.updateOne(
         { 'email': req.params.email, 'folder.folderName': req.params.folderName },
         { $push: { 
@@ -107,9 +143,8 @@ exports.postDiary = (req, res) => {
         { upsert: true },
         (err, log) => {
             if (err)
-                res.status(500).json({msg: err});
-            else
-                res.status(200).json({ log });
+                return res.status(500).json({msg: err});
+            res.status(200).json({ log });
         }
     );
 };
@@ -125,7 +160,7 @@ exports.putDiaryByTitle = (req, res) => {
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
         isFavored: req.body.isFavored,    //req.body.isFavored
-        markdown: markdown.render(req.body.content)
+        markdown: markdown.render(String(req.body.content))
     };
 
     User.find({ email: req.params.email }, (err, docs) => {
@@ -148,7 +183,7 @@ exports.putDiaryByTitle = (req, res) => {
                 }},
                 (err, log) => {
                     if (err)
-                        res.status(500).json({msg: err});
+                        res.status(204).json({msg: err});
                     else
                         res.status(200).json({ log });
                 }

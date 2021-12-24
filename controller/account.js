@@ -61,13 +61,18 @@ exports.randomPassword = async (req, res, next) => {  // middleware randomize pa
                 msg: "Something wrong when updating data!"
             })
         }
-        else{
+        else if(user){
             // set local response 
             res.locals.email = user.email;
             res.locals.message = "New password was sending to the mail."
             res.locals.text = randPassword;
             res.locals.subject = 'Sending Verify Code!';
             next();  // next middleware: mail
+        }
+        else{
+            res.status(404).json({  // 404: Not Found
+                msg: "User is not found!"
+            })
         }
     });
 }

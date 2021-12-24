@@ -62,6 +62,8 @@ exports.verify=async(req, res) => {
                 });
             } 
             else{ 
+                console.log("req" + req.body.code);
+                console.log("docs" + docs[0].cod);
                 if(req.body.code==docs[0].code){
                     User.findOneAndUpdate(
                         {email:req.body.email},
@@ -81,10 +83,10 @@ exports.verify=async(req, res) => {
                     );
                 }
                 else{   // 401: Unauthorized
-                    res.status(401).json('Code incorrect'); 
+                    res.status(401).json({ msg: 'Code incorrect'}); 
                 }
             
-    		} 
+            } 
 		});
     }
     catch (error){  // 500: Internal Server Error
