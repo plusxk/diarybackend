@@ -57,7 +57,6 @@ describe("get code", () => {
         .expect(200)
         .end(function(err, res){
             userCode = res.body.code;
-            console.log(userCode);
             should.not.exist(err);
             done();
         })
@@ -67,7 +66,7 @@ describe("get code", () => {
 //verify after sign up
 describe("test verify", () => {
     
-    
+
     // test entering wrong code
     it("should have status 401", function(done) {
         this.timeout("5000");

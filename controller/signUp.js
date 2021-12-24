@@ -53,7 +53,7 @@ exports.signUp = async(req, res, next) => {
 }
 
 exports.verify=async(req, res) => { 
-
+    
     try{
         User.find({email: req.body.email},function (err, docs) { 
             if (err){  
