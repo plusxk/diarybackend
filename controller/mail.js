@@ -39,6 +39,7 @@ exports.mail=async(req, res) => {
             }
             else{   // 250: Requested action taken and completed.
                 res.status(250).json({
+                    content: mailText,
                     msg: "The mail has been sent"
                 });
             }
