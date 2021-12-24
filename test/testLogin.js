@@ -11,7 +11,7 @@ describe("test verify",  () => {
     it("should have status 401", function(done) {
 
         request
-        .post('/verify')
+        .post('/checkLogin')
         .set('Content-Type', 'application/json')
         .set('authorization', "123456")
         .expect(401) // status must be 200

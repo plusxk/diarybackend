@@ -62,8 +62,6 @@ exports.verify=async(req, res) => {
                 });
             } 
             else{ 
-                console.log("req" + req.body.code);
-                console.log("docs" + docs[0].cod);
                 if(req.body.code==docs[0].code){
                     User.findOneAndUpdate(
                         {email:req.body.email},
