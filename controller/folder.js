@@ -63,7 +63,7 @@ exports.postFolder = (req, res) => {
             if (err)
                 res.status(500).json({msg: err});
             else
-                res.status(200).json({ log });
+                res.status(201).json({ log });
         }
     );
 };
@@ -79,7 +79,7 @@ exports.putFolder = (req, res) => {
             if (err)
                 res.status(500).json({msg: err});
             else
-                res.status(200).json({ log })
+                res.status(204).json({ log })
         }
     );
 };
@@ -97,7 +97,7 @@ exports.deleteFolder = (req, res) => {
             if (err)
                 res.status(500).json({msg: err});
             else
-                res.status(200).json({ log })
+                res.status(204).json({ log })
         }
     );
 };

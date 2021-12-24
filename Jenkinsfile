@@ -6,28 +6,24 @@ pipeline {
     }*/
   stages {
     stage('build') {
+      when{
+        changeset "package.json"
+      }
       steps {
-        bat 'docker-compose up -d'
+        echo 'Install dependencies state!!'
         bat 'npm install'
       }
     }
     stage('test') {
       steps {
-        echo 'Unit tests'
+        echo 'Unit test state!!'
         bat 'npm test'
       }
     }
-    stage('Push') {
+    /*stage('Push') {
         steps {
-            echo 'Deploying docker images'
-            bat 'docker tag diary-docker_app steven0103/diary-docker_app'
-            bat 'docker push steven0103/diary-docker_app:latest'
+            
         }
-    }
+    }*/
   }
-  post {
-        always {
-            bat 'docker-compose down'
-        }
-    }
 }

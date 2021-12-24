@@ -15,17 +15,24 @@ exports.login = async (req, res) => { // middleware: login
                 });
             }
             else if(user){  // user is found
-                if(bcrypt.compareSync(password, user.password)){
-                    res.status(200).json({  // 200: OK
-                        token: jwt.sign({email:user.email}, config.authenticateJWT, {
-                            expiresIn: "60s"
-                        }),
-                        email: user.email,
-                    });
+                if(user.isActivated){
+                    if(bcrypt.compareSync(password, user.password)){
+                        res.status(200).json({  // 200: OK
+                            token: jwt.sign({email:user.email}, config.authenticateJWT, {
+                                expiresIn: "300s"
+                            }),
+                            email: user.email,
+                        });
+                    }
+                    else{
+                        res.status(401).json({  // 401: Unauthorized
+                            msg: "Password is incorrect!"
+                        });
+                    }
                 }
                 else{
-                    res.status(401).json({  // 401: Unauthorized
-                        msg: "Password is incorrect!"
+                    res.status(403).json({  // 403: Forbidden
+                        msg: "Your account has not be activated!"
                     });
                 }
                 
@@ -50,13 +57,10 @@ exports.verify = async (req, res, next) => {
             res.status(401).json({msg: '當前用戶未登入'});
         }
         else{
-            res.status(200).json({     // 200: OK
-                email: decode.email,
-                msg: '已登入'
+            token: jwt.sign({email:decode.email}, config.authenticateJWT , {
+                expiresIn: "300s"
             });
-            token: jwt.sign({email:user.email}, config.key , {
-                expiresIn: "60s"
-            });
+            next();
         }
     })
 }

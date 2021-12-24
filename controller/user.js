@@ -23,9 +23,9 @@ exports.postUser = async (req, res) => {
     const userA = new User({
         email: 'genewang7@gmail.com',
         password: bcrypt.hashSync('ssssss', 10),
-        code: 'fhfjfj',
+        code: '1234',
         isAdmin: false,
-        isActivated: false
+        isActivated: true
     });
 
     const user = await userA.save();
@@ -39,7 +39,7 @@ exports.deleteUser = async (req, res) => {
         } 
         else{
             console.log('got deleted');
-            res.status(200).json({msg: "got deleted"});
+            res.status(204).json({msg: "got deleted"});
         }
     })
 };

@@ -1,16 +1,14 @@
 # 使用方式
-裝好docker後 先去把目錄底下mongoDB資料夾刪除
+不使用docker:
+直接資料夾下npm install 再npm start
+port:3001
+
+用docker:
 接著在專案路徑底下輸入cmd
 docker-compose up
 
-去docker內看容器是否都成功運行
-沒成功運行，我們碰過的原因:
-  1. 可能為有地方占用了port:80 or 8081 or 27017 (80可能是Apache) 
-
-重試方法:
-  1. 執行 docker-compose down 把容器刪掉
-  2. 使用docker指令或者直接使用docker 把diarydb_app這個image刪除
-  3. 重新跑docker-compose up
+#以下有status code是500的 找不到原因，要來跟我們後端講一下
+#除了重設密碼，登入，註冊以外，其他call API都要在設header的authorization:token
 
 # 成功執行後:
   ## 先發送請求 (HTTP GET)
@@ -30,11 +28,17 @@ docker-compose up
         "email": "123456@google.com",
         "password": "tttttt"
     }
-
-  ### 寄送驗證碼入信箱 (HTTP POST):
-    localhost/resendCode
     
-  ### 確認驗證碼 (HTTP POST):
+  註冊成功: 250
+  
+  email已存在: 409
+
+  ### 重寄驗證碼入信箱 (HTTP POST):
+    localhost/resendCode
+  
+  寄送成功: 250
+    
+  ### 確認驗證碼(激活帳號) (HTTP POST):
     localhost/verify
     
   POST測試內容(json):
@@ -42,6 +46,11 @@ docker-compose up
         "email": "123456@google.com",
         "code": "3518"
     }
+   
+  驗證成功: 204
+  
+  驗證碼錯誤: 409
+  
   
   ### 登入(登入成功後，前端要將token存到cookie) (HTTP POST):
     localhost/login
@@ -51,13 +60,20 @@ docker-compose up
         "email": "123456@google.com",
         "password": "tttttt"
     }
-
-  ### 驗證是否登入(headers裡面放token，傳到後端check Token) (HTTP POST):
-    localhost/checkLogin
+    
+  登入成功: 200
+  
+  密碼錯誤: 401
+  
+  帳號未激活: 403
 
   ### 忘記密碼(僅輸入email即可) (HTTP POST):
     localhost/randomPassword
   (寄出隨機密碼入信箱)
+  
+  寄出成功: 250
+  
+  查無信箱: 404
 
   ### 重設密碼 (HTTP POST):
     localhost/resetPassword
@@ -67,7 +83,10 @@ docker-compose up
         "password": "tttttt",
         "newPassword": "ssssss"
     }
-
+    
+  修改成功: 201
+  
+  密碼錯誤: 401
 
   ## 日記&資料夾系統
   ### 新增資料夾 (HTTP POST):
@@ -79,8 +98,9 @@ docker-compose up
         folderName: 'MYFOLDER'
     }
   
-  回傳狀態:正常->200
-          發現相同資料夾->409
+  回傳狀態:正常->201
+  
+  發現相同資料夾->409
 
   ### 取得所有資料夾 (HTTP GET):
     localhost/user/:email/folder
@@ -103,16 +123,17 @@ docker-compose up
         folderName: 'mYfOlDeR'
     }
 
-  回傳狀態:正常->200
-          發現相同資料夾->409  
+  回傳狀態:正常->204
+  
+  發現相同資料夾->409  
 
   ### 刪除資料夾 (HTTP DELETE):
     localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/MYFOLDER
 
-  回傳狀態:正常->200  
+  回傳狀態:正常->204 
 
-  ### 新增日記 (HTTP POST):
+  ### 將日記新增至指定資料夾 (HTTP POST):
     localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/Uncategorized 
     
@@ -128,8 +149,9 @@ docker-compose up
         "isFavored": false
     }
 
-  回傳狀態:正常->200
-          發現相同日記->409 
+  回傳狀態:正常->201
+  
+  發現相同日記->409 
 
   ### 透過title取得日記 (HTTP GET):
     localhost/user/:email/:folderName/:title
@@ -162,24 +184,6 @@ docker-compose up
 
   回傳狀態:正常->200
 
-  ### 將日記新增至指定資料夾 (HTTP POST):
-    localhost/user/:email/:folderName
-    ex: localhost/genewang7@gmail.com/Uncategorized
-    
-  POST測試內容(json):
-    {
-        "title": "MYDIARY1",
-        "content": "# SHGSDIG;ASIHGIS;G",
-        "date": "2021-12-14T03:24:03.572+00:00",
-        "tag": ["tagSSSS"],
-        "filesURL": ["filesSSSS"],
-        "picURL": ["picSSSS"],
-        "videoURL": ["videosSSSS"],
-        "isFavored": false
-    }
-
-  回傳狀態:正常->200
-          發現相同日記->409 
    
   ### 修改日記 (HTTP PUT):
     localhost/user/:email/:folderName/:title
@@ -197,18 +201,26 @@ docker-compose up
         "isFavored": false
     }
 
-  回傳狀態:正常->200
-          發現相同日記->409  
+  回傳狀態:正常->204
+  
+  發現相同日記->409  
     
   ### 刪除日記 (HTTP DELETE):
     localhost/user/:email/:folderName/:title
     ex: localhost/user/genewang7@gmail.com/Uncategorized/MYDIARY
 
-  回傳狀態:正常->200  
+  回傳狀態:正常->204  
   
   ### 分享連結 (HTTP GET):
     localhost/shareLink/:email/:folderName/:title
     ex: localhost/shareLink/genewang7@gmail.com/Uncategorized/mydiary
+    
+  成功: 200
+
+  ### 上傳圖片 (HTTP POST):
+    localhost/fileupload
+    
+  成功: 200
 
   ### 上傳圖片 (HTTP POST):
     localhost/fileupload
