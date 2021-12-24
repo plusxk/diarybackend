@@ -31,7 +31,7 @@ describe('Folder Controller Test', () => {
     })
 
     describe('POST / post a folder in a user', () => {
-        it('should respond an object, have status 200', function(done) {
+        it('should respond an object, have status 201', function(done) {
             const folderA = {
                 folderName: 'Thisismyfolder',
                 diary: []
@@ -40,7 +40,7 @@ describe('Folder Controller Test', () => {
             request
             .post('/user/genewang7@gmail.com/folder')
             .send(folderA)
-            .expect(200)
+            .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body.log.folder).be.an.Array();
@@ -66,7 +66,7 @@ describe('Folder Controller Test', () => {
     })
 
     describe('PUT / put a folder in a user by folderName', () => {
-        it('should respond an object, have status 200', function(done) {
+        it('should respond an object, have status 204', function(done) {
             const folderA = {
                 folderName: 'THISISMYFOLDER'
             }
@@ -74,7 +74,7 @@ describe('Folder Controller Test', () => {
             request
             .put('/user/genewang7@gmail.com/Thisismyfolder')
             .send(folderA)
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
@@ -100,10 +100,10 @@ describe('Folder Controller Test', () => {
     })
 
     describe('DELETE / delete a folder in a user by folderName', () => {
-        it('should respond an object, have status 200', function(done) {
+        it('should respond an object, have status 204', function(done) {
             request
             .delete('/user/genewang7@gmail.com/THISISMYFOLDER')
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();

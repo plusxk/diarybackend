@@ -82,7 +82,7 @@ describe('Diary Controller Test', () => {
     })
     
     describe('POST/ post a diary in a folder', () => {
-        it('should respond an object, having status 200', function(done) {
+        it('should respond an object, having status 201', function(done) {
             const diaryA = {
                 title: 'testdiary',   //req.body.title
                 content: '# SHGSDIG;ASIHGIS;G',   //req.body.content
@@ -97,7 +97,7 @@ describe('Diary Controller Test', () => {
             request
             .post('/user/genewang7@gmail.com/Uncategorized')
             .send(diaryA)
-            .expect(200)
+            .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body.log).be.a.Object();
@@ -130,7 +130,7 @@ describe('Diary Controller Test', () => {
     })
 
     describe('PUT/ put a diary in a folder', () => {
-        it('should respond an object, having status 200', function(done) {
+        it('should respond an object, having status 204', function(done) {
             const diaryA = {
                 title: 'TESTDIARY',   //req.body.title
                 content: 'SHGSDIG;ASIHGIS;G',   //req.body.content
@@ -145,7 +145,7 @@ describe('Diary Controller Test', () => {
             request
             .put('/user/genewang7@gmail.com/Uncategorized/testdiary')
             .send(diaryA)
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
@@ -178,11 +178,11 @@ describe('Diary Controller Test', () => {
     })
 
     describe('DELETE/ delete a diary in a folder', () => {
-        it('should respond an object, having status 200', function(done) {
+        it('should respond an object, having status 204', function(done) {
 
             request
             .delete('/user/genewang7@gmail.com/Uncategorized/TESTDIARY')
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();

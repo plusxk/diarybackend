@@ -144,7 +144,7 @@ exports.postDiary = (req, res) => {
         (err, log) => {
             if (err)
                 return res.status(500).json({msg: err});
-            res.status(200).json({ log });
+            res.status(201).json({ log });
         }
     );
 };
@@ -183,9 +183,9 @@ exports.putDiaryByTitle = (req, res) => {
                 }},
                 (err, log) => {
                     if (err)
-                        res.status(204).json({msg: err});
+                        res.status(500).json({msg: err});
                     else
-                        res.status(200).json({ log });
+                        res.status(204).json({ log });
                 }
             );
         }
@@ -216,7 +216,7 @@ exports.deleteDiaryByTitle = (req, res) => {
                     if (err)
                         res.status(500).json({msg: err});
                     else
-                        res.status(200).json({ log });
+                        res.status(204).json({ log });
                 }
             );
         }
