@@ -35,6 +35,10 @@ const DiarySchema = new Schema({
     markdown: {
         type : String,
         // required: true
+    },
+    parentFolder: {
+        type: String,
+        required: true
     }
 });
 

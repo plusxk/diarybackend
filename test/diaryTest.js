@@ -33,7 +33,7 @@ describe('Diary Controller Test', () => {
     describe('GET/ get a diary by title', () => {
         it('should respond an object, having status 200', function(done) {
             request
-            .get('/user/genewang7@gmail.com/Uncategorized/mydiary')
+            .get('/user/genewang7@gmail.com/Uncategorized/MY')
             .set('authorization', token)
             .expect(200)
             .end(function(err, res) {
@@ -47,6 +47,7 @@ describe('Diary Controller Test', () => {
                 should(res.body.diary).have.property('picURL');
                 should(res.body.diary).have.property('videoURL');
                 should(res.body.diary).have.property('isFavored');
+                should(res.body.diary).have.property('parentFolder');
                 done();
             })
         })
@@ -122,7 +123,8 @@ describe('Diary Controller Test', () => {
                 filesURL: ['filesSSSS'],    //req.body.filesURL
                 picURL: ['picSSSS'],    //req.body.picURL
                 videoURL: ['videosSSSS'],   //req.body.videoURL
-                isFavored: false    //req.body.isFavored
+                isFavored: false,    //req.body.isFavored
+                parentFolder: 'Uncategorized'   //req.body.parentFolder
             };
 
             request
@@ -146,7 +148,8 @@ describe('Diary Controller Test', () => {
                 filesURL: ['filesSSSS'],    //req.body.filesURL
                 picURL: ['picSSSS'],    //req.body.picURL
                 videoURL: ['videosSSSS'],   //req.body.videoURL
-                isFavored: false    //req.body.isFavored
+                isFavored: false,    //req.body.isFavored
+                parentFolder: 'Uncategorized'   //req.body.parentFolder
             };
 
             request
@@ -172,7 +175,8 @@ describe('Diary Controller Test', () => {
                 filesURL: ['filesSSSS'],    //req.body.filesURL
                 picURL: ['picSSSS'],    //req.body.picURL
                 videoURL: ['videosSSSS'],   //req.body.videoURL
-                isFavored: false    //req.body.isFavored
+                isFavored: false,    //req.body.isFavored
+                parentFolder: 'Uncategorized'   //req.body.parentFolder
             };
 
             request
@@ -196,7 +200,8 @@ describe('Diary Controller Test', () => {
                 filesURL: ['filesSSSS'],    //req.body.filesURL
                 picURL: ['picSSSS'],    //req.body.picURL
                 videoURL: ['videosSSSS'],   //req.body.videoURL
-                isFavored: false    //req.body.isFavored
+                isFavored: false,    //req.body.isFavored
+                parentFolder: 'Uncategorized'   //req.body.parentFolder
             };
 
             request

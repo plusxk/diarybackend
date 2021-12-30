@@ -98,7 +98,8 @@ exports.isDuplicate = (req, res, next) => {
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
         isFavored: req.body.isFavored,    //req.body.isFavored
-        markdown: markdown.render(String(req.body.content))
+        markdown: markdown.render(String(req.body.content)),
+        parentFolder: req.params.folderName
     };
 
     User.find({ email: req.params.email }, (err, docs) => {
@@ -132,7 +133,8 @@ exports.postDiary = (req, res) => {
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
         isFavored: req.body.isFavored,    //req.body.isFavored
-        markdown: markdown.render(String(req.body.content))
+        markdown: markdown.render(String(req.body.content)),
+        parentFolder: req.params.folderName
     };
     
     User.updateOne(
@@ -160,7 +162,8 @@ exports.putDiaryByTitle = (req, res) => {
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
         isFavored: req.body.isFavored,    //req.body.isFavored
-        markdown: markdown.render(String(req.body.content))
+        markdown: markdown.render(String(req.body.content)),
+        parentFolder: req.params.folderName
     };
 
     User.find({ email: req.params.email }, (err, docs) => {
