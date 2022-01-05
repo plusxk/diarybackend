@@ -17,7 +17,8 @@ exports.verifyCode = async(req, res, next) => {
         (err,log) => {
             if(err){    // 500: Internal Server Error
                 res.status(500).json({ // 500: Internal Server Error
-                    msg: "err"
+                    msg: "err",
+                    token: req.token
                 });
             }
         }
@@ -28,8 +29,7 @@ exports.verifyCode = async(req, res, next) => {
 exports.signUp = async(req, res, next) => { 
     try{
         if (await User.findOne({ email: req.body.email })) {
-            res.status(409).json({
-                msg: "The email is already existed"});
+            res.status(409).json({msg: "The email is already existed", token: req.token});
         }
         else{
             const userA = new User({
@@ -46,7 +46,8 @@ exports.signUp = async(req, res, next) => {
     }
     catch (error){
         res.status(500).json({ // 500: Internal Server Error
-            msg: "err"
+            msg: "err",
+            token: req.token
         });
     } 
 
@@ -58,7 +59,8 @@ exports.verify=async(req, res) => {
         User.find({email: req.body.email},function (err, docs) { 
             if (err){  
                 res.status(500).json({ // 500: Internal Server Error
-                    msg: "err"
+                    msg: "err",
+                    token: req.token
                 });
             } 
             else{ 
@@ -69,19 +71,21 @@ exports.verify=async(req, res) => {
                         (err,log) => {
                             if(err){   
                                 res.status(500).json({ 
-                                    msg: "err"
+                                    msg: "err",
+                                    token: req.token
                                 });
                             }
                             else{   // 204: No Content
                                 res.status(204).json({ 
-                                    msg: "Activate successfully!"
+                                    msg: "Activate successfully!",
+                                    token: req.token
                                 });
                             }
                         }
                     );
                 }
                 else{   // 401: Unauthorized
-                    res.status(401).json({ msg: 'Code incorrect'}); 
+                    res.status(401).json({ msg: 'Code incorrect', token: req.token}); 
                 }
             
             } 
@@ -89,7 +93,8 @@ exports.verify=async(req, res) => {
     }
     catch (error){  // 500: Internal Server Error
         res.status(500).json({ 
-            msg: "err"
+            msg: "err",
+            token: req.token
         });
     } 
 }

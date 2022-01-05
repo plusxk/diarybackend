@@ -36,7 +36,8 @@ exports.fileUpload= async(req, res) => {
                 message: 'No file uploaded'
 			}); 
 			res.status(500).json({ // 500: Internal Server Error
-				msg: "err"
+				msg: "err",
+				token: req.token
 			});
         }
         //console.log(req.file);
@@ -77,11 +78,13 @@ exports.fileUpload= async(req, res) => {
 		let url=result.data.webViewLink;
 
        	res.status(201).json({	// 201: Create
-			msg: "The file has been upload!"
+			msg: "The file has been upload!",
+			token: req.token
 		});
     }catch (err){
         res.status(500).json({	// 500: Internal Server Error
-			msg:"err"
+			msg:"err",
+			token: req.token
 		});
     } 
 

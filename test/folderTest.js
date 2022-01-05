@@ -38,7 +38,8 @@ describe('Folder Controller Test', () => {
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Array();
+                should(res.body).have.property('token');
+                should(res.body).have.property('folder');
                 done();
             })
         })
@@ -52,7 +53,8 @@ describe('Folder Controller Test', () => {
             .expect(200)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();  
+                should(res.body).have.property('token');
+                should(res.body).have.property('folder');
                 done();
             })
         })
@@ -72,7 +74,7 @@ describe('Folder Controller Test', () => {
             .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body.log.folder).be.an.Array();
+                should(res.body).have.property('token');
                 done();
             })
         })
@@ -89,6 +91,7 @@ describe('Folder Controller Test', () => {
             .expect(409)
             .end(function(err, res) {
                 should.not.exist(err);
+                should(res.body).have.property('token');
                 should(res.body).have.property('msg');
                 done();
             })
@@ -105,10 +108,10 @@ describe('Folder Controller Test', () => {
             .put('/user/genewang7@gmail.com/Thisismyfolder')
             .set('authorization', token)
             .send(folderA)
-            .expect(204)
+            .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
+                should(res.body).have.property('token');
                 done();
             })
         })
@@ -125,6 +128,7 @@ describe('Folder Controller Test', () => {
             .expect(409)
             .end(function(err, res) {
                 should.not.exist(err);
+                should(res.body).have.property('token');
                 should(res.body).have.property('msg');
                 done();
             })
@@ -136,10 +140,10 @@ describe('Folder Controller Test', () => {
             request
             .delete('/user/genewang7@gmail.com/THISISMYFOLDER')
             .set('authorization', token)
-            .expect(204)
+            .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
+                should(res.body).have.property('token');
                 done();
             })
         })

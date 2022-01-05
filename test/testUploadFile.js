@@ -41,6 +41,8 @@ describe('test file upload', function() {
         .expect(201)
         .end(function(err, res) {
             should.not.exist(err);
+            should(res.body).have.property('msg');
+            should(res.body).have.property('token');
             done();
         });
     });

@@ -38,12 +38,14 @@ exports.resetPassword = async (req, res) =>  {  // middleware: reset password
     User.updateOne(filter, update, (err, user) => {
         if(err){
             res.status(500).json({  // 500: Internal Server Error
-                msg: "Something wrong when updating data!"
+                msg: "Something wrong when updating data!",
+                token: req.token
             })
         }
         else{
             res.status(201).json({  // 201: Created
-                msg: "Reset Password successfully"
+                msg: "Reset Password successfully",
+                token: req.token
             })
         }
     });

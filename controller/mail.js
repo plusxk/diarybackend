@@ -34,13 +34,15 @@ exports.mail=async(req, res) => {
         transporter.sendMail(mailOptions,function(err) {
             if (err) {    
                 res.status(500).json({ // 500: Internal Server Error
-                    msg: "err"
+                    msg: "err",
+                    token: req.token
                 });
             }
             else{   // 250: Requested action taken and completed.
                 res.status(250).json({
                     content: mailText,
-                    msg: "The mail has been sent"
+                    msg: "The mail has been sent",
+                    token: req.token
                 });
             }
         });
@@ -48,7 +50,8 @@ exports.mail=async(req, res) => {
     }
     catch (error){  // 500: Internal Server Error
         res.status(500).json({ 
-            msg: "err"
+            msg: "err",
+            token: req.token
         });
     }
 }

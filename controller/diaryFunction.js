@@ -14,12 +14,14 @@ exports.encryptedPath = (req, res) => {
         enc += cipher.final('hex');//编码方式转为hex;
 
         res.status(200).json({
-            encryptedPath: enc
+            encryptedPath: enc,
+            token: req.token
         });
     }
     catch(err){
         res.status(500).json({	// 500: Internal Server Error
-			msg:"err"
+			msg:"err",
+            token: req.token
 		});
     }
 
@@ -59,7 +61,8 @@ exports.decrypt = (req, res) => {
         User.find({ email: email }, (err, docs) => {
             if (err){
                 res.status(500).json({	// 500: Internal Server Error
-                    msg:"err"
+                    msg:"err",
+                    token: req.token
                 });
             }
                 
@@ -72,18 +75,20 @@ exports.decrypt = (req, res) => {
                 const diary = diaries.find((item, index, array) => {
                     return item.title === title;
                 });
-                res.status(200).json({diary});
+                res.status(200).json({diary: diary, token: req.token});
             }
             else {
                 res.status(404).json({	// 404: Not Found
-                    msg:"not found"
+                    msg:"not found",
+                    token: req.token
                 });
             }
         });
     }
     catch(err){
         res.status(500).json({	// 500: Internal Server Error
-			msg:"err"
+			msg:"err",
+            token: req.token
 		});
     }
 

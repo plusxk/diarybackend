@@ -38,6 +38,7 @@ describe('User Controller Test', () => {
             .expect(200)
             .end((err, res) => {
                 should.not.exist(err);
+                should(res.body).have.property('token');
                 should(res.body.user).be.a.Array();
                 done();
             })
@@ -53,14 +54,14 @@ describe('User Controller Test', () => {
             .expect(200)
             .end(function (err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
-                should(res.body).have.property('_id');
-                should(res.body).have.property('email');
-                should(res.body).have.property('password');
-                should(res.body).have.property('code');
-                should(res.body).have.property('isAdmin');
-                should(res.body).have.property('isActivated');
-                should(res.body).have.property('folder');
+                should(res.body).have.property('token');
+                should(res.body.user).have.property('_id');
+                should(res.body.user).have.property('email');
+                should(res.body.user).have.property('password');
+                should(res.body.user).have.property('code');
+                should(res.body.user).have.property('isAdmin');
+                should(res.body.user).have.property('isActivated');
+                should(res.body.user).have.property('folder');
                 done();
             })
         });

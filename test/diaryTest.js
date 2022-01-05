@@ -39,6 +39,7 @@ describe('Diary Controller Test', () => {
             .end(function(err, res) {
                 should.not.exist(err);
                 should(res.body).be.a.Object();
+                should(res.body).have.property('token');
                 should(res.body.diary).have.property('_id');
                 should(res.body.diary).have.property('title');
                 should(res.body.diary).have.property('content');
@@ -62,6 +63,7 @@ describe('Diary Controller Test', () => {
                 .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
+                    should(res.body).have.property('token');
                     should(res.body.diaryArray).be.a.Array();
                     done();
                 })
@@ -90,6 +92,7 @@ describe('Diary Controller Test', () => {
                 .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
+                    should(res.body).have.property('token');
                     should(res.body.diaryArray).be.a.Array();
                     done();
                 })
@@ -106,6 +109,7 @@ describe('Diary Controller Test', () => {
                 .expect(200)
                 .end(function(err, res) {
                     should.not.exist(err);
+                    should(res.body).have.property('token');
                     should(res.body.diaryArray).be.a.Array();
                     done();
                 })
@@ -134,7 +138,7 @@ describe('Diary Controller Test', () => {
             .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body.log).be.a.Object();
+                should(res.body).have.property('token');
                 done();
             })
         })
@@ -159,6 +163,7 @@ describe('Diary Controller Test', () => {
             .expect(409)
             .end(function(err, res) {
                 should.not.exist(err);
+                should(res.body).have.property('token');
                 should(res.body).have.property('msg');
                 done();
             })
@@ -183,10 +188,10 @@ describe('Diary Controller Test', () => {
             .put('/user/genewang7@gmail.com/Uncategorized/testdiary')
             .set('authorization', token)
             .send(diaryA)
-            .expect(204)
+            .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
+                should(res.body).have.property('token');
                 done();
             })
         })
@@ -211,6 +216,7 @@ describe('Diary Controller Test', () => {
             .expect(409)
             .end(function(err, res) {
                 should.not.exist(err);
+                should(res.body).have.property('token');
                 should(res.body).have.property('msg');
                 done();
             })
@@ -223,10 +229,10 @@ describe('Diary Controller Test', () => {
             request
             .delete('/user/genewang7@gmail.com/Uncategorized/TESTDIARY')
             .set('authorization', token)
-            .expect(204)
+            .expect(201)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
+                should(res.body).have.property('token');
                 done();
             })
         })
