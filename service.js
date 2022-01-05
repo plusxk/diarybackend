@@ -13,8 +13,7 @@ const AccountRoutes = require('./routes/accountRoutes');
 const AuthRoutes = require('./routes/authRoutes');
 const SignUpRoutes = require('./routes/signUpRoutes');
 const DiaryFunctionRoutes = require('./routes/diaryFunctionRoutes');
-const FileUpLoadRoutes=require('./routes/fileUploadRoutes');
-
+const FileUpLoadRoutes=require('./routes/fileuploadRoutes');
 
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3001;
