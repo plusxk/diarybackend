@@ -1,9 +1,5 @@
 def notifyLINE(status) {
-    def token = "4KTgSkRacd4cMha54QmOsFHafAEZ2TWaJFnfLRXLFPK"
-      
-    def url = 'https://notify-api.line.me/api/notify'
-    def message = "${status} \r\n"
-    bat 'curl ${url} -H "Authorization: Bearer ${token}" -F "message=${message}"'
+    bat 'curl -X POST -H "Authorization: Bearer 4KTgSkRacd4cMha54QmOsFHafAEZ2TWaJFnfLRXLFPK" -F "message= Build Start" https://notify-api.line.me/api/notify'
 }
 
 pipeline {
