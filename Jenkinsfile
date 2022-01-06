@@ -3,7 +3,7 @@ def notifyLINE(status) {
       
     def url = 'https://notify-api.line.me/api/notify'
     def message = "${status} \r\n"
-    bat "curl ${url} -H 'Authorization: Bearer ${token}' -F 'message=${message}'"
+    bat 'curl ${url} -H "Authorization: Bearer ${token}" -F "message=${message}"'
 }
 
 pipeline {
