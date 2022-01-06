@@ -4,6 +4,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "curl": "^0.1.4",
     "dompurify": "^2.3.4",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
@@ -26,7 +27,10 @@
   "name": "diarydb",
   "version": "1.0.0",
   "main": "service.js",
-  "engines": { "npm": "8.1.2", "node": "16.13.1"},
+  "engines": {
+    "npm": "8.1.2",
+    "node": "16.13.1"
+  },
   "scripts": {
     "start": "node service.js",
     "test": "cross-env NODE_ENV=test mocha test/testSignUp.js --exit && cross-env NODE_ENV=test mocha test/testLogin.js --exit && cross-env NODE_ENV=test mocha test/testRandomPassword.js --exit && cross-env NODE_ENV=test mocha test/testResetPassword.js --exit && cross-env NODE_ENV=test mocha test/userTest.js --exit && cross-env NODE_ENV=test mocha test/folderTest.js --exit && cross-env NODE_ENV=test mocha test/diaryTest.js --exit && cross-env NODE_ENV=test mocha test/testShareLink.js --exit && cross-env NODE_ENV=test mocha test/testUploadFile.js --exit"
