@@ -5,7 +5,7 @@ def notifyLINE(status) {
       
     def url = 'https://notify-api.line.me/api/notify'
     def message = "${jobName} Build #${buildNo} ${status} \r\n"
-    bat "curl -X POST -H \"${token}\" -F \"message=${message}\" ${url}"
+    bat "curl -X POST -H \"Authorization: Bearer ${token}\" -F \"message=${message}\" ${url}"
 }
 
 pipeline {
