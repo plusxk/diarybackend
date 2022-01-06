@@ -1,5 +1,11 @@
 def notifyLINE(status) {
-    bat 'curl -X POST -H "Authorization: Bearer 4KTgSkRacd4cMha54QmOsFHafAEZ2TWaJFnfLRXLFPK" -F "message= Build Start" https://notify-api.line.me/api/notify'
+    def token = "Authorization: Bearer 4KTgSkRacd4cMha54QmOsFHafAEZ2TWaJFnfLRXLFPK"
+    def jobName = env.JOB_NAME +' '+env.BRANCH_NAME
+    def buildNo = env.BUILD_NUMBER
+      
+    def url = 'https://notify-api.line.me/api/notify'
+    def message = "${jobName} Build #${buildNo} ${status} \r\n"
+    bat "curl -X POST -H \"${token}\" -F \"message=${message}\" ${url}"
 }
 
 pipeline {
