@@ -1,6 +1,6 @@
 def notifyLINE(status) {
     def token = "ALgop9NLwRpYtMglonMhqRKepRnRdcBXtviO8U1ry5J"
-    def jobName = env.JOB_NAME +' '+env.BRANCH_NAME
+    def jobName = env.JOB_NAME
     def buildNo = env.BUILD_NUMBER
       
     def url = 'https://notify-api.line.me/api/notify'
