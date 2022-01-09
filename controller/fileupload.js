@@ -78,6 +78,7 @@ exports.fileUpload= async(req, res) => {
 		let url=result.data.webViewLink;
 
        	res.status(201).json({	// 201: Create
+       		url:url,
 			msg: "The file has been upload!",
 			token: req.token
 		});
