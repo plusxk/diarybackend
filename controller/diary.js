@@ -115,9 +115,10 @@ exports.isDuplicate = (req, res, next) => {
             return item.title === req.body.title;
         });
 
-        if (diary !== undefined) 
+        if (req.method === "POST" && diary !== undefined) 
             return res.status(409).json({ msg: "Found duplicate diary title.", token: req.token });  
-
+        else if(req.method === "PUT" && req.params.title !==  req.body.title && diary !== undefined)
+            return res.status(409).json({ msg: "Found duplicate diary title.", token: req.token });  
         next();
     })
 }
