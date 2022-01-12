@@ -55,12 +55,10 @@ describe("test decrypted",  () => {
     it("should respond a diary, having status 200", function(done) {
         request
         .get('/shareLink/' + encryptedPath)
-        .set('authorization', token)
         .expect(200) // status must be 200
         .end(function(err, res){
             //console.log(res.body);
             should.not.exist(err);
-            should(res.body).have.property('token');
             should(res.body).be.a.Object();
             done();
         })
