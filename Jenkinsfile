@@ -16,9 +16,6 @@ pipeline {
     }*/
   stages {
     stage('build') {
-      when{
-        changeset "package.json"
-      }
       steps {
         echo 'Install dependencies state!!'
         bat 'npm install'
