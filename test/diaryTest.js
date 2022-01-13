@@ -58,7 +58,7 @@ describe('Diary Controller Test', () => {
         describe('search by title', () => {
             it('should respond an array, having status 200', function(done) {
                 request
-                .get('/search/genewang7@gmail.com?condition=title&search_query=mythirddiary')
+                .get('/search/genewang7@gmail.com?search_query=mythirddiary')
                 .set('authorization', token)
                 .expect(200)
                 .end(function(err, res) {
@@ -73,7 +73,7 @@ describe('Diary Controller Test', () => {
         describe('search by content', () => {
             it('should respond an array, having status 200', function(done) {
                 request
-                .get('/search/genewang7@gmail.com?condition=content&search_query=SHGSDIG')
+                .get('/search/genewang7@gmail.com?search_query=SHGSDIG')
                 .set('authorization', token)
                 .expect(200)
                 .end(function(err, res) {
@@ -87,7 +87,7 @@ describe('Diary Controller Test', () => {
         describe('search by tags', () => {
             it('should respond an array, having status 200', function(done) {
                 request
-                .get('/search/genewang7@gmail.com?condition=tags&search_query=tag')
+                .get('/search/genewang7@gmail.com?search_query=tag')
                 .set('authorization', token)
                 .expect(200)
                 .end(function(err, res) {

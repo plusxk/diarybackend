@@ -10,9 +10,9 @@ router.get('/user/:email/:folderName/:title', diaryController.getDiaryByTitle);
 
 /*關鍵字查詢*/
 
-//GET specific diaries by title     localhost/search/1?condition=title&search_query=mydiary
-//GET specific diaries by content   localhost/search/1?condition=content&search_query=sgegrhrh
-//GET specific diaries by tags      localhost/search/1?condition=tags&search_query=tag
+//GET specific diaries by title     localhost/search/genewang7@gmail.com?search_query=mydiary
+//GET specific diaries by content   localhost/search/genewang7@gmail.com?search_query=sgegrhrh
+//GET specific diaries by tags      localhost/search/genewang7@gmail.com?search_query=tag
 router.get('/search/:email', authController.verify);
 router.get('/search/:email', diaryController.getDiaryBySearch);
 

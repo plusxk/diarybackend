@@ -42,21 +42,64 @@ exports.getDiaryBySearch = (req, res) => {
             const searchBy = req.query;
     
             folders.forEach(folder => {
-                const foundDiary = folder.diary.filter((item, index, array) => {
+                const foundDiary = new Array();
+
+                const foundDiaryTitle = folder.diary.filter((item, index, array) => {
                     if (item.title !== undefined && item.content !== undefined) {
-                        if (searchBy.condition === 'title')
-                            return item.title.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
-                        else if (searchBy.condition === 'content')
-                            return item.content.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
-                        else if (searchBy.condition === 'tags') {
-                            const tags = item.tag;
-                            return tags.find((it, index, array) => {
-                                return it.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
-                            });
-                        }
+                        // if (searchBy.condition === 'title')
+                        //     return item.title.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        // else if (searchBy.condition === 'content')
+                        //     return item.content.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        // else if (searchBy.condition === 'tags') {
+                        //     const tags = item.tag;
+                        //     return tags.find((it, index, array) => {
+                        //         return it.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                        //     });
+                        // }
+                        return item.title.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                    }
+                });
+                const foundDiaryContent = folder.diary.filter((item, index, array) => {
+                    if (item.title !== undefined && item.content !== undefined) {
+                        // if (searchBy.condition === 'title')
+                        //     return item.title.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        // else if (searchBy.condition === 'content')
+                        //     return item.content.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        // else if (searchBy.condition === 'tags') {
+                        //     const tags = item.tag;
+                        //     return tags.find((it, index, array) => {
+                        //         return it.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                        //     });
+                        // }
+                        return item.content.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                    }
+                });
+                const foundDiaryTags = folder.diary.filter((item, index, array) => {
+                    if (item.title !== undefined && item.content !== undefined) {
+                        // if (searchBy.condition === 'title')
+                        //     return item.title.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        // else if (searchBy.condition === 'content')
+                        //     return item.content.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true; 
+                        // else if (searchBy.condition === 'tags') {
+                        //     const tags = item.tag;
+                        //     return tags.find((it, index, array) => {
+                        //         return it.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                        //     });
+                        // }
+                        const tags = item.tag;
+                        return tags.find((it, index, array) => {
+                            return it.toLowerCase().includes(searchBy.search_query.toLowerCase()) === true;
+                        });
                     }
                 });
                 
+                if (foundDiaryTitle.length > 0)
+                    foundDiary.push(foundDiaryTitle);
+                if (foundDiaryContent.length > 0)
+                    foundDiary.push(foundDiaryContent);
+                if (foundDiaryTags.length > 0)
+                    foundDiary.push(foundDiaryTags);
+
                 if (foundDiary.length > 0)
                     diaryArray.push(foundDiary);
             });
