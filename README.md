@@ -160,7 +160,7 @@ docker-compose up
 
   回傳狀態:正常->200
 
-  ### 關鍵字查詢取得日記透過title (HTTP GET):
+  ### 關鍵字查詢取得日記 (HTTP GET):
     localhost/search/:email
     ex: localhost/search/genewang7@gmail.com?search_query=mythirddiary
     ex: localhost/search/genewang7@gmail.com?search_query=hello
