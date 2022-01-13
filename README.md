@@ -162,21 +162,10 @@ docker-compose up
 
   ### 關鍵字查詢取得日記透過title (HTTP GET):
     localhost/search/:email
-    ex: localhost/search/genewang7@gmail.com?condition=title&search_query=mythirddiary
+    ex: localhost/search/genewang7@gmail.com?search_query=mythirddiary
 
   回傳狀態:正常->200
-
-  ### 關鍵字查詢取得日記透過content (HTTP GET):
-    localhost/search/:email
-    ex: localhost/search/genewang7@gmail.com?condition=content&search_query=SHGSDIG
-
-  回傳狀態:正常->200
-
-  ### 關鍵字查詢取得日記透過tags (HTTP GET):
-    localhost/search/:email
-    ex: localhost/search/genewang7@gmail.com?condition=tags&search_query=tagSSSS
-
-  回傳狀態:正常->200
+  
 
   ### 透過日期取得日記 (HTTP GET):
     localhost/date/:email
