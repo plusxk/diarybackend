@@ -30,6 +30,7 @@ router.put('/user/:email/:folderName/:title', diaryController.isDuplicate, diary
 
 //DELETE specific diary by title in specific folder by folderName
 router.delete('/user/:email/:folderName/:title', authController.verify);
-router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByTitle)
+router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByTitle);
+
 
 module.exports = router;

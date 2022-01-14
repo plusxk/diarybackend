@@ -148,4 +148,40 @@ describe('Folder Controller Test', () => {
             })
         })
     })
+    
+    describe('GET / get all favored diaries', () => {
+        it('should respond an array, having status 200', function(done) {
+
+            request
+            .get('/isFavored/genewang7@gmail.com')
+            .set('authorization', token)
+            .expect(200)
+            .end(function(err, res) {
+                should.not.exist(err);
+                should(res.body).have.property('token');
+                should(res.body).have.property('diaryArray');
+                done();
+            })
+        })
+    })
+
+    describe('PUT / modify isFavored current status', () => {
+        it('should respond an object, having status 201', function(done) {
+            const diaryA = {
+                diaryTitle: 'mydiary'
+            }
+
+            request
+            .put('/isFavored/genewang7@gmail.com/Uncategorized')
+            .set('authorization', token)
+            .send(diaryA)
+            .expect(201)
+            .end(function(err, res) {
+                should.not.exist(err);
+                should(res.body).have.property('token');
+                done();
+            })
+        })
+    })
+
 });
