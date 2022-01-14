@@ -23,4 +23,12 @@ router.put('/user/:email/:folderName', folderController.isDuplicate, folderContr
 router.delete('/user/:email/:folderName', authController.verify);
 router.delete('/user/:email/:folderName', folderController.deleteFolder);
 
+//GET favored diaries
+router.get('/isFavored/:email', authController.verify);
+router.get('/isFavored/:email', folderController.getFavoredDiaries);
+
+//Modify diary's isFavored state
+router.put('/isFavored/:email/:folderName', authController.verify);
+router.put('/isFavored/:email/:folderName', folderController.setIsFavored);
+
 module.exports = router;

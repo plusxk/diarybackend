@@ -171,7 +171,7 @@ describe('Diary Controller Test', () => {
     })
 
     describe('PUT/ put a diary in a folder', () => {
-        it('should respond an object, having status 204', function(done) {
+        it('should respond an object, having status 201', function(done) {
             const diaryA = {
                 title: 'TESTDIARY',   //req.body.title
                 content: 'SHGSDIG;ASIHGIS;G',   //req.body.content

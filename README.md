@@ -206,15 +206,34 @@ docker-compose up
     localhost/shareLink/:email/:folderName/:title
     ex: localhost/shareLink/genewang7@gmail.com/Uncategorized/mydiary
     
-  成功: 200
+  回傳狀態:正常->200
+
+  ### 加入愛心 (HTTP PUT):
+    localhost/isFavored/:email/:folderName
+    ex: localhost/isFavored/genewang7@gmail.com/Favorite
+
+    PUT測試內容(json):
+    {
+        "diaryTitle": "title"
+    }
+
+  回傳狀態:正常->201
+
+  ### 顯示愛心日記 (HTTP GET):
+    localhost/isFavored/:email
+    ex: localhost/isFavored/genewang7@gmail.com
+
+  回傳狀態:正常->200
 
   ### 上傳圖片 (HTTP POST):
     localhost/fileupload
     
-  成功: 200
+  回傳狀態:正常->200
 
   ### 上傳圖片 (HTTP POST):
     localhost/fileupload
+
+  回傳狀態:正常->201 
 
   ## 管理員系統
   ### 透過email取得使用者 (HTTP GET):

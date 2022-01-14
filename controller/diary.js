@@ -142,7 +142,7 @@ exports.isDuplicate = (req, res, next) => {
         filesURL: req.body.filesURL,    //req.body.filesURL
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
-        isFavored: req.body.isFavored,    //req.body.isFavored
+        isFavored: false,    //req.body.isFavored
         markdown: markdown.render(String(req.body.content)),
         parentFolder: req.params.folderName
     };
@@ -178,7 +178,7 @@ exports.postDiary = (req, res) => {
         filesURL: req.body.filesURL,    //req.body.filesURL
         picURL: req.body.picURL,    //req.body.picURL
         videoURL: req.body.videoURL,   //req.body.videoURL
-        isFavored: req.body.isFavored,    //req.body.isFavored
+        isFavored: false,    //req.body.isFavored
         markdown: markdown.render(String(req.body.content)),
         parentFolder: req.params.folderName
     };
