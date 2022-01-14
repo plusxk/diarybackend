@@ -94,14 +94,16 @@ exports.getDiaryBySearch = (req, res) => {
                 });
                 
                 if (foundDiaryTitle.length > 0)
-                    foundDiary.push(foundDiaryTitle);
+                    foundDiaryTitle.forEach(element => foundDiary.push(element));
                 if (foundDiaryContent.length > 0)
-                    foundDiary.push(foundDiaryContent);
+                    foundDiaryContent.forEach(element => foundDiary.push(element));
                 if (foundDiaryTags.length > 0)
-                    foundDiary.push(foundDiaryTags);
+                    foundDiaryTags.forEach(element => foundDiary.push(element));
 
-                if (foundDiary.length > 0)
-                    diaryArray.push(foundDiary);
+                if (foundDiary.length > 0) {
+                    let uniqueFoundDiary = [...new Set(foundDiary)];
+                    diaryArray.push(uniqueFoundDiary);
+                }
             });
             res.status(200).json({ diaryArray: diaryArray, token: req.token });
         }

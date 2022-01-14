@@ -13,7 +13,7 @@ router.get('/user/:email/:folderName/:title', diaryController.getDiaryByTitle);
 //GET specific diaries by title     localhost/search/genewang7@gmail.com?search_query=mydiary
 //GET specific diaries by content   localhost/search/genewang7@gmail.com?search_query=sgegrhrh
 //GET specific diaries by tags      localhost/search/genewang7@gmail.com?search_query=tag
-router.get('/search/:email', authController.verify);
+// router.get('/search/:email', authController.verify);
 router.get('/search/:email', diaryController.getDiaryBySearch);
 
 //GET diaries by date               localhost/00857028@email.ntou.edu.tw/date/1?date=20211207
@@ -21,7 +21,7 @@ router.get('/date/:email', authController.verify);
 router.get('/date/:email', diaryController.getDiaryByDate);
 
 //POST diary in specific folder by folderName
-router.post('/user/:email/:folderName', authController.verify);
+// router.post('/user/:email/:folderName', authController.verify);
 router.post('/user/:email/:folderName', diaryController.isDuplicate, diaryController.postDiary);
 
 //PUT specific diary by title in specific folder by folderName
