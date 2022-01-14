@@ -212,10 +212,10 @@ docker-compose up
     localhost/isFavored/:email/:folderName
     ex: localhost/isFavored/genewang7@gmail.com/Favorite
 
-    PUT測試內容(json):
-    {
-        "diaryTitle": "title"
-    }
+   PUT測試內容(json):
+   {
+       "diaryTitle": "title"
+   }
 
   回傳狀態:正常->201
 
