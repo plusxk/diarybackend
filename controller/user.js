@@ -3,8 +3,9 @@ const bcrypt = require('bcryptjs');
 
 exports.getUser = async (req, res) => {
     try {
-        const user = await User.find();
-        res.status(200).json({ user:user, token: req.token })
+        let user = await User.find();
+        reversed = user.reverse();
+        res.status(200).json({ user:reversed, token: req.token })
     } catch(err) {
         res.status(404).json({ msg: 'No user found', token: req.token });
     }
