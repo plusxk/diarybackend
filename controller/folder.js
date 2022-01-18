@@ -78,8 +78,15 @@ exports.putFolder = (req, res) => {
         (err, log) => {
             if (err)
                 res.status(500).json({ msg: err, token: req.token});
-            else
-                res.status(201).json({ token: req.token});
+            else{
+                User.updateMany({"parentFolder": req.params.email}, {"$set":{"parentFolder": req.body.folderName}}, (err, log) => {
+                    if (err)
+                        res.status(500).json({ msg: err, token: req.token});
+                    else{
+                        res.status(201).json({ token: req.token});
+                    }
+                });
+            }
         }
     );
 };
