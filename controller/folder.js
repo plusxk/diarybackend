@@ -79,16 +79,39 @@ exports.putFolder = (req, res) => {
             if (err)
                 res.status(500).json({ msg: err, token: req.token});
             else{
-                User.updateMany({"parentFolder": req.params.folderName}, {"$set":{"parentFolder": req.body.folderName}}, (err, log) => {
+
+                User.find({ email: req.params.email }, (err, docs) => {
                     if (err)
-                        res.status(500).json({ msg: err, token: req.token});
-                    else{
-                        res.status(201).json({ token: req.token});
+                        res.status(500).json({msg: err, token: req.token});
+                    else {
+                        const folders = docs[0].toObject().folder;
+                        const folder = folders.find((item, index, array) => {
+                            return item.folderName === req.body.folderName;
+                        });
+            
+                        const diaryArray = folder.diary;
+                        const index = diaryArray.findIndex(obj => obj.parentFolder !== req.body.folderName); 
+
+                        diaryArray[index].parentFolder = req.body.folderName;
+                        User.updateOne(
+                            { 'email': req.params.email, 'folder.folderName': req.body.folderName },
+                            { $set: { 
+                                'folder.$.diary': diaryArray 
+                            }},
+                            (err, log) => {
+                                if (err)
+                                    res.status(204).json({msg: err, token: req.token});
+                                else
+                                    res.status(201).json({ token: req.token });
+                            }
+                        );
                     }
                 });
+
             }
         }
     );
+    
 };
 
 //刪除資料夾
