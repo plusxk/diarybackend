@@ -99,7 +99,7 @@ describe('Folder Controller Test', () => {
     })
 
     describe('PUT / put a folder in a user by folderName', () => {
-        it('should respond an object, have status 204', function(done) {
+        it('should respond an object, have status 201', function(done) {
             const folderA = {
                 folderName: 'THISISMYFOLDER'
             }

@@ -90,9 +90,9 @@ exports.putFolder = (req, res) => {
                         });
             
                         const diaryArray = folder.diary;
-                        const index = diaryArray.findIndex(obj => obj.parentFolder !== req.body.folderName); 
-
-                        diaryArray[index].parentFolder = req.body.folderName;
+                        for(let i = 0; i < diaryArray.length; i++){
+                            diaryArray[i].parentFolder = req.body.folderName;
+                        }
                         User.updateOne(
                             { 'email': req.params.email, 'folder.folderName': req.body.folderName },
                             { $set: { 
@@ -100,7 +100,7 @@ exports.putFolder = (req, res) => {
                             }},
                             (err, log) => {
                                 if (err)
-                                    res.status(204).json({msg: err, token: req.token});
+                                    res.status(500).json({msg: err, token: req.token});
                                 else
                                     res.status(201).json({ token: req.token });
                             }
