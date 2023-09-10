@@ -1,9 +1,11 @@
+const dotenv = require("dotenv")
+dotenv.config()
 module.exports = {
     port: 3001,
     db: {
-      production: "mongodb+srv://test:1234@cluster0.5r4ti.mongodb.net/diarydb?retryWrites=true&w=majority",
-      development: "mongodb+srv://test:1234@cluster0.5r4ti.mongodb.net/diarydb?retryWrites=true&w=majority",
-      test: "mongodb+srv://test:1234@unittest.ocwrg.mongodb.net/diarydb?retryWrites=true&w=majority",
+      production: process.env.MONGO,
+      development: process.env.MONGO,
+      test: process.env.MONGO,
     },
     dbParams: {
         useNewUrlParser: true,

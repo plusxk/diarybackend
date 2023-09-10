@@ -30,6 +30,7 @@ exports.signUp = async(req, res, next) => {
     try{
         if (await User.findOne({ email: req.body.email })) {
             res.status(409).json({msg: "The email is already existed", token: req.token});
+            
         }
         else{
             const userA = new User({
@@ -56,6 +57,7 @@ exports.signUp = async(req, res, next) => {
 exports.verify=async(req, res) => { 
     
     try{
+       
         User.find({email: req.body.email},function (err, docs) { 
             if (err){  
                 res.status(500).json({ // 500: Internal Server Error
